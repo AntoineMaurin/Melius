@@ -1,0 +1,233 @@
+body {
+  margin: 0;
+}
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Logofont;
+  src: url('../fonts/powell_antique/PowellAntique.ttf');
+}
+
+.project-name {
+  font-family: 'Dancing Script';
+  font-size: 55px;
+}
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  border-bottom: 1px solid #018e68;
+
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+/* Add a "checked" mark when clicked on */
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Style the header */
+.header {
+  background-color: #262c3a;
+  padding: 20px 40px;
+  color: #018e68;
+  text-align: center;
+  border-bottom: 1px solid #018e68;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+
+.logo {
+  max-height: 100px;
+  height: auto;
+  position: absolute;
+  left: 30px;
+  top: 5px;
+  padding: 5px 0 5px;
+}
+
+.tasks {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 600px;
+}
+
+.habits {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 600px;
+}
+
+.loginform {
+  max-width: 400px;
+  background-color: lightgreen;
+  margin-top: 50vh;
+  transform: translateY(-50%);
+}
+
+.page-subtitle{
+  font-size: 50px;
+}
+
+.btn-submit-register {
+  border: 1px solid;
+  width: 100px;
+}
+
+.register-title {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 20px;
+  color: #fff;
+  font-family: Logofont;
+  font-size: 50px;
+}
+
+.register-wallpaper {
+  background: url('../img/0021.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+.text-green {
+  color: #88c27d;
+}
+
+.register-submit {
+  background-color: #88c27d;
+  border: 1px solid #fff;
+  color: #262c3a;
+}
+
+.register-form {
+  border-radius: 20px;
+  padding: 20px 30px;
+  color: #fff;
+  max-width: 450px;
+}
+
+.darkblue-bg {
+  background-color: rgb(38, 44, 58);
+}
+
+#logo {
+  font-family: Logofont;
+  color: #fff;
+  font-size: 50px;
+}
+
+.logo-medium {
+  width: 200px;
+  height: 200px;
+}
+
+.form-group {
+  margin-bottom: 50px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #88c27d;
+  border-color: #fff;
+}
+
+.alert-error {
+  color: #353535;
+  background-color: #e59e5f;
+  border-color: #fff;
+}

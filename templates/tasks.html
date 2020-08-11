@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tâches{% endblock title %}
+
+{% block main_content %}
+<div class="row header">
+  <img class="logo" type="image/png" src="{% static 'img/favicon.png' %}"></img>
+  <div class="col">
+    <h2 id="logo">Melius</h2>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <section class="col container tasks">
+    <div class="text-center">
+      <h3>Tasks</h3>
+    </div>
+    <ul id="tasksUL">
+      <li>Hit the gym</li>
+      <li>Pay bills</li>
+      <li>Meet George</li>
+      <li>Buy eggs</li>
+      <li>Read a book</li>
+      <li>Organize office</li>
+    </ul>
+    <input type="text" id="TaskInput" placeholder="Name...">
+    <span onclick="newTaskElement()" class="addBtn">Add</span>
+  </section>
+
+  <section class="col container habits">
+    <div class="text-center">
+      <h3>Habits</h3>
+    </div>
+    <ul id="HabitUL">
+      <li>Hit the gym</li>
+      <li>Pay bills</li>
+      <li>Meet George</li>
+      <li>Buy eggs</li>
+      <li>Read a book</li>
+      <li>Organize office</li>
+    </ul>
+    <input type="text" id="HabitInput" placeholder="Name...">
+    <span onclick="newHabitElement()" class="addBtn">Add</span>
+  </section>
+</div>
+{% endblock main_content %}
