@@ -47,7 +47,7 @@ def register(request):
                                          email=email,
                                          password=password1)
                 messages.success(request, message[1])
-                return redirect("/tasks")
+                return redirect("/login")
     else:
         form = UserRegisterForm()
     return render(request, "register.html", {'form': form})

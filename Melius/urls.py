@@ -20,5 +20,6 @@ from Melius import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-    path('tasks', views.taskspage)
+    path('', views.homepage),
+    path('tasks', views.taskspage),
 ]

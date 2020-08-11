@@ -167,13 +167,16 @@ input {
   width: 100px;
 }
 
-.register-title {
+.beautiful-title {
   display: inline-block;
   padding: 10px 25px;
-  border-radius: 20px;
   color: #fff;
   font-family: Logofont;
   font-size: 50px;
+}
+
+.big-title {
+  font-size: 70px;
 }
 
 .text-green {
@@ -201,6 +204,10 @@ input {
   font-family: Logofont;
   color: #fff;
   font-size: 50px;
+}
+
+.flipped-left {
+  transform: scaleX(-1);
 }
 
 .logo-medium {
