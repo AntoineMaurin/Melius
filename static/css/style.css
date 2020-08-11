@@ -176,14 +176,6 @@ input {
   font-size: 50px;
 }
 
-.register-wallpaper {
-  background: url('../img/0021.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-}
-
 .text-green {
   color: #88c27d;
 }
