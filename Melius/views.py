@@ -6,6 +6,3 @@ def homepage(request):
 
 def taskspage(request):
     return render(request, "tasks.html")
-
-def zerodivision(request):
-    division_by_zero = 1 / 0
