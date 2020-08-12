@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', views.homepage),
     path('tasks', views.taskspage),
+    path('zero', views.zerodivision),
 ]
