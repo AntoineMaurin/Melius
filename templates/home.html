@@ -10,15 +10,20 @@
 
 {% block main_content %}
 <section>
-  <div class="container text-center">
+  <div class="container-fluid text-center">
     <div class="logo-medium d-inline-block align-middle">
       <img class="img-fluid" src="{% static 'img/favicon.png' %}">
     </div>
     <div class="beautiful-title text-center mx-auto align-middle">
       <h2 class="big-title">Melius</h2>
     </div>
-    <div class="logo-medium d-inline-block align-middle flipped-left">
-      <img class="img-fluid" src="{% static 'img/favicon.png' %}">
+    <div class="logo-medium d-inline-block align-middle">
+      <img class="img-fluid flipped-left" src="{% static 'img/favicon.png' %}">
+    </div>
+    <div class="d-inline-block topnav-logo">
+      <a href="/login">
+        <i class="fas fa-feather-alt fa-4x text-white"></i>
+      </a>
     </div>
   </div>
   <div class="container-fluid text-center">

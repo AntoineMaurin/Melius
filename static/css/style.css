@@ -230,3 +230,9 @@ input {
   background-color: #e59e5f;
   border-color: #fff;
 }
+
+.topnav-logo {
+  position: absolute;
+  top: 35px;
+  right: 5%;
+}
