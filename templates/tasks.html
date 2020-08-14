@@ -4,10 +4,19 @@
 {% block title %}Tâches{% endblock title %}
 
 {% block main_content %}
-<div class="row header">
-  <img class="logo" type="image/png" src="{% static 'img/favicon.png' %}"></img>
-  <div class="col">
+<div class="container-fluid header">
+  <div class="logo-small d-inline-block topnav-left-logo">
+    <a href="/login">
+      <img class="img-fluid" src="{% static 'img/favicon.png' %}">
+    </a>
+  </div>
+  <div class="text-center d-inline-block">
     <h2 id="logo">Melius</h2>
+  </div>
+  <div class="d-inline-block topnav-single-right mt-2">
+    <a href="/logout">
+      <i class="fas fa-sign-out-alt fa-3x text-white"></i>
+    </a>
   </div>
 </div>
 
@@ -16,22 +25,30 @@
     <div class="text-center">
       <h3>Tasks</h3>
     </div>
-    <ul id="tasksUL">
-      <li>Hit the gym</li>
-      <li>Pay bills</li>
-      <li>Meet George</li>
-      <li>Buy eggs</li>
-      <li>Read a book</li>
-      <li>Organize office</li>
+    <div class="py-5">
+      <form class="" action="addtask" method="post">
+        {% csrf_token %}
+        <input type="text" id="TaskInput" name="taskname" placeholder="Name...">
+        <button type="submit" class="addBtn btn btn-submit-register">Ajouter</button>
+      </form>
+    </div>
+
+    <ul>
+      {% for task in tasks %}
+      <li>{{ task.name }}<a href="deltask/{{ task.id }}"><span class="close">x</span></a></li>
+      {% endfor %}
     </ul>
-    <input type="text" id="TaskInput" placeholder="Name...">
-    <span onclick="newTaskElement()" class="addBtn">Add</span>
   </section>
 
   <section class="col container habits">
     <div class="text-center">
       <h3>Habits</h3>
     </div>
+    <form class="py-5">
+      {% csrf_token %}
+      <input type="text" id="HabitInput" placeholder="Name...">
+      <span onclick="newHabitElement()" class="addBtn">Add</span>
+    </form>
     <ul id="HabitUL">
       <li>Hit the gym</li>
       <li>Pay bills</li>
@@ -40,8 +57,6 @@
       <li>Read a book</li>
       <li>Organize office</li>
     </ul>
-    <input type="text" id="HabitInput" placeholder="Name...">
-    <span onclick="newHabitElement()" class="addBtn">Add</span>
   </section>
 </div>
 {% endblock main_content %}

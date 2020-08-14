@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import UserRegisterForm, UserLoginForm
 from accounts.register_management import RegisterManagement
+from tasks.models import TaskList
 
 
 def user_login(request):
@@ -43,11 +44,22 @@ def register(request):
                 form = UserRegisterForm(request.POST)
                 return render(request, "register.html", {'form': form})
             else:
-                User.objects.create_user(username=email,
-                                         email=email,
-                                         password=password1)
+                user = User.objects.create_user(username=email,
+                                                email=email,
+                                                password=password1)
+                TaskList.objects.create(user=user)
                 messages.success(request, message[1])
                 return redirect("/login")
     else:
         form = UserRegisterForm()
     return render(request, "register.html", {'form': form})
+
+def user_logout(request):
+    logout(request)
+    form = UserLoginForm()
+    try:
+        del request.session['user_mail']
+        del request.session['user_name']
+    except KeyError:
+        pass
+    return redirect('/login')

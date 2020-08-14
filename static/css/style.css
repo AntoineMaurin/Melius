@@ -77,6 +77,7 @@ ul li.checked::before {
   position: absolute;
   right: 0;
   top: 0;
+  bottom: 0;
   padding: 12px 16px 12px 16px;
 }
 
@@ -116,9 +117,9 @@ input {
 .addBtn {
   padding: 10px;
   width: 25%;
-  background: #d9d9d9;
-  color: #555;
-  float: left;
+  background: #88c27d;
+  color: #fff;
+  float: right;
   text-align: center;
   font-size: 16px;
   cursor: pointer;
@@ -215,6 +216,11 @@ input {
   height: 200px;
 }
 
+.logo-small {
+  width: 100px;
+  height: 100px;
+}
+
 .form-group {
   margin-bottom: 50px;
 }
@@ -231,8 +237,18 @@ input {
   border-color: #fff;
 }
 
-.topnav-logo {
+.topnav-single-right {
   position: absolute;
-  top: 35px;
   right: 5%;
+}
+
+.topnav-single-left {
+  position: absolute;
+  left: 5%;
+}
+
+.topnav-left-logo {
+  position: absolute;
+  left: 25px;
+  top: 0;
 }
