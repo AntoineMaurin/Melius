@@ -10,17 +10,21 @@
 
 {% block main_content %}
 <section>
-  <div class="container-fluid text-center">
-    <div class="logo-medium d-inline-block align-middle">
-      <img class="img-fluid" src="{% static 'img/favicon.png' %}">
+  <div class="row text-center">
+    <div class="col-2"></div>
+    <div class="col">
+      <div class="logo-medium d-inline-block align-middle">
+        <img class="img-fluid" src="{% static 'img/favicon.png' %}">
+      </div>
+      <div class="beautiful-title text-center mx-auto align-middle">
+        <h2 class="big-title">Melius</h2>
+      </div>
+      <div class="logo-medium d-inline-block align-middle">
+        <img class="img-fluid flipped-left" src="{% static 'img/favicon.png' %}">
+      </div>
     </div>
-    <div class="beautiful-title text-center mx-auto align-middle">
-      <h2 class="big-title">Melius</h2>
-    </div>
-    <div class="logo-medium d-inline-block align-middle">
-      <img class="img-fluid flipped-left" src="{% static 'img/favicon.png' %}">
-    </div>
-    <div class="d-inline-block topnav-single-right mt-5">
+
+    <div class="col-2 my-5">
       <a href="/login">
         <i class="fas fa-feather-alt fa-4x text-white"></i>
       </a>

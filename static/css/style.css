@@ -29,10 +29,10 @@ ul li {
   position: relative;
   padding: 12px 8px 12px 40px;
   list-style-type: none;
-  background: #eee;
+  background: #d8f7ca;
+  color: #262c3a;
   font-size: 18px;
   transition: 0.2s;
-  border-bottom: 1px solid #018e68;
 
   /* make the list items unselectable */
   -webkit-user-select: none;
@@ -43,12 +43,12 @@ ul li {
 
 /* Set all odd list items to a different color (zebra-stripes) */
 ul li:nth-child(odd) {
-  background: #f9f9f9;
+  background: #b8e1a5;
 }
 
 /* Darker background-color on hover */
 ul li:hover {
-  background: #ddd;
+  background: #e3fff8;
 }
 
 /* When clicked on, add a background color and strike out text */
@@ -70,6 +70,16 @@ ul li.checked::before {
   transform: rotate(45deg);
   height: 15px;
   width: 7px;
+}
+
+a:hover {
+  color: #88c27d;
+}
+
+.addBtn:hover {
+  background-color: #2fa395 !important;
+  border: none;
+  color: #fff;
 }
 
 /* Style the close button */
@@ -146,12 +156,6 @@ input {
   max-height: 600px;
 }
 
-.habits {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  max-height: 600px;
-}
-
 .loginform {
   max-width: 400px;
   background-color: lightgreen;
@@ -161,6 +165,7 @@ input {
 
 .page-subtitle{
   font-size: 50px;
+  font-family: Logofont;
 }
 
 .btn-submit-register {
@@ -178,6 +183,7 @@ input {
 
 .big-title {
   font-size: 70px;
+  font-family: Logofont;
 }
 
 .text-green {
@@ -237,18 +243,33 @@ input {
   border-color: #fff;
 }
 
-.topnav-single-right {
-  position: absolute;
-  right: 5%;
-}
-
-.topnav-single-left {
+/* .topnav-single-left {
   position: absolute;
   left: 5%;
-}
+} */
 
 .topnav-left-logo {
   position: absolute;
   left: 25px;
   top: 0;
+}
+
+.sidebar {
+  color: #fff !important;
+  background-color: #262c3a !important;
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  font-size: 30px !important;
+  width: 70px;
+}
+
+.sidebar-elt {
+  width: 100%;
+  display: inline-block;
+  padding: 10px 16px;
+  vertical-align: middle;
+  color: inherit;
+  background-color: inherit;
+  text-align: center;
 }
