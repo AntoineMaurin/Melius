@@ -82,27 +82,12 @@ a:hover {
   color: #fff;
 }
 
-/* Style the close button */
-.close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 12px 16px 12px 16px;
-}
-
-.close:hover {
-  background-color: #f44336;
-  color: white;
-}
-
 /* Style the header */
 .header {
-  background-color: #262c3a;
+  background-color: #fff;
   padding: 20px 40px;
-  color: #018e68;
   text-align: center;
-  border-bottom: 1px solid #018e68;
+  border-bottom: 1px solid #cdd4d4;
 }
 
 /* Clear floats after the header */
@@ -176,7 +161,6 @@ input {
 .beautiful-title {
   display: inline-block;
   padding: 10px 25px;
-  color: #fff;
   font-family: Logofont;
   font-size: 50px;
 }
@@ -188,6 +172,18 @@ input {
 
 .text-green {
   color: #88c27d;
+}
+
+.text-darkblue {
+  color: #262c3a
+}
+
+.green-blue-bg {
+  background-color: #21756b;
+}
+
+.lightgreen-bg {
+  background-color: #ccecc3;
 }
 
 .register-submit {
@@ -258,18 +254,44 @@ input {
   color: #fff !important;
   background-color: #262c3a !important;
   position: absolute;
+  bottom: 0;
   z-index: 1;
   height: 100%;
   font-size: 30px !important;
   width: 70px;
+  margin-top: -15px;
 }
 
 .sidebar-elt {
   width: 100%;
   display: inline-block;
-  padding: 10px 16px;
+  padding: 12px 16px;
   vertical-align: middle;
   color: inherit;
   background-color: inherit;
   text-align: center;
+}
+
+.submit-part {
+  height: 55px;
+  width: 100%;
+}
+
+.bot-50 {
+  margin-bottom: 50px;
+}
+
+.task-box {
+  height: 70px;
+  margin-bottom: 1px;
+}
+
+.task-name {
+  width: 75%;
+  float: left;
+}
+
+.task-date {
+  width: 75%;
+  float: left;
 }

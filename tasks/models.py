@@ -12,6 +12,8 @@ class TaskList(models.Model):
 class SimpleTask(models.Model):
     tasklist = models.ForeignKey(TaskList, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=150)
+    due_date = models.DateField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
