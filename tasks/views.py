@@ -20,7 +20,7 @@ def deltask(request, id):
     SimpleTask.objects.get(id=id).delete()
     return redirect('/tasks')
 
-def update_task(request, id):
+def open_update_form(request, id):
     task = SimpleTask.objects.get(id=id)
     tasklist = TaskList.objects.get(user__email=request.session['user_mail'])
     tasks = reversed(SimpleTask.objects.filter(tasklist=tasklist))
@@ -30,6 +30,8 @@ def edit_task(request, id):
     task = SimpleTask.objects.get(id=id)
     task.name = request.POST['name']
     task.due_date = request.POST['due_date']
+    if not task.due_date:
+        task.due_date = None
     task.description = request.POST['description']
     task.save()
     return redirect('/tasks')
