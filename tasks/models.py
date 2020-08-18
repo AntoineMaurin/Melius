@@ -18,6 +18,7 @@ class SimpleTask(models.Model):
     due_date = models.DateField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     creation = models.DateTimeField(default=None)
+    is_done = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

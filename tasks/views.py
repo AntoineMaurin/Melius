@@ -18,6 +18,18 @@ def addtask(request):
                               creation=datetime.now())
     return redirect('/tasks')
 
+def donetask(request, id):
+    done_task = SimpleTask.objects.get(id=id)
+    done_task.is_done = True
+    done_task.save()
+    return redirect('/tasks')
+
+def undonetask(request, id):
+    undone_task = SimpleTask.objects.get(id=id)
+    undone_task.is_done = False
+    undone_task.save()
+    return redirect('/tasks')
+
 def deltask(request, id):
     SimpleTask.objects.get(id=id).delete()
     return redirect('/tasks')
