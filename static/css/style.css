@@ -12,6 +12,11 @@ body {
   src: url('../fonts/powell_antique/PowellAntique.ttf');
 }
 
+@font-face {
+  font-family: BalooFont;
+  src: url('../fonts/Baloo_Tamma_2/BalooTamma2-Regular.ttf');
+}
+
 .project-name {
   font-family: 'Dancing Script';
   font-size: 55px;
@@ -80,6 +85,26 @@ a:hover {
   background-color: #2fa395 !important;
   border: none;
   color: #fff;
+}
+
+.baloo-font {
+  font-family: BalooFont;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.font-18 {
+  font-size: 18px;
+}
+
+.font-22 {
+  font-size: 22px;
+}
+
+.fa-2x {
+    font-size: 1.5em;
 }
 
 /* Style the header */
@@ -239,17 +264,6 @@ input {
   border-color: #fff;
 }
 
-/* .topnav-single-left {
-  position: absolute;
-  left: 5%;
-} */
-
-.topnav-left-logo {
-  position: absolute;
-  left: 25px;
-  top: 0;
-}
-
 .sidebar {
   color: #fff !important;
   background-color: #262c3a !important;
@@ -272,26 +286,6 @@ input {
   text-align: center;
 }
 
-.submit-part {
-  height: 55px;
-  width: 100%;
-}
-
-.bot-50 {
-  margin-bottom: 50px;
-}
-
 .task-box {
-  height: 70px;
   margin-bottom: 1px;
-}
-
-.task-name {
-  width: 75%;
-  float: left;
-}
-
-.task-date {
-  width: 75%;
-  float: left;
 }

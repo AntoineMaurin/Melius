@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from tasks.models import TaskList, SimpleTask
 from tasks.forms import SimpleTaskForm
+from datetime import datetime
 
 
 def addtask(request):
@@ -13,7 +14,8 @@ def addtask(request):
     SimpleTask.objects.create(tasklist=user_tasklist,
                               name=task_name,
                               due_date=due_date,
-                              description=description)
+                              description=description,
+                              creation=datetime.now())
     return redirect('/tasks')
 
 def deltask(request, id):
@@ -21,10 +23,12 @@ def deltask(request, id):
     return redirect('/tasks')
 
 def open_update_form(request, id):
-    task = SimpleTask.objects.get(id=id)
+    current_updating_task = SimpleTask.objects.get(id=id)
     tasklist = TaskList.objects.get(user__email=request.session['user_mail'])
-    tasks = reversed(SimpleTask.objects.filter(tasklist=tasklist))
-    return render(request, "tasks.html", {'task': task, 'tasks': tasks})
+    tasks = SimpleTask.objects.filter(tasklist=tasklist).order_by('creation')
+    return render(request, "tasks.html",
+                  {'tasks': tasks,
+                   'current_updating_task': current_updating_task})
 
 def edit_task(request, id):
     task = SimpleTask.objects.get(id=id)
