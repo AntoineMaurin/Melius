@@ -1,0 +1,24 @@
+<div class="pl-3 py-2 border-bottom green-blue-bg text-white">
+  <h4 class="baloo-font font-22">Nouvelle tâche</h4>
+</div>
+  <form class="py-3 border" action="/addtask" method="post">
+  {% csrf_token %}
+  <div class="mb-5 px-3">
+    <label>Nom*</label>
+    <input class="form-control" type="text" name="name" required="true">
+  </div>
+  <div class="mb-5 px-3 font-16">
+    <label>Date limite</label>
+    <input class="form-control" class="form-control" type="date" name="due_date">
+  </div>
+  <div class="mb-3 px-3 font-16">
+    <label>Description</label>
+    <textarea class="form-control" name="description" rows="3"></textarea>
+  </div>
+  <div class="row">
+    <div class="col pr-5">
+      <button type="submit" class="addBtn btn btn-submit-register green-blue-bg">Ajouter</button>
+      <a href="/tasks" class="addBtn btn btn-submit-register">Annuler</a>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,27 @@
+<div class="pl-3 py-2 border-bottom green-blue-bg text-white">
+  <h4>{{ current_updating_task.name }}</h4>
+</div>
+  <form class="py-3 border" action="/updatetask/{{ current_updating_task.id }}" method="post">
+  {% csrf_token %}
+  <div class="mb-5 px-3">
+    <label>Nom*</label>
+    <input class="form-control" type="text" name="name" required="true" value="{{ current_updating_task.name }}">
+  </div>
+  <div class="mb-5 px-3 font-16">
+    <label>Date limite</label>
+    <input class="form-control" class="form-control" type="date" name="due_date" value="{{ current_updating_task.due_date }}">
+  </div>
+  <div class="mb-3 px-3 font-16">
+    <label>Description</label>
+    <textarea class="form-control" name="description" rows="3">{{ current_updating_task.description }}</textarea>
+  </div>
+  <div class="row justify-content-between px-5 py-2">
+    <div class="col-3">
+      <a href="/deltask/{{ current_updating_task.id }}" class="addBtn btn btn-submit-register float-left">Supprimer</a>
+    </div>
+    <div class="col-5">
+      <button type="submit" class="addBtn btn btn-submit-register green-blue-bg">Modifier</button>
+      <a href="/tasks" class="addBtn btn btn-submit-register">Annuler</a>
+    </div>
+  </div>
+</form>

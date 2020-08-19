@@ -37,250 +37,40 @@
   <section class="col container tasks ml-5 pl-5">
     <div class="mt-2 font-18">
       {% if overdue_tasks %}
-        <h4>Tâches dépassées</h4>
-        {% for task in overdue_tasks %}
-          <div class="row task-box border">
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date != 'None' %}
-                  {{ task.due_date_clean_display }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/updateform/{{ task.id }}" class="d-inline"><i class="fas fa-pencil-alt fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/done/{{ task.id }}" class="d-inline"><i class="fas fa-check fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        {% include "tasks_list_per_due_date/overdue_tasks.html" %}
       {% endif %}
+
       {% if due_today_tasks %}
-        <h4>Pour aujourd'hui</h4>
-        {% for task in due_today_tasks %}
-          <div class="row task-box border">
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date != 'None' %}
-                  {{ task.due_date_clean_display }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/updateform/{{ task.id }}" class="d-inline"><i class="fas fa-pencil-alt fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/done/{{ task.id }}" class="d-inline"><i class="fas fa-check fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        {% include "tasks_list_per_due_date/due_today_tasks.html" %}
       {% endif %}
+
       {% if due_tommorow_tasks %}
-        <h4>Pour demain</h4>
-        {% for task in due_tommorow_tasks %}
-          <div class="row task-box border">
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date != 'None' %}
-                  {{ task.due_date_clean_display }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/updateform/{{ task.id }}" class="d-inline"><i class="fas fa-pencil-alt fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/done/{{ task.id }}" class="d-inline"><i class="fas fa-check fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        {% include "tasks_list_per_due_date/due_tomorrow_tasks.html" %}
       {% endif %}
+
       {% if future_tasks %}
-        <h4>A venir</h4>
-        {% for task in future_tasks %}
-          <div class="row task-box border">
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date != 'None' %}
-                  {{ task.due_date_clean_display }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/updateform/{{ task.id }}" class="d-inline"><i class="fas fa-pencil-alt fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/done/{{ task.id }}" class="d-inline"><i class="fas fa-check fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        {% include "tasks_list_per_due_date/future_tasks.html" %}
       {% endif %}
+
       {% if no_date_tasks %}
-        <h4>Sans date</h4>
-        {% for task in no_date_tasks %}
-          <div class="row task-box border">
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date != 'None' %}
-                  {{ task.due_date_clean_display }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/updateform/{{ task.id }}" class="d-inline"><i class="fas fa-pencil-alt fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/done/{{ task.id }}" class="d-inline"><i class="fas fa-check fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        {% include "tasks_list_per_due_date/no_date_tasks.html" %}
       {% endif %}
-    </div>
-    <div class="mt-2 font-18">
+
       {% if finished_tasks %}
-        <h4>Tâches terminées</h4>
-        <div class="row task-box border">
-        {% for task in finished_tasks %}
-          {% if task.is_done %}
-            <div class="col-10">
-              <div class="pl-2 pt-1">
-                {{ task.name }}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {% if task.due_date %}
-                  {{ task.due_date }}
-                {% else %}
-                  -
-                {% endif %}
-              </div>
-              <div class="pl-2 pt-1 font-16">
-                {{ task.description }}
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="row align-items-center h-100">
-                <div class="col-6">
-                  <a href="/undone/{{ task.id }}" class="d-inline float-right"><i class="fas fa-arrow-circle-up fa-2x"></i></a>
-                </div>
-                <div class="col-6">
-                  <a href="/deltask/{{ task.id }}" class="d-inline float-right"><i class="fas fa-times fa-2x"></i></a>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
+        {% include "tasks_list_per_due_date/finished_tasks.html" %}
+      {% endif %}
     </div>
   </section>
 
   <section class="col container mr-3">
     <div class="border w-100 font-18">
-      <div class="pl-3 py-2 border-bottom green-blue-bg text-white">
-        {% if current_updating_task %}
-          <h4>{{ current_updating_task.name }}</h4>
-        {% else %}
-          <h4 class="baloo-font font-22">Nouvelle tâche</h4>
-        {% endif %}
-      </div>
       {% if current_updating_task %}
-        <form class="py-3 border" action="/edittask/{{ current_updating_task.id }}" method="post">
+        {% include "tasks_forms/edit_task_form.html" %}
       {% else %}
-        <form class="py-3 border" action="/addtask" method="post">
+        {% include "tasks_forms/new_task_form.html" %}
       {% endif %}
-        {% csrf_token %}
-        <div class="mb-5 px-3">
-          <label>Nom*</label>
-          <input class="form-control" type="text" name="name" required="true" value="{{ current_updating_task.name }}">
-        </div>
-        <div class="mb-5 px-3 font-16">
-          <label>Date limite</label>
-          <input class="form-control" class="form-control" type="date" name="due_date" value="{{ current_updating_task.due_date }}">
-        </div>
-        <div class="mb-3 px-3 font-16">
-          <label>Description</label>
-          <textarea class="form-control" name="description" rows="3">{{ current_updating_task.description }}</textarea>
-        </div>
-        {% if current_updating_task %}
-          <div class="row justify-content-between px-5 py-2">
-            <div class="col-3">
-              <a href="/deltask/{{ current_updating_task.id }}" class="addBtn btn btn-submit-register float-left">Supprimer</a>
-            </div>
-            <div class="col-5">
-              <button type="submit" class="addBtn btn btn-submit-register green-blue-bg">Modifier</button>
-              <a href="/tasks" class="addBtn btn btn-submit-register">Annuler</a>
-            </div>
-          </div>
-        {% else %}
-        <div class="row">
-          <div class="col pr-5">
-            <button type="submit" class="addBtn btn btn-submit-register green-blue-bg">Ajouter</button>
-            <a href="/tasks" class="addBtn btn btn-submit-register">Annuler</a>
-          </div>
-        </div>
-        {% endif %}
-      </form>
     </div>
   </section>
+  
 </div>
 {% endblock main_content %}
