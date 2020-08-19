@@ -16,6 +16,7 @@ class SimpleTask(models.Model):
                                  default=None)
     name = models.CharField(max_length=150)
     due_date = models.DateField(null=True, blank=True)
+    due_date_clean_display = models.CharField(max_length=20, null=True)
     description = models.TextField(null=True, blank=True)
     creation = models.DateTimeField(default=None)
     is_done = models.BooleanField(default=False)

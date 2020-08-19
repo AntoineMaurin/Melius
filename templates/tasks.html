@@ -44,10 +44,10 @@
                 {{ task.name }}
               </div>
               <div class="pl-2 pt-1 font-16">
-                {% if not task.due_date %}
-                  -
+                {% if task.due_date != 'None' %}
+                  {{ task.due_date_clean_display }}
                 {% else %}
-                  {{ task.due_date }}
+                  -
                 {% endif %}
               </div>
               <div class="pl-2 pt-1 font-16">
@@ -78,10 +78,10 @@
               {{ task.name }}
             </div>
             <div class="pl-2 pt-1 font-16">
-              {% if not task.due_date %}
-                -
-              {% else %}
+              {% if task.due_date %}
                 {{ task.due_date }}
+              {% else %}
+                -
               {% endif %}
             </div>
             <div class="pl-2 pt-1 font-16">
