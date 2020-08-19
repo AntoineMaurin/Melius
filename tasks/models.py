@@ -9,6 +9,8 @@ class TaskList(models.Model):
     def __str__(self):
         return self.user.email
 
+    def get_tasklist_from_user(user_mail):
+        return TaskList.objects.get(user__email=user_mail)
 
 class SimpleTask(models.Model):
     tasklist = models.ForeignKey(TaskList,
@@ -23,3 +25,6 @@ class SimpleTask(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_task_with_id(id):
+        return SimpleTask.objects.get(id=id)

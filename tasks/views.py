@@ -6,7 +6,8 @@ from Melius.utils import *
 
 @login_required
 def tasks_dashboard(request, updating_task=None):
-    tasklist = TaskList.objects.get(user__email=request.session['user_mail'])
+    user_mail = request.session['user_mail']
+    tasklist = TaskList.get_tasklist_from_user(user_mail)
 
     for task in SimpleTask.objects.filter(tasklist=tasklist):
         task.due_date = str(task.due_date)
@@ -54,32 +55,26 @@ def addtask(request):
     task.save()
     return redirect('/tasks')
 
-def donetask(request, id):
-    done_task = SimpleTask.objects.get(id=id)
-    done_task.is_done = True
-    done_task.save()
-    return redirect('/tasks')
-
-def undonetask(request, id):
-    undone_task = SimpleTask.objects.get(id=id)
-    undone_task.is_done = False
-    undone_task.save()
+def change_task_state(request, id):
+    task = SimpleTask.get_task_with_id(id)
+    task.is_done = not task.is_done
+    task.save()
     return redirect('/tasks')
 
 @login_required
 def deltask(request, id):
-    SimpleTask.objects.get(id=id).delete()
+    SimpleTask.get_task_with_id(id).delete()
     return redirect('/tasks')
 
 @login_required
 def edit_task(request, id):
-    current_updating_task = SimpleTask.objects.get(id=id)
+    current_updating_task = SimpleTask.get_task_with_id(id)
     current_updating_task.due_date = str(current_updating_task.due_date)
     return tasks_dashboard(request, updating_task=current_updating_task)
 
 @login_required
 def update_task(request, id):
-    task = SimpleTask.objects.get(id=id)
+    task = SimpleTask.get_task_with_id(id)
     task.name = request.POST['name']
     task.due_date = request.POST['due_date']
 
