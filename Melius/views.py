@@ -13,17 +13,22 @@ def taskspage(request):
     form = SimpleTaskForm()
     name = request.session['user_name']
     tasklist = TaskList.objects.get(user__email=request.session['user_mail'])
-    tasks = SimpleTask.objects.filter(tasklist=tasklist).order_by('creation')
 
-    for task in tasks:
+    for task in SimpleTask.objects.filter(tasklist=tasklist):
         task.due_date = str(task.due_date)
-        
-    # overdue_tasks
-    # due_today_tasks
-    # due_tommorow_tasks
-    # future_tasks
-    # finished_tasks
+
+    overdue_tasks = get_overdue_tasks_list(tasklist)
+    due_today_tasks = get_today_tasks_list(tasklist)
+    due_tommorow_tasks = get_tomorrow_tasks_list(tasklist)
+    future_tasks = get_future_tasks(tasklist)
+    no_date_tasks = get_no_date_tasks(tasklist)
+    finished_tasks = get_finished_tasks(tasklist)
+
 
     return render(request, "tasks.html",
-                 {'tasks': tasks,
-                  'form': form})
+                 {'overdue_tasks': overdue_tasks,
+                  'due_today_tasks': due_today_tasks,
+                  'due_tommorow_tasks': due_tommorow_tasks,
+                  'future_tasks': future_tasks,
+                  'no_date_tasks': no_date_tasks,
+                  'finished_tasks': finished_tasks})
