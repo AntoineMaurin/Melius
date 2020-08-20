@@ -1,0 +1,18 @@
+<div id="NewListForm">
+  <div class="pl-3 py-2 border-bottom green-blue-bg text-white">
+    <h4 class="baloo-font font-22">Nouvelle catégorie</h4>
+  </div>
+    <form class="py-3 border" action="/addcategory" method="post">
+    {% csrf_token %}
+    <div class="mb-5 px-3">
+      <label>Nom</label>
+      <input class="form-control" type="text" name="list_name" required="true">
+    </div>
+    <div class="row">
+      <div class="col pr-5">
+        <button type="submit" onclick="closeForm()" class="addBtn btn btn-submit-register green-blue-bg">Ok</button>
+        <button onclick="closeForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</button>
+      </div>
+    </div>
+  </form>
+</div>

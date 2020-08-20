@@ -35,6 +35,33 @@
 
 <div class="row mt-3">
   <section class="col container tasks ml-5 pl-5">
+    <form class="py-3 border" action="/show_tasklist" method="post">
+      {% csrf_token %}
+      <div class="row categories ml-2">
+      {% for tasklist in all_tasklists %}
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" autocomplete="off" id="{{ tasklist.id }}" name="tasklist" value="{{ tasklist.id }}" required="true" >
+          <label for="{{ tasklist.name }}" class="form-check-label">{{ tasklist.name }}</label>
+        </div>
+      {% endfor %}
+      </div>
+      <div class="row ml-2 mt-2 dropdown-content">
+        <div class="col-12 ml-3">
+          <input type="radio" class="form-check-input" autocomplete="off" id="all_tasks" name="type_sort" value="all">
+          <label for="all_tasks_option" class="form-check-label">Toutes les tâches</label>
+        </div>
+        <div class="col-12 ml-3">
+          <input type="radio" class="form-check-input" autocomplete="off" id="current_tasks" name="type_sort" value="current">
+          <label for="current_tasks_option" class="form-check-label">Tâches en cours</label>
+        </div>
+        <div class="col-12 ml-3">
+          <input type="radio" class="form-check-input" autocomplete="off" id="finished_tasks" name="type_sort" value="finished">
+          <label for="finished_tasks_option" class="form-check-label">Tâches terminées</label>
+        </div>
+      </div>
+    <button type="submit" class="sort-submit-button text-white mt-2">Trier</button>
+    </form>
+
     <div class="mt-2 font-18">
       {% if overdue_tasks %}
         {% include "tasks_list_per_due_date/overdue_tasks.html" %}
@@ -71,6 +98,8 @@
       {% endif %}
     </div>
   </section>
-  
+
+  {% include "tasks_forms/new_tasklist_form.html" %}
+
 </div>
 {% endblock main_content %}

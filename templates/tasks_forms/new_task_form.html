@@ -3,13 +3,22 @@
 </div>
   <form class="py-3 border" action="/addtask" method="post">
   {% csrf_token %}
+  <div class="mb-3 px-3">
+    <label for="tasklists">Catégorie :</label>
+    <select name="tasklists" id="tasklists">
+      {% for tasklist in all_tasklists %}
+        <option value="{{ tasklist.id }}">{{ tasklist.name }}</option>
+      {% endfor %}
+    </select>
+    <button onclick="openForm()" type="button" class="border-0"><i class="far fa-plus-square fa-2x align-middle"></i></button>
+  </div>
   <div class="mb-5 px-3">
     <label>Nom*</label>
     <input class="form-control" type="text" name="name" required="true">
   </div>
   <div class="mb-5 px-3 font-16">
     <label>Date limite</label>
-    <input class="form-control" class="form-control" type="date" name="due_date">
+    <input class="form-control" type="date" name="due_date">
   </div>
   <div class="mb-3 px-3 font-16">
     <label>Description</label>
