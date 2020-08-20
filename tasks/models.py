@@ -9,7 +9,7 @@ class TaskList(models.Model):
     name = models.CharField(max_length=25, default=None, null=True)
 
     def __str__(self):
-        return self.user.email
+        return self.name
 
     def get_tasklists_from_user(user_mail):
         return TaskList.objects.filter(user__email=user_mail)

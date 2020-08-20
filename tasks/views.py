@@ -17,55 +17,62 @@ def set_tasks_dict(request, display, tasklist_to_show):
     no_date_tasks = SimpleTask.get_no_date_tasks(tasklist_to_show)
     finished_tasks = SimpleTask.get_finished_tasks(tasklist_to_show)
 
-    if display == 'all':
-        return {'overdue_tasks': overdue_tasks,
+    all_data = {'overdue_tasks': overdue_tasks,
                 'due_today_tasks': due_today_tasks,
                 'due_tommorow_tasks': due_tommorow_tasks,
                 'future_tasks': future_tasks,
                 'no_date_tasks': no_date_tasks,
                 'finished_tasks': finished_tasks,
-                'all_tasklists': all_tasklists}
+                'all_tasklists': all_tasklists,
+                'tasklist_to_show': tasklist_to_show}
+
+    if display == 'all':
+        return all_data
 
     elif display == 'current':
-        return {'overdue_tasks': overdue_tasks,
-                'due_today_tasks': due_today_tasks,
-                'due_tommorow_tasks': due_tommorow_tasks,
-                'future_tasks': future_tasks,
-                'no_date_tasks': no_date_tasks,
-                'all_tasklists': all_tasklists}
+        current = {}
+        current_keys = ['overdue_tasks', 'due_today_tasks',
+                        'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
+                        'all_tasklists', 'tasklist_to_show']
+
+        for k, v in all_data.items():
+            if k in current_keys:
+                current[k] = v
+
+        return current
 
     elif display == 'finished':
-        return {'finished_tasks': finished_tasks,
-                'all_tasklists': all_tasklists}
+        finished = {}
+        finished_keys = ['finished_tasks', 'all_tasklists', 'tasklist_to_show']
+
+        for k, v in all_data.items():
+            if k in finished_keys:
+                finished[k] = v
+
+        return finished
 
 @login_required
-def tasks_dashboard(request, tasklist_to_show,
+def tasks_dashboard(request, tasklist_to_show_id=None,
                     updating_task=None, display='all'):
+
+    if tasklist_to_show_id:
+        tasklist_to_show = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
+    else:
+        user_mail = request.session['user_mail']
+        lists = TaskList.get_tasklists_from_user(user_mail)[:1]
+        tasklist_to_show = lists[0]
 
     for task in SimpleTask.get_tasks_with_due_date_from_tasklist(tasklist=tasklist_to_show):
         task.due_date = str(task.due_date)
 
     dict = set_tasks_dict(request, display, tasklist_to_show)
 
+
+
     if updating_task:
         dict['current_updating_task'] = updating_task
 
     return render(request, "tasks.html", dict)
-
-@login_required
-def taskspage(request, tasklist_to_show_id=None,
-              updating_task=None, display='all'):
-
-    if tasklist_to_show_id:
-        tasklist_to_show = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
-    else:
-        user_mail = request.session['user_mail']
-        tasklist_to_show = TaskList.get_tasklists_from_user(user_mail)[:1]
-
-    return tasks_dashboard(request,
-                           tasklist_to_show=tasklist_to_show,
-                           updating_task=updating_task,
-                           display=display)
 
 @login_required
 def addtask(request):
@@ -104,7 +111,7 @@ def deltask(request, id):
 def edit_task(request, id):
     current_updating_task = SimpleTask.get_task_with_id(id)
     current_updating_task.due_date = str(current_updating_task.due_date)
-    return taskspage(request, updating_task=current_updating_task)
+    return tasks_dashboard(request, updating_task=current_updating_task)
 
 @login_required
 def update_task(request, id):
@@ -123,17 +130,29 @@ def update_task(request, id):
     task.save()
     return redirect('/tasks')
 
-def show_tasklist(request):
-    if request.method == 'POST':
-        tasklist_id = request.POST.get('tasklist')
-        type_sort = request.POST.get('type_sort')
-        if not type_sort:
-            type_sort = 'all'
+def show_tasklist(request, id):
+    return tasks_dashboard(request, tasklist_to_show_id=id)
 
-        tasklist = TaskList.get_tasklist_by_id(id=tasklist_id)
+def sort_tasklist(request):
+    type_sort = request.POST.get('type_sort')
+    if not type_sort:
+        type_sort = 'all'
 
-    return taskspage(request, tasklist_to_show_id=tasklist_id,
+    return tasks_dashboard(request, tasklist_to_show_id=tasklist_id,
                      display=type_sort)
+
+def sort_by_all(request, id):
+    return tasks_dashboard(request, tasklist_to_show_id=id,
+                     display='all')
+
+def sort_by_current(request, id):
+    return tasks_dashboard(request, tasklist_to_show_id=id,
+                    display='current')
+
+def sort_by_finished(request, id):
+    return tasks_dashboard(request, tasklist_to_show_id=id,
+                    display='finished')
+
 
 def addcategory(request):
     list_name = request.POST['list_name']
