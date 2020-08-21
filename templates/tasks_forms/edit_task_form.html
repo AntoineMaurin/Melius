@@ -10,7 +10,9 @@
         <option value="{{ tasklist.id }}">{{ tasklist.name }}</option>
       {% endfor %}
     </select>
-      <button onclick="openForm()" type="button" class="border-0"><i class="far fa-plus-square fa-2x align-middle"></i></button>
+    <button onclick="openNewListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-plus-square fa-2x align-middle"></i></button>
+    <button onclick="openEditListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-edit fa-2x align-middle"></i></button>
+    <button onclick="openDeleteListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-trash-alt fa-2x align-middle"></i></button>
   </div>
   <div class="mb-5 px-3">
     <label>Nom*</label>

@@ -60,7 +60,10 @@ def tasks_dashboard(request, tasklist_to_show_id=None,
     else:
         user_mail = request.session['user_mail']
         lists = TaskList.get_tasklists_from_user(user_mail)[:1]
-        tasklist_to_show = lists[0]
+        try:
+            tasklist_to_show = lists[0]
+        except(IndexError):
+            tasklist_to_show = None
 
     for task in SimpleTask.get_tasks_with_due_date_from_tasklist(tasklist=tasklist_to_show):
         task.due_date = str(task.due_date)
@@ -156,7 +159,26 @@ def sort_by_finished(request, id):
 
 def addcategory(request):
     list_name = request.POST['list_name']
+    list_color = request.POST['list_color']
     user = User.objects.get(email=request.session['user_mail'])
 
-    TaskList.objects.create(name=list_name, user=user)
+    TaskList.objects.create(name=list_name, user=user, color=list_color)
+    return redirect('/tasks')
+
+def editcategory(request):
+    list_id = request.POST['list_id']
+    tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
+
+    new_list_name = request.POST['list_name']
+    new_list_color = request.POST['list_color']
+
+    tasklist_to_edit.name = new_list_name
+    tasklist_to_edit.color = new_list_color
+    tasklist_to_edit.save()
+    return redirect('/tasks')
+
+def deletecategory(request):
+    list_id = request.POST['list_id']
+    tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
+    tasklist_to_edit.delete()
     return redirect('/tasks')

@@ -1,0 +1,23 @@
+<div id="EditListForm">
+  <div class="pl-3 py-2 border-bottom green-blue-bg text-white">
+    <h4 class="baloo-font font-22" id="list_title"></h4>
+  </div>
+    <form class="py-3 border" action="/editcategory" method="post">
+    {% csrf_token %}
+    <div class="mb-5 px-3">
+      <label>Nom</label>
+      <input class="form-control" id="list_name" type="text" name="list_name" value="" required="true" >
+    </div>
+    <div class="mb-2 px-3 color-field">
+      <label class="float-left">Couleur</label>
+      <input class="p-2" type="color" name="list_color" value="" required="true">
+    </div>
+    <input type="hidden" id="list_id" name="list_id" value="">
+    <div class="row">
+      <div class="col pr-5">
+        <button type="submit" onclick="closeEditListForm()" class="addBtn btn btn-submit-register green-blue-bg">Modifier</button>
+        <div onclick="closeEditListForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</div>
+      </div>
+    </div>
+  </form>
+</div>

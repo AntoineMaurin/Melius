@@ -290,24 +290,26 @@ input {
 }
 
 .sort-by-buttons {
-    margin: 5px 5px;
-    background-color: #21756b;
-    color: white;
-    border-radius: 15px;
-    padding: 0 10px;
+  margin: 5px 5px;
+  background-color: #21756b;
+  color: white;
+  border-radius: 15px;
+  padding: 3px 12px;
 }
+
 .sort-by-buttons a:hover {
     text-decoration: none;
     color: white;
 }
 
-.sort-submit-button {
-    border-radius: 10px;
-    height: 32px;
-    background-color: #262c3a;
+.category {
+  margin: 5px 5px;
+  color: white;
+  border-radius: 15px;
+  padding: 3px 12px;
 }
 
-#NewListForm {
+#NewListForm, #EditListForm, #DeleteListForm {
   display: none;
   position: absolute;
   top: 50%;
@@ -315,4 +317,18 @@ input {
   transform: translate(50%, -50%);
   z-index: 9;
   background-color: white;
+  max-width: 450px;
+  box-shadow: 0 0 5px;
+}
+
+.color-field {
+  height: 40px;
+}
+
+.category-color {
+  max-width: 3px;
+}
+
+.offset-left-45 {
+  margin-left: -45px;
 }

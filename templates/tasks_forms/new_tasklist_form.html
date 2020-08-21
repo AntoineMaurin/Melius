@@ -8,10 +8,14 @@
       <label>Nom</label>
       <input class="form-control" type="text" name="list_name" required="true">
     </div>
+    <div class="mb-2 px-3 color-field">
+      <label class="float-left" >Couleur</label>
+      <input class="p-2" type="color" name="list_color" value="#21756b" required="true">
+    </div>
     <div class="row">
       <div class="col pr-5">
-        <button type="submit" onclick="closeForm()" class="addBtn btn btn-submit-register green-blue-bg">Ok</button>
-        <button onclick="closeForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</button>
+        <button type="submit" onclick="closeNewListForm()" class="addBtn btn btn-submit-register green-blue-bg">Ok</button>
+        <div onclick="closeNewListForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</div>
       </div>
     </div>
   </form>

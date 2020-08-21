@@ -6,7 +6,8 @@ from datetime import date
 
 class TaskList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=25, default=None, null=True)
+    name = models.CharField(max_length=25, default='Sans nom', null=True)
+    color = models.CharField(max_length=7, default='#21756b')
 
     def __str__(self):
         return self.name

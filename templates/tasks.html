@@ -35,42 +35,64 @@
 
 <div class="row mt-3">
   <section class="col container tasks ml-5 pl-5">
-
     <div class="row categories ml-2">
-    {% for tasklist in all_tasklists %}
-      <a class="btn py-3 border text-white darkblue-bg" href="/show_tasklist/{{ tasklist.id }}" method="post">{{ tasklist.name }}</a>
-    {% endfor %}
+    {% if tasklist_to_show %}
+      {% for tasklist in all_tasklists %}
+        <a class="category text-white darkblue-bg" href="/show_tasklist/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
+      {% endfor %}
+    {% else %}
+      <p>Nouvelle catégorie</p>
+    {% endif %}
+    <button onclick="openNewListForm()" type="button" class="border-0 ml-2 bg-transparent"><i class="far fa-plus-square fa-2x align-middle"></i></button>
     </div>
 
-    <div class="row ml-2 mt-2 dropdown-content">
-      <a class="btn py-3 border text-white green-blue-bg" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes les tâches</a>
-      <a class="btn py-3 border text-white green-blue-bg" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">Tâches en cours</a>
-      <a class="btn py-3 border text-white green-blue-bg" href="/sort_by_finished/{{ tasklist_to_show.id }}" method="post">Tâches terminées</a>
+    <div class="row ml-2 mt-2">
+      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>
+      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">En cours</a>
+      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_finished/{{ tasklist_to_show.id }}" method="post">Terminées</a>
     </div>
 
     <div class="mt-2 font-18">
       {% if overdue_tasks %}
-        {% include "tasks_list_per_due_date/overdue_tasks.html" %}
+        <h4>Tâches dépassées</h4>
+        {% for task in overdue_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
 
       {% if due_today_tasks %}
-        {% include "tasks_list_per_due_date/due_today_tasks.html" %}
+        <h4>Pour aujourd'hui</h4>
+        {% for task in due_today_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
 
       {% if due_tommorow_tasks %}
-        {% include "tasks_list_per_due_date/due_tomorrow_tasks.html" %}
+        <h4>Pour demain</h4>
+        {% for task in due_tommorow_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
 
       {% if future_tasks %}
-        {% include "tasks_list_per_due_date/future_tasks.html" %}
+        <h4>A venir</h4>
+        {% for task in future_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
 
       {% if no_date_tasks %}
-        {% include "tasks_list_per_due_date/no_date_tasks.html" %}
+        <h4>Sans date</h4>
+        {% for task in no_date_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
 
       {% if finished_tasks %}
-        {% include "tasks_list_per_due_date/finished_tasks.html" %}
+        <h4>Tâches terminées</h4>
+        {% for task in finished_tasks %}
+          {% include "simple_task.html" %}
+        {% endfor %}
       {% endif %}
     </div>
   </section>
@@ -86,6 +108,8 @@
   </section>
 
   {% include "tasks_forms/new_tasklist_form.html" %}
+  {% include "tasks_forms/edit_tasklist_form.html" %}
+  {% include "tasks_forms/delete_tasklist_form.html" %}
 
 </div>
 {% endblock main_content %}
