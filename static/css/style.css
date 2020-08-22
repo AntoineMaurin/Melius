@@ -113,13 +113,7 @@ a:hover {
   padding: 20px 40px;
   text-align: center;
   border-bottom: 1px solid #cdd4d4;
-}
-
-/* Clear floats after the header */
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
+  height: 80px;
 }
 
 /* Style the input */
@@ -265,14 +259,15 @@ input {
 
 .sidebar {
   color: #fff !important;
-  background-color: #262c3a !important;
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  height: 100%;
+  background-color: #21756b !important;
   font-size: 30px !important;
+  border-radius: 0 10px 10px 0;
   width: 70px;
-  margin-top: -15px;
+  position: fixed;
+  margin-top: 50vh;
+  z-index: 1;
+  transform: translateY(-50%);
+  border: 1px solid transparent;
 }
 
 .sidebar-elt {
@@ -281,7 +276,6 @@ input {
   padding: 12px 16px;
   vertical-align: middle;
   color: inherit;
-  background-color: inherit;
   text-align: center;
 }
 
@@ -289,6 +283,9 @@ input {
   margin-bottom: 1px;
 }
 
+.task-box:hover {
+  box-shadow: 0 0 5px;
+}
 .sort-by-buttons {
   margin: 5px 5px;
   background-color: #21756b;

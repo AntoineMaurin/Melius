@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from tasks.models import TaskList, SimpleTask
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from tasks.utils import *
@@ -69,8 +70,6 @@ def tasks_dashboard(request, tasklist_to_show_id=None,
         task.due_date = str(task.due_date)
 
     dict = set_tasks_dict(request, display, tasklist_to_show)
-
-
 
     if updating_task:
         dict['current_updating_task'] = updating_task
@@ -182,3 +181,14 @@ def deletecategory(request):
     tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
     tasklist_to_edit.delete()
     return redirect('/tasks')
+
+
+def ajaxedit(request, id):
+    task = SimpleTask.get_task_with_id(id=id)
+    data = {"task_name": task.name,
+            "task_id": task.id,
+            "category_name": task.tasklist.name,
+            "category_color": task.tasklist.color,
+            "due_date": task.due_date,
+            "description": task.description}
+    return JsonResponse(data)

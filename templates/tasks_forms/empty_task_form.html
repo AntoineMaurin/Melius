@@ -1,0 +1,37 @@
+<div class="border w-100 font-18" id="empty-task-form">
+  <div class="pl-3 py-2 border-bottom green-blue-bg text-white" id="empty-task-form-header">
+    <h4 class="baloo-font font-22" id="empty-task-form-title">Nouvelle tâche</h4>
+  </div>
+    <form class="py-3 border" action="/addtask" method="post" id="empty-task-form-submit-action">
+    {% csrf_token %}
+    <div class="mb-3 px-3 pb-2 border-bottom">
+      <label for="tasklists">Catégorie :</label>
+      <select name="tasklists" id="tasklists">
+        {% for tasklist in all_tasklists %}
+          <option value="{{ tasklist.id }}">{{ tasklist.name }}</option>
+        {% endfor %}
+      </select>
+      <button onclick="openNewListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-plus-square fa-2x align-middle"></i></button>
+      <button onclick="openEditListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-edit fa-2x align-middle"></i></button>
+      <button onclick="openDeleteListForm()" type="button" class="border-0 bg-transparent"><i class="far fa-trash-alt fa-2x align-middle"></i></button>
+    </div>
+    <div class="mb-5 px-3">
+      <label>Nom*</label>
+      <input class="form-control" type="text" name="name" required="true" id="empty-task-form-name">
+    </div>
+    <div class="mb-5 px-3 font-16">
+      <label>Date limite</label>
+      <input class="form-control" type="date" name="due_date" id="empty-task-form-date">
+    </div>
+    <div class="mb-3 px-3 font-16">
+      <label>Description</label>
+      <textarea class="form-control" name="description" rows="3" id="empty-task-form-description"></textarea>
+    </div>
+    <div class="row">
+      <div class="col pr-5">
+        <button type="submit" class="addBtn btn btn-submit-register green-blue-bg" id="empty-task-form-submit-add-button">Ajouter</button>
+        <a href="/tasks" class="addBtn btn btn-submit-register">Annuler</a>
+      </div>
+    </div>
+  </form>
+</div>

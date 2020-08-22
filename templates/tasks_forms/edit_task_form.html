@@ -1,7 +1,7 @@
 <div class="pl-3 py-2 border-bottom green-blue-bg text-white">
   <h4>{{ current_updating_task.name }}</h4>
 </div>
-  <form class="py-3 border" action="/updatetask/{{ current_updating_task.id }}" method="post">
+  <form class="py-3 border" action="/updatetask/{{ current_updating_task.id }}" method="post" id="empty-task-form-submit-action">
   {% csrf_token %}
   <div class="mb-3 px-3">
     <label for="tasklists">Catégorie :</label>
