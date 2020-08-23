@@ -1,11 +1,11 @@
 <div id="DeleteListForm">
   <div class="pl-3 py-2 border-bottom text-white" id="delete_header">
-    <h4 class="baloo-font font-22" id="list_title_to_delete"></h4>
+    <h4 class="baloo-font font-22" id="delete_list_title"></h4>
   </div>
     <form class="py-3 border" action="/deletecategory" method="post">
     {% csrf_token %}
     <div class="mb-2 px-3">
-      <h4 class="mb-3" id="delete_message"></h4>
+      <p class="mb-3" id="delete_message"></p>
     </div>
     <input type="hidden" id="delete_list_id" name="list_id" value="">
     <div class="row">

@@ -41,72 +41,37 @@ const pickr = Pickr.create({
     }
 });
 
-function openEditListForm() {
-  var list_element = document.getElementById("tasklists");
-
-  var list_selected_name = list_element.options[list_element.selectedIndex].text;
-  var list_id = list_element.options[list_element.selectedIndex].value;
-
-  document.getElementById("edit-list-title").innerHTML = list_selected_name;
-  document.getElementById("edit-list-name").value = list_selected_name;
-  document.getElementById("edit-list-id").value = list_id;
-
-  document.getElementById("EditListForm").style.display = "block";
-
-  pickr.on('save', (color, instance) => {
-
-    var color = pickr.getSelectedColor().toHEXA().toString();
-    document.getElementById("edit-list-color").value = color;
-    console.log($("input[name='list_color']").val());
-  });
-
-}
-
-function closeNewListForm() {
-  document.getElementById("NewListForm").style.display = "none";
-}
-
-function closeEditListForm() {
-  document.getElementById("EditListForm").style.display = "none";
-}
-
-function openDeleteListForm() {
-  var list_element = document.getElementById("tasklists");
-
-  var list_selected_name = list_element.options[list_element.selectedIndex].text;
-  var list_id = list_element.options[list_element.selectedIndex].value;
 
 
-  var start_msg = "Êtes-vous sûr de vouloir supprimer la catégorie "
-  var end_msg =  " et toutes les tâches qu'elle contient ?";
-
-  document.getElementById("list_title_to_delete").innerHTML = list_selected_name
-  document.getElementById("delete_message").innerHTML = start_msg + list_selected_name + end_msg;
-  document.getElementById("delete_list_id").value = list_id;
-
-
-  document.getElementById("DeleteListForm").style.display = "block";
+function closeBaseListForm() {
+  document.getElementById("BaseListForm").style.display = "none";
 }
 
 function closeDeleteListForm() {
   document.getElementById("DeleteListForm").style.display = "none";
 }
 
-function createTitle(title_id, title_name) {
-  var new_title = document.createElement("p");
-
-  document.getElementById(title_id).appendChild(new_title);
-
-  new_title.classList.add("ml-3");
-  new_title.innerHTML = title_name;
-}
 
 
 $(document).ready(function() {
 
-  $(".new-task-button").click(function(){
+  set_current_category();
 
-    $("#empty-task-form-header").css('background-color', '#21756b');
+  set_task_form_header_color();
+
+  $(document).on('change','#tasklists', function(){
+    set_task_form_header_color();
+  });
+
+  function set_task_form_header_color() {
+    var selected_id = $('#tasklists').children("option:selected").val();
+    var category_color = $("[href='/show_tasklist/" + selected_id + "']").css("background-color");
+
+    $("#empty-task-form-header").css('background-color', category_color);
+    $("#empty-task-form-submit-add-button").css('background-color', category_color);
+    $(".category-buttons").css('color', category_color);
+    $(".category-buttons").css('transition', '0.3s');
+    $(".category-buttons").children().css('color', 'inherit');
     $("#empty-task-form-title").html("Nouvelle tâche");
 
     $("#empty-task-form-name").val("");
@@ -115,8 +80,26 @@ $(document).ready(function() {
 
     $("#empty-task-form-submit-add-button").html('Ajouter');
     $("#empty-task-form-submit-action").attr("action", "/addtask");
+   }
 
-  });
+   function update_form_when_color_saved() {
+     pickr.on('save', (color, instance) => {
+
+       var color = pickr.getSelectedColor().toHEXA().toString();
+       $("input[name='list_color']").val(color);
+
+       $(".category_header").css("background-color", color);
+       $(".submit-list-form").css("background-color", color);
+     });
+   }
+
+   function set_current_category() {
+     var current_category_color = $(".sort-by-buttons").attr("href");
+     current_category_id = current_category_color.replace(/[^0-9]/gi, '');
+
+     category_to_set = $("option[value='" + current_category_id + "']")
+     category_to_set.attr("selected", "selected");
+   }
 
   $(".task-box").click(function(){
     var task_id = $(this).attr('id');
@@ -178,14 +161,55 @@ $(document).ready(function() {
 
   $(".new-list-form").click(function(){
 
-    $("#NewListForm").css("display", "block");
+    $("#BaseListForm").css("display", "block");
+    $(".category_name").html("Nouvelle catégorie");
+    $("#list_name").val("");
+    $(".category_header").css("background-color", "#21756b");
+    $(".pcr-button").css("color", "#21756b");
+    $(".submit-list-form").css("background-color", "#21756b");
 
-    pickr.on('save', (color, instance) => {
+    update_form_when_color_saved();
 
-      var color = pickr.getSelectedColor().toHEXA().toString();
-      $("input[name='list_color']").val(color);
-      console.log($("input[name='list_color']").val());
-    });
   });
+
+    $("#edit-list-form-button").click(function(){
+
+      $("#BaseListForm").css("display", "block");
+
+      var category_name = $('#tasklists').children("option:selected").text();
+      var category_id = $('#tasklists').children("option:selected").val();
+      var category_color = $("[href='/show_tasklist/" + category_id + "']").css("background-color");
+
+      $(".category_header").css("background-color", category_color);
+      $(".category_name").text("Modifier");
+      $("#list_name").val(category_name);
+      $("#category_form_action").attr("action", "/editcategory");
+      $(".submit-list-form").text("Modifier");
+      $(".submit-list-form").css("background-color", category_color);
+      $(".pcr-button").css("color", category_color);
+      $(".list_color").val("category_color");
+      $(".list_id").val(category_id);
+
+      update_form_when_color_saved();
+
+    });
+
+    $("#delete-list-form-button").click(function(){
+
+      $("#DeleteListForm").css("display", "block");
+
+      var category_name = $('#tasklists').children("option:selected").text();
+      var category_id = $('#tasklists').children("option:selected").val();
+      var category_color = $("[href='/show_tasklist/" + category_id + "']").css("background-color");
+
+      var start_msg = "Êtes-vous sûr de vouloir supprimer la catégorie "
+      var end_msg =  " et toutes les tâches qu'elle contient ?";
+
+      $("#delete_header").css("background-color", category_color);
+      $("#delete_list_title").text(category_name);
+      $("#delete_message").text(start_msg + category_name + end_msg);
+      $("#delete_list_id").val(category_id);
+
+    });
 
 });

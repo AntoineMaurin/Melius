@@ -9,7 +9,7 @@
 
 {% block main_content %}
 
-<div class="row header green-blue-bg mb-3">
+<div class="row header green-blue-bg">
   <div class="col-1 text-center"></div>
   <div class="col-10 text-center">
     <div class="sidebar">
@@ -31,7 +31,7 @@
 </div>
 
 <div class="row px-3">
-  <section class="col container tasks pl-5">
+  <section class="col container pl-5">
     <div class="row pl-3 py-2">
       {% if tasklist_to_show %}
         {% for tasklist in all_tasklists %}
@@ -50,10 +50,10 @@
         <div class="text-white green-blue-bg btn new-task-button">Nouvelle tâche</div>
       </div>
     </div>
-    <div class="font-18">
+    <div class="font-18 task-container">
       <div class="overdue-tasks-list">
         {% if overdue_tasks %}
-          <p class="ml-3 my-3">Tâches dépassées</p>
+          <p class="m-3">Tâches dépassées</p>
           {% for task in overdue_tasks %}
             {% include "simple_task.html" %}
           {% endfor %}
@@ -62,7 +62,7 @@
 
       <div class="today-tasks-list">
         {% if due_today_tasks %}
-          <p class="ml-3 my-3">Pour aujourd'hui</p>
+          <p class="m-3">Pour aujourd'hui</p>
           {% for task in due_today_tasks %}
             {% include "simple_task.html" %}
           {% endfor %}
@@ -71,7 +71,7 @@
 
       <div class="tomorrow-tasks-list">
         {% if due_tommorow_tasks %}
-          <p class="ml-3 my-3">Pour demain</p>
+          <p class="m-3">Pour demain</p>
           {% for task in due_tommorow_tasks %}
             {% include "simple_task.html" %}
           {% endfor %}
@@ -80,7 +80,7 @@
 
       <div class="future-tasks-list">
         {% if future_tasks %}
-          <p class="ml-3 my-3">A venir</p>
+          <p class="m-3">A venir</p>
           {% for task in future_tasks %}
             {% include "simple_task.html" %}
           {% endfor %}
@@ -89,7 +89,7 @@
 
       <div class="no-date-tasks-list">
         {% if no_date_tasks %}
-          <p class="ml-3 my-3">Sans date</p>
+          <p class="m-3">Sans date</p>
           {% for task in no_date_tasks %}
             {% include "simple_task.html" %}
           {% endfor %}
@@ -98,7 +98,7 @@
 
       <div class="finished-tasks-list">
         {% if finished_tasks %}
-        <p class="ml-3 my-3">Tâches terminées</p>
+        <p class="m-3">Tâches terminées</p>
         {% for task in finished_tasks %}
           {% include "finished_task.html" %}
         {% endfor %}
@@ -108,13 +108,12 @@
     </div>
   </section>
 
-  <section class="col container mr-3 pt-3">
+  <section class="col container mr-3 pt-3 mt-2">
     {% include "tasks_forms/empty_task_form.html" %}
   </section>
 
-  {% include "tasks_forms/new_tasklist_form.html" %}
-  {% include "tasks_forms/edit_tasklist_form.html" %}
-  {% include "tasks_forms/delete_tasklist_form.html" %}
+  {% include "tasks_forms/base_list_form.html" %}
+  {% include "tasks_forms/delete_list_form.html" %}
 
 </div>
 {% endblock main_content %}

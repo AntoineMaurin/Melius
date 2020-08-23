@@ -1,0 +1,24 @@
+<div id="BaseListForm">
+  <div class="pl-3 py-2 border-bottom text-white category_header">
+    <h4 class="baloo-font font-22 category_name">Nouvelle catégorie</h4>
+  </div>
+    <form class="py-3 border" action="/addcategory" method="post" id="category_form_action">
+    {% csrf_token %}
+    <div class="row mb-3 px-3">
+      <div class="col-10">
+        <input class="form-control pt-2" id="list_name" type="text" name="list_name" required="true" placeholder="Nom">
+      </div>
+      <div class="col-2 align-self-end mb-1 pl-1">
+        <div class="color-picker color-field" required="true"></div>
+        <input type="hidden" name="list_color" class="list_color" value="">
+        <input type="hidden" name="list_id" class="list_id" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col pr-5 mt-2">
+        <button type="submit" onclick="closeBaseListForm()" class="addBtn btn btn-submit-register green-blue-bg submit-list-form">Valider</button>
+        <div onclick="closeBaseListForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</div>
+      </div>
+    </div>
+  </form>
+</div>

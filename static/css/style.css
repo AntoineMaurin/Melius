@@ -135,22 +135,26 @@ input {
   font-size: 16px;
 }
 
-/* Style the "Add" button */
 .addBtn {
-  padding: 10px;
-  width: 25%;
-  background: #4a95a2;
+  padding: 10px 17px;
+  background: #dd9f28;
   color: #fff;
   float: right;
   text-align: center;
   font-size: 16px;
-  cursor: pointer;
   transition: 0.3s;
-  border-radius: 0;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .addBtn:hover {
   background-color: #bbb;
+}
+
+#cancel-button {
+  color: #333;
+  background-color: #fff;
+  border: 1px solid;
 }
 
 .logo {
@@ -162,7 +166,7 @@ input {
   padding: 5px 0 5px;
 }
 
-.tasks {
+.task-container {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 600px;
@@ -203,6 +207,10 @@ input {
 
 .text-darkblue {
   color: #262c3a
+}
+
+.text-green-blue {
+  color: #21756b
 }
 
 .green-blue-bg {
@@ -284,8 +292,13 @@ input {
   text-align: center;
 }
 
+.sidebar-elt:hover {
+  color: #ffbf00;
+}
+
 .task-box {
-  margin-bottom: 1px;
+  box-shadow: 0 0 2px;
+  border-radius: 5px;
 }
 
 .task-box:hover {
@@ -311,7 +324,12 @@ input {
   padding: 3px 12px;
 }
 
-#NewListForm, #EditListForm, #DeleteListForm {
+.category:hover {
+  text-decoration: none;
+}
+
+
+#BaseListForm, #DeleteListForm {
   display: none;
   position: absolute;
   top: 50%;
@@ -368,4 +386,13 @@ input {
 
 #sort_by_finished {
   background-color: #7f807f;
+}
+
+#empty-task-form-header {
+  border-radius: 10px 10px 0 0;
+  transition: 0.3s;
+}
+
+#empty-task-form {
+  border-radius: 0 0 10px 10px;
 }
