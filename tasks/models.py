@@ -65,3 +65,8 @@ class SimpleTask(models.Model):
 
     def get_finished_tasks(tasklist):
         return SimpleTask.objects.filter(tasklist=tasklist, is_done=True)
+
+    def is_overdue(task):
+        today = date.today()
+        return SimpleTask.objects.filter(id=task.id, due_date__lt=today,
+                                         is_done=False).exists()

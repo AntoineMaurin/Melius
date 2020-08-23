@@ -15,5 +15,4 @@ urlpatterns = [
     path('sort_by_all/<int:id>', views.sort_by_all),
     path('sort_by_current/<int:id>', views.sort_by_current),
     path('sort_by_finished/<int:id>', views.sort_by_finished),
-    path('ajaxedit/<int:id>', views.ajaxedit),
 ]

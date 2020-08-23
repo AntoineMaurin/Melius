@@ -107,13 +107,7 @@ def change_task_state(request, id):
 @login_required
 def deltask(request, id):
     SimpleTask.get_task_with_id(id).delete()
-    return redirect('/tasks')
-
-@login_required
-def edit_task(request, id):
-    current_updating_task = SimpleTask.get_task_with_id(id)
-    current_updating_task.due_date = str(current_updating_task.due_date)
-    return tasks_dashboard(request, updating_task=current_updating_task)
+    return JsonResponse({'task_id': id})
 
 @login_required
 def update_task(request, id):
@@ -129,6 +123,9 @@ def update_task(request, id):
         task.due_date_clean_display = None
 
     task.description = request.POST['description']
+    new_category_id = request.POST['tasklists']
+    new_tasklist = TaskList.get_tasklist_by_id(new_category_id)
+    task.tasklist = new_tasklist
     task.save()
     return redirect('/tasks')
 
@@ -182,8 +179,7 @@ def deletecategory(request):
     tasklist_to_edit.delete()
     return redirect('/tasks')
 
-
-def ajaxedit(request, id):
+def edit_task(request, id):
     task = SimpleTask.get_task_with_id(id=id)
     data = {"task_name": task.name,
             "task_id": task.id,

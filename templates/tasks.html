@@ -8,23 +8,24 @@
 {% block body_class %}baloo-font{% endblock body_class %}
 
 {% block main_content %}
-<div class="sidebar">
-  <a href="#" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
-  <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
-  <a href="#" class="sidebar-elt"><i class="fas fa-th-large"></i></a>
-  <a href="#" class="sidebar-elt"><i class="fas fa-columns"></i></a>
-  <a href="#" class="sidebar-elt"><i class="fas fa-hourglass-start"></i></a>
-  <a href="#" class="sidebar-elt"><i class="fas fa-stopwatch"></i></a>
-  <a href="#" class="sidebar-elt"><i class="far fa-calendar-alt"></i></a>
-  <a href="#" class="sidebar-elt"><i class="fas fa-meteor"></i></a>
-</div>
 
-<div class="row header">
-  <div class="col-1"></div>
-  <div class="col-10"></div>
-  <div class="col-1 float-right my-3">
+<div class="row header green-blue-bg">
+  <div class="col-1 text-center"></div>
+  <div class="col-10 text-center">
+    <div class="sidebar">
+      <a href="#" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
+      <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
+      <a href="#" class="sidebar-elt"><i class="fas fa-th-large"></i></a>
+      <a href="#" class="sidebar-elt"><i class="fas fa-columns"></i></a>
+      <a href="#" class="sidebar-elt"><i class="fas fa-hourglass-start"></i></a>
+      <a href="#" class="sidebar-elt"><i class="fas fa-stopwatch"></i></a>
+      <a href="#" class="sidebar-elt"><i class="far fa-calendar-alt"></i></a>
+      <a href="#" class="sidebar-elt"><i class="fas fa-meteor"></i></a>
+    </div>
+  </div>
+  <div class="col-1 text-center">
     <a href="/logout">
-      <i class="fas fa-sign-out-alt fa-3x text-darkblue"></i>
+      <i class="fas fa-sign-out-alt diconnect-icon text-white"></i>
     </a>
   </div>
 </div>
@@ -40,52 +41,70 @@
         <button onclick="openNewListForm()" type="button" class="border-0 ml-2 bg-transparent"><i class="far fa-plus-square fa-2x align-middle"></i></button>
     </div>
     <div class="row pl-3 py-2 border-top">
-      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>
-      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">En cours</a>
-      <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_finished/{{ tasklist_to_show.id }}" method="post">Terminées</a>
+      <div class="col-9 pt-2">
+        <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>
+        <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">En cours</a>
+        <a class="text-white green-blue-bg sort-by-buttons" href="/sort_by_finished/{{ tasklist_to_show.id }}" method="post">Terminées</a>
+      </div>
+      <div class="col-3 pl-3 py-2">
+        <div class="text-white green-blue-bg btn new-task-button">Nouvelle tâche</div>
+      </div>
     </div>
     <div class="mt-2 font-18">
-      {% if overdue_tasks %}
-        <p class="ml-3">Tâches dépassées</p>
-        {% for task in overdue_tasks %}
-          {% include "simple_task.html" %}
-        {% endfor %}
-      {% endif %}
+      <div class="overdue-tasks-list">
+        {% if overdue_tasks %}
+          <p class="ml-3">Tâches dépassées</p>
+          {% for task in overdue_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
-      {% if due_today_tasks %}
-        <p class="ml-3">Pour aujourd'hui</p>
-        {% for task in due_today_tasks %}
-          {% include "simple_task.html" %}
-        {% endfor %}
-      {% endif %}
+      <div class="today-tasks-list">
+        {% if due_today_tasks %}
+          <p class="ml-3">Pour aujourd'hui</p>
+          {% for task in due_today_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
-      {% if due_tommorow_tasks %}
-        <p class="ml-3">Pour demain</p>
-        {% for task in due_tommorow_tasks %}
-          {% include "simple_task.html" %}
-        {% endfor %}
-      {% endif %}
+      <div class="tomorrow-tasks-list">
+        {% if due_tommorow_tasks %}
+          <p class="ml-3">Pour demain</p>
+          {% for task in due_tommorow_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
-      {% if future_tasks %}
-        <p class="ml-3">A venir</p>
-        {% for task in future_tasks %}
-          {% include "simple_task.html" %}
-        {% endfor %}
-      {% endif %}
+      <div class="future-tasks-list">
+        {% if future_tasks %}
+          <p class="ml-3">A venir</p>
+          {% for task in future_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
-      {% if no_date_tasks %}
-        <p class="ml-3">Sans date</p>
-        {% for task in no_date_tasks %}
-          {% include "simple_task.html" %}
-        {% endfor %}
-      {% endif %}
+      <div class="no-date-tasks-list">
+        {% if no_date_tasks %}
+          <p class="ml-3">Sans date</p>
+          {% for task in no_date_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
-      {% if finished_tasks %}
+      <div class="finished-tasks-list">
+        {% if finished_tasks %}
         <p class="ml-3">Tâches terminées</p>
         {% for task in finished_tasks %}
           {% include "finished_task.html" %}
         {% endfor %}
+      </div>
       {% endif %}
+
     </div>
   </section>
 
