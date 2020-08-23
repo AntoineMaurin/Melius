@@ -96,7 +96,7 @@ def addtask(request):
         task.due_date_clean_display = convert_to_clean_date(task.due_date)
 
     task.save()
-    return redirect('/tasks')
+    return tasks_dashboard(request, tasklist_to_show_id=user_tasklist.id)
 
 def change_task_state(request, id):
     task = SimpleTask.get_task_with_id(id)
@@ -127,7 +127,7 @@ def update_task(request, id):
     new_tasklist = TaskList.get_tasklist_by_id(new_category_id)
     task.tasklist = new_tasklist
     task.save()
-    return redirect('/tasks')
+    return tasks_dashboard(request, tasklist_to_show_id=new_tasklist.id)
 
 def show_tasklist(request, id):
     return tasks_dashboard(request, tasklist_to_show_id=id)
@@ -162,11 +162,11 @@ def addcategory(request):
     return redirect('/tasks')
 
 def editcategory(request):
-    list_id = request.POST['list_id']
+    list_id = request.POST['edit-list-id']
     tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
 
-    new_list_name = request.POST['list_name']
-    new_list_color = request.POST['list_color']
+    new_list_name = request.POST['edit-list-name']
+    new_list_color = request.POST['edit-list-color']
 
     tasklist_to_edit.name = new_list_name
     tasklist_to_edit.color = new_list_color

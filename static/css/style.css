@@ -344,3 +344,28 @@ input {
 .form-control:invalid {
   outline: none;
 }
+.new-task-button {
+  background-color:#3ea661;
+}
+
+.new-task-button:hover {
+  transition: 0.2s;
+  background-color: #55b37e;
+}
+
+.sort-by-buttons:hover {
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+#sort_by_all {
+  background-color: #d73d3d;
+}
+
+#sort_by_current {
+  background-color: #ffad10;
+}
+
+#sort_by_finished {
+  background-color: #7f807f;
+}

@@ -4,17 +4,18 @@
   </div>
     <form class="py-3 border" action="/addcategory" method="post">
     {% csrf_token %}
-    <div class="mb-5 px-3">
-      <label>Nom</label>
-      <input class="form-control" type="text" name="list_name" required="true">
-    </div>
-    <div class="mb-2 px-3 color-field">
-      <label class="float-left" >Couleur</label>
-      <input class="p-2" type="color" name="list_color" value="#21756b" required="true">
+    <div class="row mb-3 px-3">
+      <div class="col-10">
+        <input class="form-control pt-2" id="list_name" type="text" name="list_name" required="true" placeholder="Nom">
+      </div>
+      <div class="col-2 align-self-end mb-1">
+        <div class="color-picker color-field" required="true"></div>
+        <input type="hidden" name="list_color" value="">
+      </div>
     </div>
     <div class="row">
-      <div class="col pr-5">
-        <button type="submit" onclick="closeNewListForm()" class="addBtn btn btn-submit-register green-blue-bg">Ok</button>
+      <div class="col pr-5 mt-2">
+        <button type="submit" onclick="closeNewListForm()" class="addBtn btn btn-submit-register green-blue-bg">Valider</button>
         <div onclick="closeNewListForm()" class="addBtn btn btn-submit-register darkblue-bg">Fermer</div>
       </div>
     </div>

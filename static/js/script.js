@@ -1,6 +1,45 @@
-function openNewListForm() {
-  document.getElementById("NewListForm").style.display = "block";
-}
+const pickr = Pickr.create({
+    el: '.color-picker',
+    theme: 'classic', // or 'monolith', or 'nano'
+    default: '#21756b',
+
+    swatches: [
+        '#1abc9c',
+        '#16a085',
+        '#2ecc71',
+        '#27ae60',
+        '#3498db',
+        '#2980b9',
+        '#9b59b6',
+        '#8e44ad',
+        '#34495e',
+        '#e67e22',
+        '#d35400',
+        '#e74c3c',
+        '#c0392b',
+        '#f39c12'
+    ],
+
+    components: {
+
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: true
+        }
+    }
+});
 
 function openEditListForm() {
   var list_element = document.getElementById("tasklists");
@@ -8,11 +47,19 @@ function openEditListForm() {
   var list_selected_name = list_element.options[list_element.selectedIndex].text;
   var list_id = list_element.options[list_element.selectedIndex].value;
 
-  document.getElementById("list_title").innerHTML = list_selected_name;
-  document.getElementById("list_name").value = list_selected_name;
-  document.getElementById("list_id").value = list_id;
+  document.getElementById("edit-list-title").innerHTML = list_selected_name;
+  document.getElementById("edit-list-name").value = list_selected_name;
+  document.getElementById("edit-list-id").value = list_id;
 
   document.getElementById("EditListForm").style.display = "block";
+
+  pickr.on('save', (color, instance) => {
+
+    var color = pickr.getSelectedColor().toHEXA().toString();
+    document.getElementById("edit-list-color").value = color;
+    console.log($("input[name='list_color']").val());
+  });
+
 }
 
 function closeNewListForm() {
@@ -52,11 +99,10 @@ function createTitle(title_id, title_name) {
 
   new_title.classList.add("ml-3");
   new_title.innerHTML = title_name;
-
 }
 
-$(document).ready(function() {
 
+$(document).ready(function() {
 
   $(".new-task-button").click(function(){
 
@@ -113,7 +159,6 @@ $(document).ready(function() {
         dataType: "json",
         success: function() {
 
-
           if ( $("#" + task_id).siblings().length < 2 ) {
             var title_class = $("#" + task_id).parent().attr('class');
             console.log(title_class);
@@ -130,33 +175,17 @@ $(document).ready(function() {
       });
     });
 
+
+  $(".new-list-form").click(function(){
+
+    $("#NewListForm").css("display", "block");
+
+    pickr.on('save', (color, instance) => {
+
+      var color = pickr.getSelectedColor().toHEXA().toString();
+      $("input[name='list_color']").val(color);
+      console.log($("input[name='list_color']").val());
+    });
+  });
+
 });
-
-
-
-
-
-
-
-
-// var task_element = $("#" + response['task_id']).remove().clone();
-//
-// if (response['is_done']) {
-//
-//   if ($("#finished-tasks-list > * ").length < 1) {
-//
-//     createTitle("finished-tasks-list", "Tâches terminées");
-//
-//   }
-//
-//   $("#finished-tasks-list").append(task_element);
-//   $("#" + response['task_id'] + " .last-icon-task").removeClass().addClass("fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task");
-//
-// } else {
-//
-//   if ($("#finished-tasks-list > * ").length < 2) {
-//     removeTitle("finished-tasks-list");
-//   }
-//
-//   $("#no-date-tasks-list").append(task_element);
-// }
