@@ -52,7 +52,6 @@ function closeDeleteListForm() {
 }
 
 
-
 $(document).ready(function() {
 
   set_current_category();

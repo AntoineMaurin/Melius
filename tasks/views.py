@@ -11,12 +11,27 @@ def set_tasks_dict(request, display, tasklist_to_show):
     user_mail = request.session['user_mail']
     all_tasklists = TaskList.get_tasklists_from_user(user_mail)
 
-    overdue_tasks = SimpleTask.get_overdue_tasks_list(tasklist_to_show)
-    due_today_tasks = SimpleTask.get_today_tasks_list(tasklist_to_show)
-    due_tommorow_tasks = SimpleTask.get_tomorrow_tasks_list(tasklist_to_show)
-    future_tasks = SimpleTask.get_future_tasks(tasklist_to_show)
-    no_date_tasks = SimpleTask.get_no_date_tasks(tasklist_to_show)
-    finished_tasks = SimpleTask.get_finished_tasks(tasklist_to_show)
+    if not tasklist_to_show:
+
+        user = User.objects.get(email=user_mail)
+
+        all_tasks = SimpleTask.get_all_tasks_by_user(user)
+
+        overdue_tasks = SimpleTask.get_overdue_tasks(all_tasks)
+        due_today_tasks = SimpleTask.get_due_today_tasks(all_tasks)
+        due_tommorow_tasks = SimpleTask.get_due_tomorrow_tasks(all_tasks)
+        future_tasks = SimpleTask.get_upcoming_tasks(all_tasks)
+        no_date_tasks = SimpleTask.get_no_due_date_tasks(all_tasks)
+        finished_tasks = SimpleTask.get_completed_tasks(all_tasks)
+
+    else:
+
+        overdue_tasks = SimpleTask.get_overdue_tasks_list(tasklist_to_show)
+        due_today_tasks = SimpleTask.get_today_tasks_list(tasklist_to_show)
+        due_tommorow_tasks = SimpleTask.get_tomorrow_tasks_list(tasklist_to_show)
+        future_tasks = SimpleTask.get_future_tasks(tasklist_to_show)
+        no_date_tasks = SimpleTask.get_no_date_tasks(tasklist_to_show)
+        finished_tasks = SimpleTask.get_finished_tasks(tasklist_to_show)
 
     all_data = {'overdue_tasks': overdue_tasks,
                 'due_today_tasks': due_today_tasks,
@@ -58,18 +73,20 @@ def tasks_dashboard(request, tasklist_to_show_id=None,
 
     if tasklist_to_show_id:
         tasklist_to_show = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
+
+        for task in SimpleTask.get_tasks_with_due_date_from_tasklist(tasklist=tasklist_to_show):
+            task.due_date = str(task.due_date)
+
+        dict = set_tasks_dict(request, display, tasklist_to_show)
+
     else:
-        user_mail = request.session['user_mail']
-        lists = TaskList.get_tasklists_from_user(user_mail)[:1]
-        try:
-            tasklist_to_show = lists[0]
-        except(IndexError):
-            tasklist_to_show = None
-
-    for task in SimpleTask.get_tasks_with_due_date_from_tasklist(tasklist=tasklist_to_show):
-        task.due_date = str(task.due_date)
-
-    dict = set_tasks_dict(request, display, tasklist_to_show)
+        dict = set_tasks_dict(request, display, tasklist_to_show_id)
+    #     user_mail = request.session['user_mail']
+    #     lists = TaskList.get_tasklists_from_user(user_mail)[:1]
+    #     try:
+    #         tasklist_to_show = lists[0]
+    #     except(IndexError):
+    #         tasklist_to_show = None
 
     if updating_task:
         dict['current_updating_task'] = updating_task
@@ -103,6 +120,7 @@ def change_task_state(request, id):
     task.is_done = not task.is_done
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=task.tasklist.id)
+    # return redirect("/tasks")
 
 @login_required
 def deltask(request, id):
@@ -132,6 +150,9 @@ def update_task(request, id):
 def show_tasklist(request, id):
     return tasks_dashboard(request, tasklist_to_show_id=id)
 
+def show_all_tasklists(request):
+    return tasks_dashboard(request, tasklist_to_show_id=None)
+
 def sort_tasklist(request):
     type_sort = request.POST.get('type_sort')
     if not type_sort:
@@ -140,26 +161,38 @@ def sort_tasklist(request):
     return tasks_dashboard(request, tasklist_to_show_id=tasklist_id,
                      display=type_sort)
 
-def sort_by_all(request, id):
-    return tasks_dashboard(request, tasklist_to_show_id=id,
-                     display='all')
+def sort_by_all(request, id=None):
+    if id > 0:
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                        display='all')
+    else:
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                        display='all')
 
-def sort_by_current(request, id):
-    return tasks_dashboard(request, tasklist_to_show_id=id,
-                    display='current')
+def sort_by_current(request, id=None):
+    if id > 0:
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                        display='current')
+    else:
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                        display='current')
 
-def sort_by_finished(request, id):
-    return tasks_dashboard(request, tasklist_to_show_id=id,
-                    display='finished')
-
+def sort_by_finished(request, id=None):
+    if id > 0:
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                        display='finished')
+    else:
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                        display='finished')
 
 def addcategory(request):
     list_name = request.POST['list_name']
     list_color = request.POST['list_color']
     user = User.objects.get(email=request.session['user_mail'])
 
-    TaskList.objects.create(name=list_name, user=user, color=list_color)
-    return redirect('/tasks')
+    tl = TaskList.objects.create(name=list_name, user=user, color=list_color)
+
+    return tasks_dashboard(request, tasklist_to_show_id=tl.id)
 
 def editcategory(request):
     list_id = request.POST['list_id']
