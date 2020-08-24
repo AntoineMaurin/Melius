@@ -6,8 +6,8 @@
     {% csrf_token %}
     <div class="mb-3 px-3 pb-2">
       <div class="row">
-        <label class="my-auto mr-2" for="tasklists">Catégorie :</label>
-        <select name="tasklists" id="tasklists">
+        <label class="my-auto mr-2" for="tasklists">Catégorie*</label>
+        <select name="tasklists" id="tasklists" required>
           {% for tasklist in all_tasklists %}
             <option value="{{ tasklist.id }}">{{ tasklist.name }}</option>
           {% endfor %}
@@ -21,7 +21,7 @@
     </div>
     <div class="mb-5 px-3">
       <label>Nom*</label>
-      <input class="form-control" type="text" name="name" required="true" id="empty-task-form-name">
+      <input class="form-control" type="text" name="name" required="true" id="empty-task-form-name" maxlength="150">
     </div>
     <div class="mb-5 px-3 font-16">
       <label>Date limite</label>
@@ -33,8 +33,8 @@
     </div>
     <div class="row">
       <div class="col pr-5">
-        <button type="submit" class="addBtn btn btn-submit-register green-blue-bg" id="empty-task-form-submit-add-button">Ajouter</button>
-        <a href="/tasks" id="cancel-button" class="addBtn btn btn-submit-register">Annuler</a>
+        <button type="submit" class="addBtn btn btn-submit-register" id="empty-task-form-submit-add-button">Ajouter</button>
+        <a href="/tasks" class="addBtn cancel-button">Annuler</a>
       </div>
     </div>
   </form>

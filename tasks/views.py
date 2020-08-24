@@ -6,66 +6,16 @@ from django.contrib.auth.models import User
 from tasks.utils import *
 import datetime
 
+from tasks.set_data_dict import SetDataDict
+
+@login_required
 def set_tasks_dict(request, display, tasklist_to_show):
 
     user_mail = request.session['user_mail']
-    all_tasklists = TaskList.get_tasklists_from_user(user_mail)
+    data_dict_obj = SetDataDict(display, tasklist_to_show, user_mail)
+    data_dict = data_dict_obj.get_data()
 
-    if not tasklist_to_show:
-
-        user = User.objects.get(email=user_mail)
-
-        all_tasks = SimpleTask.get_all_tasks_by_user(user)
-
-        overdue_tasks = SimpleTask.get_overdue_tasks(all_tasks)
-        due_today_tasks = SimpleTask.get_due_today_tasks(all_tasks)
-        due_tommorow_tasks = SimpleTask.get_due_tomorrow_tasks(all_tasks)
-        future_tasks = SimpleTask.get_upcoming_tasks(all_tasks)
-        no_date_tasks = SimpleTask.get_no_due_date_tasks(all_tasks)
-        finished_tasks = SimpleTask.get_completed_tasks(all_tasks)
-
-    else:
-
-        overdue_tasks = SimpleTask.get_overdue_tasks_list(tasklist_to_show)
-        due_today_tasks = SimpleTask.get_today_tasks_list(tasklist_to_show)
-        due_tommorow_tasks = SimpleTask.get_tomorrow_tasks_list(tasklist_to_show)
-        future_tasks = SimpleTask.get_future_tasks(tasklist_to_show)
-        no_date_tasks = SimpleTask.get_no_date_tasks(tasklist_to_show)
-        finished_tasks = SimpleTask.get_finished_tasks(tasklist_to_show)
-
-    all_data = {'overdue_tasks': overdue_tasks,
-                'due_today_tasks': due_today_tasks,
-                'due_tommorow_tasks': due_tommorow_tasks,
-                'future_tasks': future_tasks,
-                'no_date_tasks': no_date_tasks,
-                'finished_tasks': finished_tasks,
-                'all_tasklists': all_tasklists,
-                'tasklist_to_show': tasklist_to_show}
-
-    if display == 'all':
-        return all_data
-
-    elif display == 'current':
-        current = {}
-        current_keys = ['overdue_tasks', 'due_today_tasks',
-                        'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
-                        'all_tasklists', 'tasklist_to_show']
-
-        for k, v in all_data.items():
-            if k in current_keys:
-                current[k] = v
-
-        return current
-
-    elif display == 'finished':
-        finished = {}
-        finished_keys = ['finished_tasks', 'all_tasklists', 'tasklist_to_show']
-
-        for k, v in all_data.items():
-            if k in finished_keys:
-                finished[k] = v
-
-        return finished
+    return data_dict
 
 @login_required
 def tasks_dashboard(request, tasklist_to_show_id=None,
@@ -81,12 +31,6 @@ def tasks_dashboard(request, tasklist_to_show_id=None,
 
     else:
         dict = set_tasks_dict(request, display, tasklist_to_show_id)
-    #     user_mail = request.session['user_mail']
-    #     lists = TaskList.get_tasklists_from_user(user_mail)[:1]
-    #     try:
-    #         tasklist_to_show = lists[0]
-    #     except(IndexError):
-    #         tasklist_to_show = None
 
     if updating_task:
         dict['current_updating_task'] = updating_task
@@ -115,6 +59,7 @@ def addtask(request):
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=user_tasklist.id)
 
+@login_required
 def change_task_state(request, id):
     task = SimpleTask.get_task_with_id(id)
     task.is_done = not task.is_done
@@ -147,12 +92,15 @@ def update_task(request, id):
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=new_tasklist.id)
 
+@login_required
 def show_tasklist(request, id):
     return tasks_dashboard(request, tasklist_to_show_id=id)
 
+@login_required
 def show_all_tasklists(request):
     return tasks_dashboard(request, tasklist_to_show_id=None)
 
+@login_required
 def sort_tasklist(request):
     type_sort = request.POST.get('type_sort')
     if not type_sort:
@@ -161,6 +109,7 @@ def sort_tasklist(request):
     return tasks_dashboard(request, tasklist_to_show_id=tasklist_id,
                      display=type_sort)
 
+@login_required
 def sort_by_all(request, id=None):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
@@ -169,6 +118,7 @@ def sort_by_all(request, id=None):
         return tasks_dashboard(request, tasklist_to_show_id=None,
                         display='all')
 
+@login_required
 def sort_by_current(request, id=None):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
@@ -177,6 +127,7 @@ def sort_by_current(request, id=None):
         return tasks_dashboard(request, tasklist_to_show_id=None,
                         display='current')
 
+@login_required
 def sort_by_finished(request, id=None):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
@@ -185,6 +136,7 @@ def sort_by_finished(request, id=None):
         return tasks_dashboard(request, tasklist_to_show_id=None,
                         display='finished')
 
+@login_required
 def addcategory(request):
     list_name = request.POST['list_name']
     list_color = request.POST['list_color']
@@ -194,6 +146,7 @@ def addcategory(request):
 
     return tasks_dashboard(request, tasklist_to_show_id=tl.id)
 
+@login_required
 def editcategory(request):
     list_id = request.POST['list_id']
     tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
@@ -206,12 +159,14 @@ def editcategory(request):
     tasklist_to_edit.save()
     return redirect('/tasks')
 
+@login_required
 def deletecategory(request):
     list_id = request.POST['list_id']
     tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
     tasklist_to_edit.delete()
     return redirect('/tasks')
 
+@login_required
 def edit_task(request, id):
     task = SimpleTask.get_task_with_id(id=id)
     data = {"task_name": task.name,

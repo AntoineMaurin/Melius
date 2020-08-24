@@ -112,10 +112,9 @@ class SimpleTask(models.Model):
     def get_no_due_date_tasks(tasks):
         list = []
         for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id, due_date=None,
-                                             is_done=False):
-                                                list.append(task)
+            if SimpleTask.objects.filter(id=task.id, due_date=None,
+                                         is_done=False):
+                                            list.append(task)
         return list
 
     def get_completed_tasks(tasks):

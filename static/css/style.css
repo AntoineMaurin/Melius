@@ -56,11 +56,6 @@ ul li:nth-child(odd) {
   background: #b8e1a5;
 }
 
-/* Darker background-color on hover */
-ul li:hover {
-  background: #e3fff8;
-}
-
 /* When clicked on, add a background color and strike out text */
 ul li.checked {
   background: #888;
@@ -80,16 +75,6 @@ ul li.checked::before {
   transform: rotate(45deg);
   height: 15px;
   width: 7px;
-}
-
-a:hover {
-  color: #88c27d;
-}
-
-.addBtn:hover {
-  background-color: #2fa395 !important;
-  border: none;
-  color: #fff;
 }
 
 .diconnect-icon {
@@ -137,24 +122,31 @@ input {
 
 .addBtn {
   padding: 10px 17px;
-  background: #dd9f28;
   color: #fff;
   float: right;
-  text-align: center;
   font-size: 16px;
   transition: 0.3s;
   border-radius: 5px;
   margin-right: 10px;
 }
 
-.addBtn:hover {
-  background-color: #bbb;
+.cancel-button {
+  color: #fff;
+  background-color: #262c3a;
+  border: 1px solid #262c3a;
 }
 
-#cancel-button {
-  color: #333;
-  background-color: #fff;
-  border: 1px solid;
+.cancel-button:hover {
+  background-color: #47536f !important;
+  text-decoration: none;
+  border: white;
+  color: #fff;
+}
+
+.submit-list-form:hover {
+  opacity: .80;
+  border: white;
+  color: #fff;
 }
 
 .logo {
@@ -368,7 +360,7 @@ input {
 
 .new-task-button:hover {
   transition: 0.2s;
-  background-color: #55b37e;
+  opacity: .80;
 }
 
 .sort-by-buttons:hover {
@@ -391,8 +383,19 @@ input {
 #empty-task-form-header {
   border-radius: 10px 10px 0 0;
   transition: 0.3s;
+  background-color: #21756b;
+}
+
+#empty-task-form-submit-add-button:hover {
+  color: white;
+  border: white;
+  opacity: .80;
 }
 
 #empty-task-form {
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px;
+}
+
+#tasklists {
+  min-width: 130px;
 }

@@ -157,7 +157,7 @@ $(document).ready(function() {
             $("." + title_class).remove();
           }
 
-          $("#" + task_id).remove();
+          $("#" + task_id).hide(600);
           $(".new-task-button").trigger('click');
 
         },
@@ -218,7 +218,7 @@ $(document).ready(function() {
       $("#delete_list_title").text(category_name);
       $("#delete_message").text(start_msg + category_name + end_msg);
       $("#delete_list_id").val(category_id);
-
+      $(".submit-list-form").css("background-color", category_color);
     });
 
 });
