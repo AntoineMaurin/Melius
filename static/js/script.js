@@ -56,13 +56,14 @@ $(document).ready(function() {
 
   set_current_category();
 
-  set_task_form_header_color();
+  set_category_colors();
 
   $(document).on('change','#tasklists', function(){
-    set_task_form_header_color();
+    set_category_colors();
   });
 
-  function set_task_form_header_color() {
+  function set_category_colors() {
+
     var selected_id = $('#tasklists').children("option:selected").val();
     var category_color = $("[href='/show_tasklist/" + selected_id + "']").css("background-color");
 
@@ -71,15 +72,8 @@ $(document).ready(function() {
     $(".category-buttons").css('color', category_color);
     $(".category-buttons").css('transition', '0.3s');
     $(".category-buttons").children().css('color', 'inherit');
-    $("#empty-task-form-title").html("Nouvelle tâche");
 
-    $("#empty-task-form-name").val("");
-    $("#empty-task-form-date").val("");
-    $("#empty-task-form-description").val("");
-
-    $("#empty-task-form-submit-add-button").html('Ajouter');
-    $("#empty-task-form-submit-action").attr("action", "/addtask");
-   }
+  }
 
    function update_form_when_color_saved() {
      pickr.on('save', (color, instance) => {
@@ -100,6 +94,19 @@ $(document).ready(function() {
      category_to_set.attr("selected", "selected");
    }
 
+  $(".new-task-button").click(function () {
+
+    $("#empty-task-form-title").html("Nouvelle tâche");
+
+    $("#empty-task-form-name").val("");
+    $("#empty-task-form-date").val("");
+    $("#empty-task-form-description").val("");
+
+    $("#empty-task-form-submit-add-button").html('Ajouter');
+    $("#empty-task-form-submit-action").attr("action", "/addtask");
+
+  });
+
   $(".task-box").click(function(){
     var task_id = $(this).attr('id');
 
@@ -109,7 +116,6 @@ $(document).ready(function() {
       data: {},
       dataType: "json",
       success: function editTaskForm(response) {
-        // $("#empty-task-form").fadeTo(300);
         $("#empty-task-form-header").css('background-color', response['category_color']);
         $("#empty-task-form-title").html(response["task_name"]);
 
@@ -122,6 +128,10 @@ $(document).ready(function() {
 
         $("#empty-task-form-submit-add-button").html('Modifier');
         $("#empty-task-form-submit-action").attr("action", "/updatetask/" + response["task_id"]);
+        $("#empty-task-form-submit-add-button").css('background-color', response['category_color']);
+        $(".category-buttons").css('color', response['category_color']);
+        $(".category-buttons").css('transition', '0.3s');
+        $(".category-buttons").children().css('color', 'inherit');
 
       },
       error: function(rs, e) {
