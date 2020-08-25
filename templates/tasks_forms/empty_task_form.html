@@ -1,6 +1,7 @@
 <div class="border w-100 font-18" id="empty-task-form">
-  <div class="pl-3 py-2 border-bottom text-white" id="empty-task-form-header">
-    <h4 class="baloo-font font-22 my-auto" id="empty-task-form-title">Nouvelle tâche</h4>
+  <div class="row pl-3 py-2 border-bottom text-white" id="empty-task-form-header">
+    <h4 class="col-11 baloo-font font-22 my-auto pl-0" id="empty-task-form-title">Nouvelle tâche</h4>
+    <a type="button" class="col-1 col px-2 d-inline-block border-0 bg-transparent text-white new-task-button pr-3"><i class="far fas fa-feather fa-2x align-middle float-right"></i></a>
   </div>
     <form class="py-3" action="/addtask" method="post" id="empty-task-form-submit-action">
     {% csrf_token %}
