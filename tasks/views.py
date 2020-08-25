@@ -19,8 +19,7 @@ def set_tasks_dict(request, display, tasklist_to_show):
     return data_dict
 
 @login_required
-def tasks_dashboard(request, tasklist_to_show_id=None,
-                    updating_task=None, display='all'):
+def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
 
     if tasklist_to_show_id:
         tasklist_to_show = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
@@ -32,9 +31,6 @@ def tasks_dashboard(request, tasklist_to_show_id=None,
 
     else:
         dict = set_tasks_dict(request, display, tasklist_to_show_id)
-
-    if updating_task:
-        dict['current_updating_task'] = updating_task
 
     return render(request, "tasks.html", dict)
 

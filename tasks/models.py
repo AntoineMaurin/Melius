@@ -120,7 +120,6 @@ class SimpleTask(models.Model):
     def get_completed_tasks(tasks):
         list = []
         for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id,is_done=True):
-                    list.append(task)
+            if SimpleTask.objects.filter(id=task.id, is_done=True):
+                list.append(task)
         return list

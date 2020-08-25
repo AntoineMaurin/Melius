@@ -37,17 +37,60 @@ class TasksViewsTest(TestCase):
     def tearDown(self):
         self.client.get('/logout')
 
+    def test_tasks_dashboard(self):
+        response = self.client.get('/tasks')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
     def test_tasks_dashboard_not_auth(self):
         self.client.get('/logout')
         response = self.client.get('/tasks')
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/tasks')
 
-    def test_tasks_dashboard_auth(self):
+    def test_tasks_dashboard_tasklist_id(self):
+        self.add_data()
+        tl = TaskList.objects.create(user=self.user, name="Sport",
+                                     color="#333333")
+        response = self.client.get('/show_tasklist/' + str(tl.id))
+        tasklist_to_show = response.context['tasklist_to_show']
+        self.assertEqual(tasklist_to_show.id, tl.id)
 
-        response = self.client.get('/tasks')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
+    def test_tasks_dashboard_tasklist_display_all(self):
+        self.add_data()
+        tl = TaskList.objects.create(user=self.user, name="Sport",
+                                     color="#333333")
+        response = self.client.get('/sort_by_all/' + str(tl.id))
+
+        all_keys = ['overdue_tasks', 'due_today_tasks', 'due_tommorow_tasks',
+                'future_tasks', 'no_date_tasks', 'finished_tasks',
+                'all_tasklists', 'tasklist_to_show']
+        for key in all_keys:
+            self.assertIn(key, response.context)
+
+
+
+    def test_tasks_dashboard_tasklist_display_current(self):
+        self.add_data()
+        tl = TaskList.objects.create(user=self.user, name="Sport",
+                                     color="#333333")
+        response = self.client.get('/sort_by_current/' + str(tl.id))
+
+        current_keys = ['overdue_tasks', 'due_today_tasks',
+                    'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
+                    'all_tasklists', 'tasklist_to_show']
+        for key in current_keys:
+            self.assertIn(key, response.context)
+
+    def test_tasks_dashboard_tasklist_display_finished(self):
+        self.add_data()
+        tl = TaskList.objects.create(user=self.user, name="Sport",
+                                     color="#333333")
+        response = self.client.get('/sort_by_finished/' + str(tl.id))
+
+        finished_keys = ['finished_tasks', 'all_tasklists', 'tasklist_to_show']
+        for key in finished_keys:
+            self.assertIn(key, response.context)
 
     def test_add_task_adds_task(self):
 
