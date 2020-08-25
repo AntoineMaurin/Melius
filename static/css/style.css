@@ -22,6 +22,10 @@ body {
   font-size: 55px;
 }
 
+.powell-font {
+  font-family: 'Logofont';
+}
+
 /* Remove margins and padding from the list */
 ul {
   margin: 0;
@@ -63,22 +67,33 @@ ul li.checked {
   text-decoration: line-through;
 }
 
-/* Add a "checked" mark when clicked on */
-ul li.checked::before {
-  content: '';
-  position: absolute;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 10px;
-  left: 16px;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
+a:hover {
+  text-decoration: underline;
+  color: #88c27d !important;
 }
 
-.diconnect-icon {
+.category:hover {
+  color: white !important;
+}
+
+.new-task-button:hover {
+  color: white !important;
+}
+
+.sort-by-buttons:hover {
+  color: white !important;
+}
+
+.sidebar-elt:hover, .disconnect-icon:hover {
+  color: #ffbf00 !important;
+}
+
+.disconnect-icon {
   font-size: 2.2em;
+}
+
+.wip-elt {
+  color: #484848b0 !important;
 }
 
 .baloo-font {
@@ -209,8 +224,16 @@ input {
   background-color: #21756b;
 }
 
+.dark-bg {
+  background-color: #323439;
+}
+
 .lightgreen-bg {
   background-color: #ccecc3;
+}
+
+.huge-font-size {
+  font-size: 87px;
 }
 
 .register-submit {
@@ -268,7 +291,6 @@ input {
 
 .sidebar {
   color: #fff !important;
-  background-color: #21756b !important;
   font-size: 30px !important;
   border-radius: 0 10px 10px 0;
   width: 100%;
@@ -310,6 +332,7 @@ input {
 }
 
 .category {
+  position: relative;
   margin: 5px 5px;
   color: white;
   border-radius: 15px;
@@ -320,6 +343,16 @@ input {
   text-decoration: none;
 }
 
+.after-effect::after {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: #27AE60 2px solid;
+    content: '';
+    border-radius: 20px;
+}
 
 #BaseListForm, #DeleteListForm {
   display: none;
@@ -398,4 +431,21 @@ input {
 
 #tasklists {
   min-width: 130px;
+}
+
+.dashboard-section {
+
+}
+
+.dashboard-container {
+  margin-top: 50%;
+  transform: translateY(-50%);
+}
+
+.custom-bg {
+  background-color: #054863;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23054863' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%23054863' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23004f69' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300566f' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23005d74' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23006479' cx='0' cy='0' r='1400'/%3E%3Ccircle\ fill='%23006b7e' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23007382' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23007a85' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23008188' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2300888a' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%2307908c' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%231c978d' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%232b9e8e' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2339a58e' cx='0' cy='0' r='500'/%3E%3Ccircle\
+  fill='%2347ac8e' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%2355b38e' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%2362b98e' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%2370c08d' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
 }

@@ -20,7 +20,7 @@ def user_login(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect("/tasks")
+                return redirect("/dashboard")
         else:
             messages.error(request, "Email ou mot de passe incorrect.")
             return render(request, "login.html", {'form': form})

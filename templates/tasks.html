@@ -10,22 +10,24 @@
 {% block main_content %}
 
 <div class="row header green-blue-bg">
-  <div class="col-1 text-center"></div>
+  <div class="col-1 text-center">
+    <h2 class="powell-font text-white">Tâches</h2>
+  </div>
   <div class="col-10 text-center">
     <div class="sidebar">
       <a href="#" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
       <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
-      <a href="#" class="sidebar-elt"><i class="fas fa-th-large"></i></a>
-      <a href="#" class="sidebar-elt"><i class="fas fa-columns"></i></a>
-      <a href="#" class="sidebar-elt"><i class="fas fa-hourglass-start"></i></a>
-      <a href="#" class="sidebar-elt"><i class="fas fa-stopwatch"></i></a>
-      <a href="#" class="sidebar-elt"><i class="far fa-calendar-alt"></i></a>
-      <a href="#" class="sidebar-elt"><i class="fas fa-meteor"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-th-large"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-columns"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-hourglass-start"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-stopwatch"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt far fa-calendar-alt"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-meteor"></i></a>
     </div>
   </div>
   <div class="col-1 text-center">
     <a href="/logout">
-      <i class="fas fa-sign-out-alt diconnect-icon text-white"></i>
+      <i class="fas fa-sign-out-alt disconnect-icon text-white"></i>
     </a>
   </div>
 </div>
@@ -33,14 +35,14 @@
 <div class="row px-3">
   <section class="col container pl-5">
     <div class="row pl-3 py-2">
-      <a class="category text-white darkblue-bg my-3" href="/show_all_tasklists" method="post"">Toutes catégories</a>
+      <a class="category text-white darkblue-bg my-3" href="/show_all_tasklists" method="post">Toutes catégories</a>
       {% for tasklist in all_tasklists %}
         <a class="category text-white darkblue-bg my-3" href="/show_tasklist/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
       {% endfor %}
       <button type="button" class="border-0 ml-2 bg-transparent text-darkblue my-3 new-list-form"><i class="far fa-plus-square fa-2x align-middle"></i></button>
     </div>
-    <div class="row pl-1 py-2 border-top border-bottom">
-      <div class="col-9 align-self-center">
+    <div class="row pl-1 border-top border-bottom">
+      <div class="col py-3 align-self-center">
         {% if tasklist_to_show %}
           <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>
           <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">En cours</a>

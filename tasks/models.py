@@ -35,6 +35,12 @@ class SimpleTask(models.Model):
     def get_all_tasks_by_user(user):
         return SimpleTask.objects.filter(tasklist__user=user)
 
+    def get_all_done_tasks_by_user(user):
+        return SimpleTask.objects.filter(tasklist__user=user, is_done=True)
+
+    def get_all_undone_tasks_by_user(user):
+        return SimpleTask.objects.filter(tasklist__user=user, is_done=False)
+
     def get_tasks_with_due_date_from_tasklist(tasklist):
         return SimpleTask.objects.filter(tasklist=tasklist).exclude(due_date=None)
 
