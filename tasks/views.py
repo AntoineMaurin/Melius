@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from tasks.models import TaskList, SimpleTask
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -52,7 +53,7 @@ def addtask(request):
                       name=task_name,
                       due_date=due_date,
                       description=description,
-                      creation=datetime.datetime.now())
+                      creation=timezone.now())
     if task.due_date:
         task.due_date_clean_display = convert_to_clean_date(task.due_date)
 

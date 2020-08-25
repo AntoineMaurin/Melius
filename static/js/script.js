@@ -143,6 +143,7 @@ $(document).ready(function() {
 
   $(".del-task").click(function(){
       var task_id = $(this).parent().parent().parent().parent().attr('id');
+      $(".new-task-button").trigger('click');
 
       $.ajax({
         type: "GET",
@@ -153,12 +154,10 @@ $(document).ready(function() {
 
           if ( $("#" + task_id).siblings().length < 2 ) {
             var title_class = $("#" + task_id).parent().attr('class');
-            console.log(title_class);
             $("." + title_class).remove();
           }
 
-          $("#" + task_id).hide(600);
-          $(".new-task-button").trigger('click');
+          $("#" + task_id).remove();
 
         },
         error: function(rs, e) {
