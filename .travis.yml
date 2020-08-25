@@ -4,12 +4,17 @@ python:
 
 before_script:
   - pip install -r requirements.txt
+  - wget https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip -d /home/travis/build/AntoineMaurin/Melius/tasks/tests/functionnal
 
 env:
   - DJANGO_SETTINGS_MODULE=settings.travis
 
 services:
   - postgresql
+
+addons:
+  chrome: stable
 
 script:
   - python manage.py test
