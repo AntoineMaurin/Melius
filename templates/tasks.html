@@ -37,7 +37,7 @@
       {% for tasklist in all_tasklists %}
         <a class="category text-white darkblue-bg my-3" href="/show_tasklist/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
       {% endfor %}
-      <button type="button" class="border-0 ml-2 bg-transparent my-3 new-list-form"><i class="far fa-plus-square fa-2x align-middle"></i></button>
+      <button type="button" class="border-0 ml-2 bg-transparent text-darkblue my-3 new-list-form"><i class="far fa-plus-square fa-2x align-middle"></i></button>
     </div>
     <div class="row pl-1 py-2 border-top border-bottom">
       <div class="col-9 align-self-center">

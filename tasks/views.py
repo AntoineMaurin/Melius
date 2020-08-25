@@ -74,7 +74,8 @@ def deltask(request, id):
     return JsonResponse({'task_id': id})
 
 @login_required
-def update_task(request, id):
+def update_task(request):
+    id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)
     task.name = request.POST['name']
     task.due_date = request.POST['due_date']
@@ -101,14 +102,6 @@ def show_tasklist(request, id):
 def show_all_tasklists(request):
     return tasks_dashboard(request, tasklist_to_show_id=None)
 
-@login_required
-def sort_tasklist(request):
-    type_sort = request.POST.get('type_sort')
-    if not type_sort:
-        type_sort = 'all'
-
-    return tasks_dashboard(request, tasklist_to_show_id=tasklist_id,
-                     display=type_sort)
 
 @login_required
 def sort_by_all(request, id=None):

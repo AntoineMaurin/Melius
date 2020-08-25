@@ -9,41 +9,10 @@ from tasks.views import *
 
 class TasksViewsTest(TestCase):
 
-    # def add_data(self):
-    #
-    #     is_done = (True, False)
-    #
-    #     tasklist_1 = TaskList.objects.create(user=user, name="Loisirs",
-    #                                          color="#55b37e")
-    #
-    #     tasklist_2 = TaskList.objects.create(user=user, name="Travail",
-    #                                          color="#ffad10")
-    #
-    #     for i in range(5):
-    #         SimpleTask.objects.create(tasklist=tasklist_1,
-    #                                   name=str("tâche " + str(i)),
-    #                                   due_date=date.today() + datetime.timedelta(days=i),
-    #                                   description=str("Description tâche " + str(i)),
-    #                                   creation=timezone.now(),
-    #                                   is_done=random.choice(is_done))
-    #
-    #     for j in range(5):
-    #         SimpleTask.objects.create(tasklist=tasklist_2,
-    #                                   name=str("tâche " + str(j)),
-    #                                   due_date=date.today() + datetime.timedelta(days=j),
-    #                                   description=str("Description tâche " + str(j)),
-    #                                   creation=timezone.now(),
-    #                                   is_done=random.choice(is_done))
-    #
-    #     print("data added !")
-
     def add_data(self):
 
-        user = User.objects.create_user(username="test@test.com",
-                                        password="testpassword")
-
         is_done = (True, False)
-        tasklist_1 = TaskList.objects.create(user=user, name="Loisirs",
+        tasklist_1 = TaskList.objects.create(user=self.user, name="Loisirs",
                                              color="#55b37e")
 
         for i in range(5):
@@ -80,8 +49,7 @@ class TasksViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'tasks.html')
 
-    def test_add_task(self):
-        # self.add_data()
+    def test_add_task_adds_task(self):
 
         tl = TaskList.objects.create(user=self.user, name="Sport",
                                      color="#333333")
@@ -96,105 +64,257 @@ class TasksViewsTest(TestCase):
             name="Footing", due_date=date.today()).exists()
             )
 
+    def test_add_task_not_auth(self):
+        self.client.get('/logout')
+        tl = TaskList.objects.create(user=self.user, name="Sport",
+                                     color="#333333")
+        response = self.client.post('/addtask', {
+            'name': 'Footing',
+            'due_date': date.today(),
+            'description': '',
+            'tasklists': tl.id
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/addtask')
 
-    # def test_change_task_state(self):
-    #     response = self.client.get('/changestate/')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'login.html')
-    #     self.failUnless(isinstance(response.context['form'], UserLoginForm))
-    #
-    #
-    #
-    # def test_register_get(self):
-    #     response = self.client.get('/register')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'register.html')
-    #     self.failUnless(isinstance(response.context['form'], UserRegisterForm))
-    #
-    # def test_logout_get(self):
-    #     response = self.client.get('/logout')
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertRedirects(response, '/login')
-    #
-    # def test_register_success(self):
-    #     response = self.client.post('/register', {
-    #         'email': 'thetest@test.com',
-    #         'pw1': 'testtest',
-    #         'pw2': 'testtest'
-    #     })
-    #
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertEqual(User.objects.count(), 1)
-    #     self.assertRedirects(response, '/login')
-    #
-    # def test_register_fails(self):
-    #     response = self.client.post('/register', {
-    #         'email': 'anothertest@test.com',
-    #         'pw1': 'testtest',
-    #         'pw2': 'wrongconfirm'
-    #     })
-    #
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertEquals(User.objects.count(), 0)
-    #     self.assertTemplateUsed(response, 'register.html')
-    #     self.failUnless(isinstance(response.context['form'], UserRegisterForm))
-    #
-    # def test_login_success_post(self):
-    #
-    #     user = User.objects.create_user(username='test@test.com',
-    #                                     email='test@test.com',
-    #                                     password='testtest')
-    #
-    #     response = self.client.post('/login', {
-    #         'username': 'test@test.com',
-    #         'password': 'testtest'
-    #     })
-    #
-    #     TaskList.objects.create(user=user)
-    #     #
-    #     self.assertEquals(response.status_code, 302)
-    #     self.assertRedirects(response, '/tasks')
-    #
-    #     user = auth.get_user(self.client)
-    #     self.assertEquals(user.is_authenticated, True)
-    #
-    # def test_login_fails(self):
-    #     user = User.objects.create_user(username='test@test.com',
-    #                                     email='test@test.com',
-    #                                     password='testtest')
-    #
-    #     response = self.client.post('/login', {
-    #         'username': 'test@test.com',
-    #         'password': 'wrongpassword'
-    #     })
-    #
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'login.html')
-    #
-    #     user = auth.get_user(self.client)
-    #     self.assertFalse(user.is_authenticated)
-    #
-    # def test_logout(self):
-    #     """Creates account, connect, and disconnect to check the efficiency of
-    #     the logout view"""
-    #
-    #     user = User.objects.create_user(username='test@test.com',
-    #                                     email='test@test.com',
-    #                                     password='testtest')
-    #
-    #     TaskList.objects.create(user=user)
-    #
-    #     self.client.post('/login', {
-    #         'username': 'test@test.com',
-    #         'password': 'testtest'
-    #     })
-    #
-    #     user = auth.get_user(self.client)
-    #     self.assertTrue(user.is_authenticated)
-    #
-    #     response = self.client.get('/logout')
-    #     self.assertEquals(response.status_code, 302)
-    #     self.assertRedirects(response, '/login')
-    #
-    #     disconnected_user = auth.get_user(self.client)
-    #     self.assertFalse(disconnected_user.is_authenticated)
+    def test_change_task_state(self):
+        self.add_data()
+        task = SimpleTask.objects.get(name="tâche 2")
+        is_done_before = task.is_done
+        self.client.get('/changestate/' + str(task.id))
+        task_after = SimpleTask.objects.get(id=task.id)
+        is_done_now = task_after.is_done
+        self.assertEqual(is_done_now, not is_done_before)
+
+    def test_change_task_state_not_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        task = SimpleTask.objects.get(name="tâche 2")
+        response = self.client.get('/changestate/' + str(task.id))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/changestate/' + str(task.id))
+
+    def test_del_task(self):
+        self.add_data()
+        task = SimpleTask.objects.get(name="tâche 4")
+        self.client.get('/deltask/' + str(task.id))
+        existing = SimpleTask.objects.filter(id=task.id).exists()
+        self.assertFalse(existing)
+
+    def test_del_task_not_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        task = SimpleTask.objects.get(name="tâche 4")
+        response = self.client.get('/deltask/' + str(task.id))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/deltask/' + str(task.id))
+
+    def test_update_task(self):
+        self.add_data()
+        id = SimpleTask.objects.get(name="tâche 3").id
+        response = self.client.post('/updatetask', {
+            'task_id': id,
+            'name': 'Handball',
+            'due_date': date.today(),
+            'description': 'Le lundi et jeudi',
+            'tasklists': TaskList.objects.get(name="Loisirs").id
+        })
+
+        updated_task = SimpleTask.objects.get(id=id)
+
+        self.assertEqual(updated_task.name, "Handball")
+        self.assertEqual(updated_task.description, "Le lundi et jeudi")
+        self.assertEqual(updated_task.tasklist.name, "Loisirs")
+
+    def test_update_task_not_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        id = SimpleTask.objects.get(name="tâche 3").id
+
+        response = self.client.post('/updatetask', {
+            'task_id': id,
+            'name': 'Handball',
+            'due_date': date.today(),
+            'description': 'Le lundi et jeudi',
+            'tasklists': TaskList.objects.get(name="Loisirs").id
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/updatetask')
+
+    def test_show_tasklist(self):
+        self.add_data()
+        tasklist = TaskList.objects.get(name="Loisirs")
+        response = self.client.get('/show_tasklist/' + str(tasklist.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_show_tasklist_not_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        tasklist = TaskList.objects.get(name="Loisirs")
+        response = self.client.get('/show_tasklist/' + str(tasklist.id))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, ('/login?next=/show_tasklist/'
+                                        + str(tasklist.id)))
+
+    def test_show_all_tasklists(self):
+        self.add_data()
+        response = self.client.get('/show_all_tasklists')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_show_all_tasklists_not_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        response = self.client.get('/show_all_tasklists')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/show_all_tasklists')
+
+    def test_sort_by_all(self):
+        self.add_data()
+        tasklist = TaskList.objects.get(name="Loisirs")
+        response = self.client.get('/sort_by_all/' + str(tasklist.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_all_no_id(self):
+        response = self.client.get('/sort_by_all/0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_all_no_auth(self):
+        self.client.get('/logout')
+        response = self.client.get('/sort_by_all/0')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/sort_by_all/0')
+
+    def test_sort_by_current(self):
+        self.add_data()
+        tasklist = TaskList.objects.get(name="Loisirs")
+        response = self.client.get('/sort_by_current/' + str(tasklist.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_current_no_id(self):
+        response = self.client.get('/sort_by_current/0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_current_no_auth(self):
+        self.client.get('/logout')
+        response = self.client.get('/sort_by_current/0')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/sort_by_current/0')
+
+    def test_sort_by_finished(self):
+        self.add_data()
+        tasklist = TaskList.objects.get(name="Loisirs")
+        response = self.client.get('/sort_by_finished/' + str(tasklist.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_finished_no_id(self):
+        response = self.client.get('/sort_by_finished/0')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tasks.html')
+
+    def test_sort_by_finished_no_auth(self):
+        self.client.get('/logout')
+        response = self.client.get('/sort_by_finished/0')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/sort_by_finished/0')
+
+    def test_add_category(self):
+        self.add_data()
+        response = self.client.post('/addcategory', {
+            'list_name': 'Tâches ménagères',
+            'list_color': '#262626',
+        })
+        self.assertTrue(TaskList.objects.filter(name="Tâches ménagères",
+                                                color="#262626",
+                                                user=self.user).exists())
+
+    def test_add_category_no_auth(self):
+        self.client.get('/logout')
+        response = self.client.post('/addcategory', {
+            'list_name': 'Tâches ménagères',
+            'list_color': '#262626',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/addcategory')
+
+    def test_edit_category(self):
+        self.add_data()
+        tasklist_to_change = TaskList.objects.get(user=self.user,
+                                                  name="Loisirs",
+                                                  color="#55b37e")
+
+        response = self.client.post('/editcategory', {
+            'list_id': tasklist_to_change.id,
+            'list_name': 'Tâches ménagères',
+            'list_color': '#262626',
+        })
+
+        list_changed = TaskList.objects.get(id=tasklist_to_change.id)
+        self.assertEqual(list_changed.name, "Tâches ménagères")
+        self.assertEqual(list_changed.color, "#262626")
+
+    def test_edit_category_no_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        tasklist_to_change = TaskList.objects.get(name="Loisirs",
+                                                  color="#55b37e")
+
+        response = self.client.post('/editcategory', {
+            'list_id': tasklist_to_change.id,
+            'list_name': 'Tâches ménagères',
+            'list_color': '#262626',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/editcategory')
+
+    def test_deletecategory(self):
+        self.add_data()
+        tasklist_to_del = TaskList.objects.get(user=self.user,
+                                               name="Loisirs",
+                                               color="#55b37e")
+
+        response = self.client.post('/deletecategory', {
+            'list_id': tasklist_to_del.id,
+        })
+        existing = TaskList.objects.filter(id=tasklist_to_del.id).exists()
+        self.assertFalse(existing)
+
+    def test_deletecategory_no_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        tasklist_to_del = TaskList.objects.get(name="Loisirs",
+                                               color="#55b37e")
+
+        response = self.client.post('/deletecategory', {
+            'list_id': tasklist_to_del.id,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/deletecategory')
+
+    def test_edit_task(self):
+        self.add_data()
+        task_to_edit = SimpleTask.objects.get(name="tâche 1")
+        response = self.client.get('/edittask/' + str(task_to_edit.id))
+
+        self.assertEqual(response['task_name'], task_to_edit.name)
+        self.assertEqual(response['task_id'], task_to_edit.id)
+        self.assertEqual(response['category_name'], task_to_edit.tasklist.name)
+        self.assertEqual(response['due_date'], task_to_edit.due_date)
+        self.assertEqual(response['description'], task_to_edit.description)
+
+    def test_edit_task(self):
+        self.client.get('/logout')
+        self.add_data()
+        task_to_edit = SimpleTask.objects.get(name="tâche 1")
+        response = self.client.get('/edittask/' + str(task_to_edit.id))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, ('/login?next=/edittask/'
+                                        + str(task_to_edit.id)))

@@ -127,7 +127,8 @@ $(document).ready(function() {
         $("#empty-task-form-description").val(response["description"]);
 
         $("#empty-task-form-submit-add-button").html('Modifier');
-        $("#empty-task-form-submit-action").attr("action", "/updatetask/" + response["task_id"]);
+        $("#empty-task-form-submit-action").attr("action", "/updatetask");
+        $("#empty-task-form-id").val(response["task_id"]);
         $("#empty-task-form-submit-add-button").css('background-color', response['category_color']);
         $(".category-buttons").css('color', response['category_color']);
         $(".category-buttons").css('transition', '0.3s');
