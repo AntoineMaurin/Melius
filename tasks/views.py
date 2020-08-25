@@ -104,7 +104,7 @@ def show_all_tasklists(request):
 
 
 @login_required
-def sort_by_all(request, id=None):
+def sort_by_all(request, id):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
                         display='all')
@@ -113,7 +113,7 @@ def sort_by_all(request, id=None):
                         display='all')
 
 @login_required
-def sort_by_current(request, id=None):
+def sort_by_current(request, id):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
                         display='current')
@@ -122,7 +122,7 @@ def sort_by_current(request, id=None):
                         display='current')
 
 @login_required
-def sort_by_finished(request, id=None):
+def sort_by_finished(request, id):
     if id > 0:
         return tasks_dashboard(request, tasklist_to_show_id=id,
                         display='finished')
