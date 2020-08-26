@@ -47,7 +47,6 @@ class SimpleTask(models.Model):
     def get_task_with_id(id):
         return SimpleTask.objects.get(id=id)
 
-
     def get_overdue_tasks(tasks):
         today = date.today()
         # if the parameter is a container object
@@ -61,7 +60,8 @@ class SimpleTask(models.Model):
                                                     list.append(task)
             return list
         else:
-            return SimpleTask.objects.filter(tasklist=tasks, due_date__lt=today,
+            return SimpleTask.objects.filter(tasklist=tasks,
+                                             due_date__lt=today,
                                              is_done=False)
 
     def get_today_tasks(tasks):
