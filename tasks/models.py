@@ -47,85 +47,101 @@ class SimpleTask(models.Model):
     def get_task_with_id(id):
         return SimpleTask.objects.get(id=id)
 
-    def get_overdue_tasks_list(tasklist):
-        today = date.today()
-        return SimpleTask.objects.filter(tasklist=tasklist, due_date__lt=today,
-                                         is_done=False)
-
-    def get_today_tasks_list(tasklist):
-        today = date.today()
-        return SimpleTask.objects.filter(tasklist=tasklist, due_date=today,
-                                         is_done=False)
-
-    def get_tomorrow_tasks_list(tasklist):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        return SimpleTask.objects.filter(tasklist=tasklist, due_date=tomorrow,
-                                         is_done=False)
-
-    def get_future_tasks(tasklist):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        return SimpleTask.objects.filter(tasklist=tasklist,
-                                         due_date__gt=tomorrow,
-                                         is_done=False)
-
-    def get_no_date_tasks(tasklist):
-         return SimpleTask.objects.filter(tasklist=tasklist, due_date=None,
-                                          is_done=False)
-
-    def get_finished_tasks(tasklist):
-        return SimpleTask.objects.filter(tasklist=tasklist, is_done=True)
 
     def get_overdue_tasks(tasks):
         today = date.today()
-        list = []
-        for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id, due_date__lt=today,
-                                             is_done=False):
-                                                list.append(task)
-        return list
+        # if the parameter is a container object
+        if hasattr(tasks, "__getitem__"):
+            list = []
+            for task in tasks:
+                if task.due_date:
+                    if SimpleTask.objects.filter(id=task.id,
+                                                due_date__lt=today,
+                                                is_done=False):
+                                                    list.append(task)
+            return list
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, due_date__lt=today,
+                                             is_done=False)
 
-    def get_due_today_tasks(tasks):
+    def get_today_tasks(tasks):
+
         today = date.today()
-        list = []
-        for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id, due_date=today,
-                                             is_done=False):
-                                                list.append(task)
-        return list
 
-    def get_due_tomorrow_tasks(tasks):
+        if hasattr(tasks, "__getitem__"):
+            list = []
+            for task in tasks:
+                if task.due_date:
+                    if SimpleTask.objects.filter(id=task.id,
+                                                due_date=today,
+                                                is_done=False):
+                                                    list.append(task)
+            return list
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, due_date=today,
+                                             is_done=False)
+
+
+
+    def get_tomorrow_tasks(tasks):
         tomorrow = date.today() + datetime.timedelta(days=1)
-        list = []
-        for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id, due_date=tomorrow,
-                                             is_done=False):
-                                                list.append(task)
-        return list
 
-    def get_upcoming_tasks(tasks):
+        if hasattr(tasks, "__getitem__"):
+            list = []
+            for task in tasks:
+                if task.due_date:
+                    if SimpleTask.objects.filter(id=task.id,
+                                                due_date=tomorrow,
+                                                is_done=False):
+                                                    list.append(task)
+            return list
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, due_date=tomorrow,
+                                             is_done=False)
+
+    def get_future_tasks(tasks):
         tomorrow = date.today() + datetime.timedelta(days=1)
-        list = []
-        for task in tasks:
-            if task.due_date:
-                if SimpleTask.objects.filter(id=task.id, due_date__gt=tomorrow,
-                                             is_done=False):
+        if hasattr(tasks, "__getitem__"):
+            list = []
+            for task in tasks:
+                if task.due_date:
+                    if SimpleTask.objects.filter(id=task.id,
+                                                due_date__gt=tomorrow,
+                                                is_done=False):
+                                                    list.append(task)
+            return list
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks,
+                                             due_date__gt=tomorrow,
+                                             is_done=False)
+
+    def get_no_date_tasks(tasks):
+
+        if hasattr(tasks, "__getitem__"):
+
+            list = []
+            for task in tasks:
+                if SimpleTask.objects.filter(id=task.id,
+                                            due_date=None,
+                                            is_done=False):
                                                 list.append(task)
-        return list
+            return list
 
-    def get_no_due_date_tasks(tasks):
-        list = []
-        for task in tasks:
-            if SimpleTask.objects.filter(id=task.id, due_date=None,
-                                         is_done=False):
-                                            list.append(task)
-        return list
 
-    def get_completed_tasks(tasks):
-        list = []
-        for task in tasks:
-            if SimpleTask.objects.filter(id=task.id, is_done=True):
-                list.append(task)
-        return list
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, due_date=None,
+                                             is_done=False)
+
+
+    def get_finished_tasks(tasks):
+        if hasattr(tasks, "__getitem__"):
+
+            list = []
+            for task in tasks:
+                if SimpleTask.objects.filter(id=task.id,
+                                            is_done=True):
+                                                list.append(task)
+            return list
+
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, is_done=True)

@@ -11,25 +11,20 @@ class SetDataDict:
 
     def get_data(self):
 
-        all_tasklists = TaskList.get_tasklists_from_user(self.user_mail)
-
         if self.tasklist_to_show:
-            overdue_tasks = SimpleTask.get_overdue_tasks_list(self.tasklist_to_show)
-            due_today_tasks = SimpleTask.get_today_tasks_list(self.tasklist_to_show)
-            due_tommorow_tasks = SimpleTask.get_tomorrow_tasks_list(self.tasklist_to_show)
-            future_tasks = SimpleTask.get_future_tasks(self.tasklist_to_show)
-            no_date_tasks = SimpleTask.get_no_date_tasks(self.tasklist_to_show)
-            finished_tasks = SimpleTask.get_finished_tasks(self.tasklist_to_show)
+            tasks = self.tasklist_to_show
         else:
             user = User.objects.get(email=self.user_mail)
-            all_tasks = SimpleTask.get_all_tasks_by_user(user)
+            tasks = SimpleTask.get_all_tasks_by_user(user)
 
-            overdue_tasks = SimpleTask.get_overdue_tasks(all_tasks)
-            due_today_tasks = SimpleTask.get_due_today_tasks(all_tasks)
-            due_tommorow_tasks = SimpleTask.get_due_tomorrow_tasks(all_tasks)
-            future_tasks = SimpleTask.get_upcoming_tasks(all_tasks)
-            no_date_tasks = SimpleTask.get_no_due_date_tasks(all_tasks)
-            finished_tasks = SimpleTask.get_completed_tasks(all_tasks)
+        overdue_tasks = SimpleTask.get_overdue_tasks(tasks)
+        due_today_tasks = SimpleTask.get_today_tasks(tasks)
+        due_tommorow_tasks = SimpleTask.get_tomorrow_tasks(tasks)
+        future_tasks = SimpleTask.get_future_tasks(tasks)
+        no_date_tasks = SimpleTask.get_no_date_tasks(tasks)
+        finished_tasks = SimpleTask.get_finished_tasks(tasks)
+
+        all_tasklists = TaskList.get_tasklists_from_user(self.user_mail)
 
         all_data = {'overdue_tasks': overdue_tasks,
                     'due_today_tasks': due_today_tasks,

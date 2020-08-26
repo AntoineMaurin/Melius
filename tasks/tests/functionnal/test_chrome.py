@@ -1,18 +1,11 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 
 class MeliusChromeTest(StaticLiveServerTestCase):
     def setUp(self):
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--window-size=1920,1080")
-
-        self.browser = webdriver.Chrome('tasks/tests/functionnal/'
-                                        'chromedriver',
-                                        chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(ChromeDriverManager().install())
 
     def tearDown(self):
         self.browser.close()
