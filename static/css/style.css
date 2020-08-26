@@ -93,7 +93,11 @@ a:hover {
 }
 
 .wip-elt {
-  color: #484848b0 !important;
+  color: #134d46 !important;
+}
+
+.wip-elt-dashboard {
+  color: #fff6 !important;
 }
 
 .baloo-font {
@@ -434,18 +438,44 @@ input {
 }
 
 .dashboard-section {
-
+  height: 500px;
+  width: 350px;
+  border-radius: 25px;
 }
 
-.dashboard-container {
-  margin-top: 50%;
-  transform: translateY(-50%);
-}
-
-.custom-bg {
-  background-color: #054863;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23054863' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%23054863' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23004f69' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300566f' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23005d74' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23006479' cx='0' cy='0' r='1400'/%3E%3Ccircle\ fill='%23006b7e' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23007382' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23007a85' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23008188' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2300888a' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%2307908c' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%231c978d' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%232b9e8e' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2339a58e' cx='0' cy='0' r='500'/%3E%3Ccircle\
-  fill='%2347ac8e' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%2355b38e' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%2362b98e' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%2370c08d' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
+.dashboard-bg {
+  background-color: #262c3a;
+  background-image: url("../img/wallpaperflare.com_wallpaper.jpg");
   background-size: cover;
+}
+/* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23054863' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%23054863' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%23004f69' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300566f' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23005d74' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23006479' cx='0' cy='0' r='1400'/%3E%3Ccircle\ fill='%23006b7e' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%23007382' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23007a85' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23008188' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2300888a' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%2307908c' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%231c978d' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%232b9e8e' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2339a58e' cx='0' cy='0' r='500'/%3E%3Ccircle\
+fill='%2347ac8e' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%2355b38e' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%2362b98e' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%2370c08d' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E"); */
+
+.text-blue-purple {
+  color: #1f1591 !important;
+}
+.stats-container {
+  top: 50%;
+  transform: translate(-50%, -80%);
+  position: absolute;
+  left: 50%;
+}
+
+#stats-1 {
+  /* background-image: url("../img/2a86b4b53b4a84d144477d67567292cb.jpg"); */
+  /* opacity: .95; */
+  background-size: cover;
+  background-position: center;
+}
+
+#stats-2 {
+  /* background-image: url("../img/7f14d6a18be48ff7a53b78194172e50b.jpg"); */
+  /* opacity: .95; */
+  background-size: cover;
+  background-position: center;
+}
+
+#stats-3 {
+  /* background-image: url("../img/15b9b07685d16e23f15698c4761f8c63.jpg");
+  opacity: .95; */
 }

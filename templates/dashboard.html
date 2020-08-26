@@ -5,7 +5,7 @@
 
 {% block title %}Dashboard{% endblock title %}
 
-{% block body_class %}custom-bg{% endblock body_class %}
+{% block body_class %}dashboard-bg{% endblock body_class %}
 
 {% block main_content %}
 <div class="row header bg-transparent py-2">
@@ -16,12 +16,12 @@
     <div class="sidebar">
       <a href="#" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
       <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-th-large"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-columns"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-hourglass-start"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-stopwatch"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt far fa-calendar-alt"></i></a>
-      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-meteor"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard fas fa-th-large"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard fas fa-columns"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard fas fa-hourglass-start"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard fas fa-stopwatch"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard far fa-calendar-alt"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt-dashboard fas fa-meteor"></i></a>
     </div>
   </div>
   <div class="col-1 text-center py-3">
@@ -32,23 +32,29 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col dashboard-section">
-      <div class="dashboard-container text-center">
-        <h2 class="text-white powell-font huge-font-size">{{ done_tasks }}</h2><br>
-        <h3 class="text-white powell-font">Tâches effectuées</h3>
+  <div class="row mx-5 mt-5">
+    <div class="col">
+      <div class="dashboard-section text-center mx-auto" id="stats-1">
+        <div class="stats-container">
+          <h2 class="text-blue-purple powell-font huge-font-size">{{ done_tasks }}</h2>
+          <h3 class="text-blue-purple powell-font">Tâches effectuées</h3>
+        </div>
       </div>
     </div>
-    <div class="col dashboard-section">
-      <div class="dashboard-container text-center">
-        <h2 class="text-white powell-font huge-font-size">{{ not_done_tasks }}</h2><br>
-        <h3 class="text-white powell-font">Tâches restantes</h3>
+    <div class="col">
+      <div class="dashboard-section text-center mx-auto" id="stats-2">
+        <div class="stats-container">
+          <h2 class="text-blue-purple powell-font huge-font-size">{{ not_done_tasks }}</h2>
+          <h3 class="text-blue-purple powell-font">Tâches restantes</h3>
+        </div>
       </div>
     </div>
-    <div class="col dashboard-section">
-      <div class="dashboard-container text-center">
-        <h2 class="text-white powell-font huge-font-size">{{ all_tasks }}</h2><br>
-        <h3 class="text-white powell-font">Tâches totales</h3>
+    <div class="col">
+      <div class="dashboard-section text-center mx-auto" id="stats-3">
+        <div class="stats-container">
+          <h2 class="text-blue-purple powell-font huge-font-size">{{ all_tasks }}</h2>
+          <h3 class="text-blue-purple powell-font">Tâches totales</h3>
+        </div>
       </div>
     </div>
   </div>
