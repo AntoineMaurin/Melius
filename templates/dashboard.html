@@ -31,38 +31,63 @@
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="dashboard-title">
-    <h2 class="powell-font big-font-size">Cette semaine</h2>
+<div class="row global-dashboard">
+  <div class="left-side-dashboard-section pt-3" id="today">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1 class="text-center big-font-size baloo-font text-white">Aujourd'hui</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-5">
+        <div class="stat-container">
+          <h2 class="text-center huge-font-size powell-font">4</h2><br>
+          <h2 class="text-center">Tâches effectuées</h2>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="stat-container">
+          <h2 class="text-center huge-font-size powell-font">4</h2><br>
+          <h2 class="text-center">Tâches effectuées</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="left-side-dashboard-section pt-3" id="this-week">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1 class="text-center big-font-size baloo-font text-white">Cette semaine</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-5">
+        <div class="stat-container">
+          <h2 class="text-center huge-font-size powell-font">4</h2><br>
+          <h2 class="text-center">Tâches effectuées</h2>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="stat-container">
+          <h2 class="text-center huge-font-size powell-font">4</h2><br>
+          <h2 class="text-center">Tâches effectuées</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center right-side-dashboard-section mt-3">
+    <h1 class="big-font-size baloo-font text-white">Global</h1>
+    <div class="stat-container my-3">
+      <h2 class="text-center huge-font-size powell-font">17</h2><br>
+      <h2 class="text-center">A faire</h2>
+    </div>
+    <div class="stat-container mt-5">
+      <h2 class="text-center huge-font-size powell-font">17</h2><br>
+      <h2 class="text-center">A faire</h2>
+    </div>
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="row mx-8 mt-5">
-    <div class="col">
-      <div class="dashboard-section text-center mx-auto" id="stats-1">
-        <div class="stats-container">
-          <h2 class="powell-font huge-font-size">{{ done_tasks }}</h2><br>
-          <h3 class="powell-font">Tâches effectuées</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="dashboard-section text-center mx-auto" id="stats-2">
-        <div class="stats-container">
-          <h2 class="powell-font huge-font-size">{{ not_done_tasks }}</h2><br>
-          <h3 class="powell-font">Tâches restantes</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="dashboard-section text-center mx-auto" id="stats-3">
-        <div class="stats-container">
-          <h2 class="powell-font huge-font-size">{{ all_tasks }}</h2><br>
-          <h3 class="powell-font">Tâches totales</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 {% endblock main_content %}
