@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from tasks.models import TaskList, SimpleTask
 
 
-class SetDataDict:
+class BuildTemplateContext:
 
     def __init__(self, display, tasklist_to_show, user_mail):
         self.display = display

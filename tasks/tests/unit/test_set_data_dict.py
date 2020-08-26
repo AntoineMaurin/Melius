@@ -1,10 +1,10 @@
 from django.test import TestCase
-from tasks.set_data_dict import SetDataDict
+from tasks.build_template_context import BuildTemplateContext
 from django.contrib.auth.models import User
 from tasks.models import TaskList
 
 
-class SetDataDictTest(TestCase):
+class BuildTemplateContextTest(TestCase):
 
     def setUp(self):
         user = User.objects.create_user(username="test@test.com",
@@ -27,7 +27,7 @@ class SetDataDictTest(TestCase):
                               'tasklist_to_show']
 
     def test_display_all(self):
-        test_obj = SetDataDict('all', self.tasklist, self.email)
+        test_obj = BuildTemplateContext('all', self.tasklist, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 
@@ -35,7 +35,7 @@ class SetDataDictTest(TestCase):
             self.assertTrue(key in self.all_keys)
 
     def test_display_all_no_tasklist(self):
-        test_obj = SetDataDict('all', None, self.email)
+        test_obj = BuildTemplateContext('all', None, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 
@@ -43,7 +43,7 @@ class SetDataDictTest(TestCase):
             self.assertTrue(key in self.all_keys)
 
     def test_display_current(self):
-        test_obj = SetDataDict('current', self.tasklist, self.email)
+        test_obj = BuildTemplateContext('current', self.tasklist, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 
@@ -51,7 +51,7 @@ class SetDataDictTest(TestCase):
             self.assertTrue(key in self.current_keys)
 
     def test_display_current_no_tasklist(self):
-        test_obj = SetDataDict('current', None, self.email)
+        test_obj = BuildTemplateContext('current', None, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 
@@ -59,7 +59,7 @@ class SetDataDictTest(TestCase):
             self.assertTrue(key in self.current_keys)
 
     def test_display_finished(self):
-        test_obj = SetDataDict('finished', self.tasklist, self.email)
+        test_obj = BuildTemplateContext('finished', self.tasklist, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 
@@ -67,7 +67,7 @@ class SetDataDictTest(TestCase):
             self.assertTrue(key in self.finished_keys)
 
     def test_display_finished_no_tasklist(self):
-        test_obj = SetDataDict('finished', None, self.email)
+        test_obj = BuildTemplateContext('finished', None, self.email)
         response = test_obj.get_data()
         self.assertTrue(isinstance(response, dict))
 

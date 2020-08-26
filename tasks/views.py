@@ -6,14 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from tasks.utils import *
 import datetime
+from tasks.build_template_context import BuildTemplateContext
 
-from tasks.set_data_dict import SetDataDict
 
 @login_required
 def set_tasks_dict(request, display, tasklist_to_show):
 
     user_mail = request.session['user_mail']
-    data_dict_obj = SetDataDict(display, tasklist_to_show, user_mail)
+    data_dict_obj = BuildTemplateContext(display, tasklist_to_show, user_mail)
     data_dict = data_dict_obj.get_data()
 
     return data_dict
