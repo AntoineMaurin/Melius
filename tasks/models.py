@@ -55,8 +55,8 @@ class SimpleTask(models.Model):
             for task in tasks:
                 if task.due_date:
                     if SimpleTask.objects.filter(id=task.id,
-                                                due_date__lt=today,
-                                                is_done=False):
+                                                 due_date__lt=today,
+                                                 is_done=False):
                                                     list.append(task)
             return list
         else:
