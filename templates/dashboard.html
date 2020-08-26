@@ -8,7 +8,7 @@
 {% block body_class %}dashboard-bg{% endblock body_class %}
 
 {% block main_content %}
-<div class="row header bg-transparent py-2">
+<div class="row header py-2">
   <div class="col-1 text-center">
     <h2 class="powell-font text-white py-2">Dashboard</h2>
   </div>
@@ -32,28 +32,34 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row mx-5 mt-5">
+  <div class="dashboard-title">
+    <h2 class="powell-font big-font-size">Cette semaine</h2>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row mx-8 mt-5">
     <div class="col">
       <div class="dashboard-section text-center mx-auto" id="stats-1">
         <div class="stats-container">
-          <h2 class="text-blue-purple powell-font huge-font-size">{{ done_tasks }}</h2>
-          <h3 class="text-blue-purple powell-font">Tâches effectuées</h3>
+          <h2 class="powell-font huge-font-size">{{ done_tasks }}</h2><br>
+          <h3 class="powell-font">Tâches effectuées</h3>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="dashboard-section text-center mx-auto" id="stats-2">
         <div class="stats-container">
-          <h2 class="text-blue-purple powell-font huge-font-size">{{ not_done_tasks }}</h2>
-          <h3 class="text-blue-purple powell-font">Tâches restantes</h3>
+          <h2 class="powell-font huge-font-size">{{ not_done_tasks }}</h2><br>
+          <h3 class="powell-font">Tâches restantes</h3>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="dashboard-section text-center mx-auto" id="stats-3">
         <div class="stats-container">
-          <h2 class="text-blue-purple powell-font huge-font-size">{{ all_tasks }}</h2>
-          <h3 class="text-blue-purple powell-font">Tâches totales</h3>
+          <h2 class="powell-font huge-font-size">{{ all_tasks }}</h2><br>
+          <h3 class="powell-font">Tâches totales</h3>
         </div>
       </div>
     </div>

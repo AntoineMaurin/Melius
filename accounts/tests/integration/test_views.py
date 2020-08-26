@@ -63,7 +63,7 @@ class AccountsViewsTest(TestCase):
         TaskList.objects.create(user=user)
         #
         self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, '/tasks')
+        self.assertRedirects(response, '/dashboard')
 
         user = auth.get_user(self.client)
         self.assertEquals(user.is_authenticated, True)
