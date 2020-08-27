@@ -67,9 +67,13 @@ ul li.checked {
   text-decoration: line-through;
 }
 
-a:hover {
+.text-green:hover {
   text-decoration: underline;
   color: #88c27d !important;
+}
+
+.cancel-button:hover, .btn-submit-register:hover {
+  color: white !important;
 }
 
 .category:hover {
@@ -93,10 +97,6 @@ a:hover {
 }
 
 .wip-elt {
-  color: #134d46 !important;
-}
-
-.wip-elt-dashboard {
   color: #fff6 !important;
 }
 
@@ -447,34 +447,29 @@ input {
 }
 
 .stat-container {
-  padding: 20px;
+  padding: 10px;
   background-color: #F0CA4D;
   color: #333;
   border-radius: 20px;
-  margin: 12px 20px;
-  width: 350px;
-  border: 4px solid white;
+  margin: 0 20px 12px;
+  width: 300px;
+  border: 2px solid white;
 }
 
 .left-side-dashboard-section {
-  width: 65vw;
-  padding-left: 20px;
-  float: left;
   background-color: #46B39D;
   color: #f0ca4d;
 }
 
 .right-side-dashboard-section {
-  position: absolute;
-  width: 25vw;
-  right: 45px;
+  background-color: #DE4F3C;
+  border-left: 2px solid white;
 }
 
 .global-dashboard {
   margin: 25px;
   box-shadow: 0 0 5px black;
-  background-color: #DE4F3C;
-  border: 4px solid white;
+  border: 2px solid white;
 }
 
 .dashboard-bg {
@@ -483,10 +478,14 @@ input {
 
 #this-week {
   background-color: #E37332;
-  border-right: 4px solid white;
-  border-top: 4px solid white;
+  border-top: 2px solid white;
 }
 
 #today {
-  border-right: 4px solid white;
+  background-color: #3EA48F;
+}
+
+#radioBtn .notActive{
+    color: #3276b1;
+    background-color: #fff;
 }

@@ -33,6 +33,28 @@
       <textarea class="form-control" name="description" rows="3" id="empty-task-form-description"></textarea>
       <input type="hidden" name="task_id" required="true" id="empty-task-form-id" value="">
     </div>
+    <div class="mb-3 px-3 font-16">
+      <label for="importance">Est-ce important ?</label>
+      <div class="input-group ml-3">
+        <div id="radioBtn" class="btn-group">
+          <a class="btn btn-primary btn-sm notActive" data-toggle="importance" data-title="True">Oui</a>
+          <a class="btn btn-primary btn-sm notActive" data-toggle="importance" data-title="False">Non</a>
+        </div>
+        <input type="hidden" name="importance" id="importance">
+      </div>
+    </div>
+    <div class="mb-3 px-3 font-16">
+      <label for="emergency">Est-ce urgent ?</label>
+      <div class="input-group ml-3">
+        <div id="radioBtn" class="btn-group">
+          <a class="btn btn-primary btn-sm notActive" data-toggle="emergency" data-title="True">Oui</a>
+          <a class="btn btn-primary btn-sm notActive" data-toggle="emergency" data-title="False">Non</a>
+        </div>
+        <input type="hidden" name="emergency" id="emergency">
+      </div>
+    </div>
+
+
     <div class="row">
       <div class="col pr-5">
         <button type="submit" class="addBtn btn btn-submit-register" id="empty-task-form-submit-add-button">Ajouter</button>

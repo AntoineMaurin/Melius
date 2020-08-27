@@ -58,6 +58,15 @@ $(document).ready(function() {
 
   set_category_colors();
 
+  $('#radioBtn a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+  })
+
   $(document).on('change','#tasklists', function(){
     set_category_colors();
   });
@@ -104,6 +113,10 @@ $(document).ready(function() {
 
     $("#empty-task-form-submit-add-button").html('Ajouter');
     $("#empty-task-form-submit-action").attr("action", "/addtask");
+
+    $('.active').removeClass('active').addClass('notActive');
+    $("#importance").val("");
+    $("#emergency").val("");
 
   });
 

@@ -28,6 +28,8 @@ class SimpleTask(models.Model):
     description = models.TextField(null=True, blank=True)
     creation = models.DateTimeField(default=None)
     is_done = models.BooleanField(default=False)
+    is_important = models.BooleanField(default=None, null=True)
+    is_urgent = models.BooleanField(default=None, null=True)
 
     def __str__(self):
         return self.name

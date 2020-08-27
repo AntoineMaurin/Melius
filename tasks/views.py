@@ -40,6 +40,8 @@ def addtask(request):
     due_date = request.POST['due_date']
     description = request.POST['description']
     tasklist_id = request.POST['tasklists']
+    importance = request.POST['importance']
+    emergency = request.POST['emergency']
 
     user_tasklist = TaskList.get_tasklist_by_id(id=tasklist_id)
 
@@ -49,7 +51,9 @@ def addtask(request):
                       name=task_name,
                       due_date=due_date,
                       description=description,
-                      creation=timezone.now())
+                      creation=timezone.now(),
+                      is_important=importance,
+                      is_urgent=emergency)
     if task.due_date:
         task.due_date_clean_display = convert_to_clean_date(task.due_date)
 
@@ -75,6 +79,8 @@ def update_task(request):
     task = SimpleTask.get_task_with_id(id)
     task.name = request.POST['name']
     task.due_date = request.POST['due_date']
+    task.is_important = request.POST['importance']
+    task.is_urgent = request.POST['emergency']
 
     if len(str(task.due_date)) > 5:
         task.due_date_clean_display = convert_to_clean_date(task.due_date)
