@@ -34,14 +34,14 @@
 
 <div class="row px-3">
   <section class="col container pl-5">
-    <div class="row pl-3 py-2">
+    <div class="row pl-3 py-2 border-bottom">
       <a class="category text-white darkblue-bg my-3" href="/show_all_tasklists" method="post">Toutes catégories</a>
       {% for tasklist in all_tasklists %}
         <a class="category text-white darkblue-bg my-3" href="/show_tasklist/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
       {% endfor %}
       <button type="button" class="border-0 ml-2 bg-transparent text-darkblue my-3 new-list-form"><i class="far fa-plus-square fa-2x align-middle"></i></button>
     </div>
-    <div class="row pl-1 border-top border-bottom">
+    <div class="row pl-1 border-bottom">
       <div class="col py-3 align-self-center">
         {% if tasklist_to_show %}
           <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>

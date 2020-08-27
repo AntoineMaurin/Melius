@@ -41,7 +41,16 @@ const pickr = Pickr.create({
     }
 });
 
+function toggleMyTasks() {
 
+  var my_tasks = document.getElementById("my-tasks");
+
+  if (my_tasks.style.display === "none") {
+    my_tasks.style.display = "block";
+  } else {
+    my_tasks.style.display = "none";
+  }
+}
 
 function closeBaseListForm() {
   document.getElementById("BaseListForm").style.display = "none";

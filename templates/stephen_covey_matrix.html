@@ -8,12 +8,12 @@
 {% block body_class %}baloo-font{% endblock body_class %}
 
 {% block main_content %}
-<div class="row header py-2">
+<div class="row header">
   <div class="col-1 text-center">
-    <h2 class="powell-font text-white py-2">Dashboard</h2>
+    <h2 class="powell-font text-white pb-2">Dashboard</h2>
   </div>
   <div class="col-10 text-center">
-    <div class="sidebar">
+    <div class="sidebar pb-3">
       <a href="/dashboard" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
       <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
       <a href="/coveys_matrix" class="sidebar-elt"><i class="fas fa-th-large"></i></a>
@@ -24,11 +24,23 @@
       <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-meteor"></i></a>
     </div>
   </div>
-  <div class="col-1 text-center py-3">
+  <div class="col-1 text-center">
     <a href="/logout">
       <i class="fas fa-sign-out-alt disconnect-icon text-white"></i>
     </a>
   </div>
+</div>
+
+<div class="row my-3">
+  <div class="see-my-tasks-button ml-3" type="button" onclick="toggleMyTasks()">
+    <h6 class="mb-0">Voir mes tâches</h6>
+  </div>
+</div>
+
+<div class="box-shadow" id="my-tasks">
+  {% for task in my_tasks %}
+    {% include "matrix_task.html" %}
+  {% endfor %}
 </div>
 
 <div class="container matrix-container">
@@ -53,24 +65,24 @@
       <div class="row h-50">
         <div class="col-6" id="important-urgent">
           {% for task in important_urgent %}
-            {% include "simple_task.html" %}
+            {% include "matrix_task.html" %}
           {% endfor %}
         </div>
         <div class="col-6" id="important-non-urgent">
           {% for task in important_non_urgent %}
-            {% include "simple_task.html" %}
+            {% include "matrix_task.html" %}
           {% endfor %}
         </div>
       </div>
       <div class="row h-50 border-top">
         <div class="col-6" id="non-important-urgent">
           {% for task in non_important_urgent %}
-            {% include "simple_task.html" %}
+            {% include "matrix_task.html" %}
           {% endfor %}
         </div>
         <div class="col-6" id="non-important-non-urgent">
           {% for task in non_important_non_urgent %}
-            {% include "simple_task.html" %}
+            {% include "matrix_task.html" %}
           {% endfor %}
         </div>
       </div>

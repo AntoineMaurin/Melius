@@ -184,9 +184,12 @@ def coveys_matrix_page(request):
 
     non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(user)
 
+    my_tasks = SimpleTask.get_all_tasks_by_user(user)
+
     context = {'important_urgent': important_urgent,
                'important_non_urgent': important_non_urgent,
                'non_important_urgent': non_important_urgent,
-               'non_important_non_urgent': non_important_non_urgent}
+               'non_important_non_urgent': non_important_non_urgent,
+               'my_tasks': my_tasks}
 
     return render(request, "stephen_covey_matrix.html", context)
