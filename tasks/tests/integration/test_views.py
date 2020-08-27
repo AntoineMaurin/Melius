@@ -69,7 +69,6 @@ class TasksViewsTest(TestCase):
             self.assertIn(key, response.context)
 
 
-
     def test_tasks_dashboard_tasklist_display_current(self):
         self.add_data()
         tl = TaskList.objects.create(user=self.user, name="Sport",
@@ -100,7 +99,9 @@ class TasksViewsTest(TestCase):
             'name': 'Footing',
             'due_date': date.today(),
             'description': '',
-            'tasklists': tl.id
+            'tasklists': tl.id,
+            'importance': "",
+            'emergency': True,
         })
 
         self.assertTrue(SimpleTask.objects.filter(
@@ -160,7 +161,9 @@ class TasksViewsTest(TestCase):
             'name': 'Handball',
             'due_date': date.today(),
             'description': 'Le lundi et jeudi',
-            'tasklists': TaskList.objects.get(name="Loisirs").id
+            'tasklists': TaskList.objects.get(name="Loisirs").id,
+            'importance': True,
+            'emergency': False,
         })
 
         updated_task = SimpleTask.objects.get(id=id)

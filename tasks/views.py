@@ -172,3 +172,6 @@ def edit_task(request, id):
             "due_date": task.due_date,
             "description": task.description}
     return JsonResponse(data)
+
+def coveys_matrix_page(request):
+    return render(request, "stephen_covey_matrix.html")

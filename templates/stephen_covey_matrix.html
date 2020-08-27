@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Stephen Covey's Matrix{% endblock title %}
+
+{% block body_class %}baloo-font{% endblock body_class %}
+
+{% block main_content %}
+<div class="row header py-2">
+  <div class="col-1 text-center">
+    <h2 class="powell-font text-white py-2">Dashboard</h2>
+  </div>
+  <div class="col-10 text-center">
+    <div class="sidebar">
+      <a href="/dashboard" class="sidebar-elt"><i class="fas fa-tachometer-alt"></i></a>
+      <a href="/tasks" class="sidebar-elt"><i class="fas fa-check-square"></i></a>
+      <a href="/coveys_matrix" class="sidebar-elt"><i class="fas fa-th-large"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-columns"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-hourglass-start"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-stopwatch"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt far fa-calendar-alt"></i></a>
+      <a href="#" class="sidebar-elt"><i class="wip-elt fas fa-meteor"></i></a>
+    </div>
+  </div>
+  <div class="col-1 text-center py-3">
+    <a href="/logout">
+      <i class="fas fa-sign-out-alt disconnect-icon text-white"></i>
+    </a>
+  </div>
+</div>
+
+<div class="col mt-3">
+  <h1 class="text-center">Welcome to matrix page</h1>
+</div>
+
+{% endblock main_content %}
