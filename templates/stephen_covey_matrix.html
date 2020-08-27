@@ -31,8 +31,51 @@
   </div>
 </div>
 
-<div class="col mt-3">
-  <h1 class="text-center">Welcome to matrix page</h1>
+<div class="container matrix-container">
+  <div class="row">
+    <div class="col-5 offset-1">
+      <h2 class="text-center">Urgent</h2>
+    </div>
+    <div class="col-6">
+      <h2 class="text-center">Non urgent</h2>
+    </div>
+  </div>
+  <div class="row matrix-row">
+    <div class="col-1 p-0">
+      <div class="row h-50">
+        <h2 class="col legend text-center">Important</h2>
+      </div>
+      <div class="row h-50">
+        <h2 class="col legend text-center">Non important</h2>
+      </div>
+    </div>
+    <div class="col-11 box-shadow p-0">
+      <div class="row h-50">
+        <div class="col-6" id="important-urgent">
+          {% for task in important_urgent %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        </div>
+        <div class="col-6" id="important-non-urgent">
+          {% for task in important_non_urgent %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="row h-50 border-top">
+        <div class="col-6" id="non-important-urgent">
+          {% for task in non_important_urgent %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        </div>
+        <div class="col-6" id="non-important-non-urgent">
+          {% for task in non_important_non_urgent %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock main_content %}

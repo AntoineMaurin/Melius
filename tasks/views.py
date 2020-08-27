@@ -174,4 +174,19 @@ def edit_task(request, id):
     return JsonResponse(data)
 
 def coveys_matrix_page(request):
-    return render(request, "stephen_covey_matrix.html")
+    user = User.objects.get(email=request.session['user_mail'])
+
+    important_urgent = SimpleTask.get_important_urgent_tasks(user)
+
+    important_non_urgent = SimpleTask.get_important_non_urgent_tasks(user)
+
+    non_important_urgent = SimpleTask.get_non_important_urgent_tasks(user)
+
+    non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(user)
+
+    context = {'important_urgent': important_urgent,
+               'important_non_urgent': important_non_urgent,
+               'non_important_urgent': non_important_urgent,
+               'non_important_non_urgent': non_important_non_urgent}
+
+    return render(request, "stephen_covey_matrix.html", context)

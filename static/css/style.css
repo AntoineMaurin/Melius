@@ -486,6 +486,44 @@ input {
 }
 
 #radioBtn .notActive{
-    color: #3276b1;
-    background-color: #fff;
+  color: #3276b1;
+  background-color: #fff;
+}
+
+.matrix-container {
+  height: 500px;
+  padding: 0;
+  margin-top: 5rem;
+}
+
+.matrix-row {
+  height: inherit;
+}
+
+#important-non-urgent, #non-important-non-urgent {
+  border-left: 2px solid #333;
+}
+
+#important-urgent, #important-non-urgent, #non-important-urgent, #non-important-non-urgent {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 250px;
+}
+
+.top-side-legend {
+  text-align: center;
+  margin-top: -40px;
+}
+
+.legend {
+  transform: rotate(-90deg);
+  min-width: 250px;
+}
+
+.box-shadow {
+  box-shadow: 0 0 5px black;
+}
+
+.border-top {
+    border-top: 2px solid #333 !important;
 }
