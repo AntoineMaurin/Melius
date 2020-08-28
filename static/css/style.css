@@ -120,6 +120,10 @@ ul li.checked {
     font-size: 1.5em;
 }
 
+.white-bg {
+  background-color: white;
+}
+
 /* Style the header */
 .header {
   background-color: #1A2530;
@@ -527,10 +531,11 @@ input {
   overflow-y: scroll;
   overflow-x: hidden;
   display: none;
+  background-color: #1a2530;
 }
 
 .see-my-tasks-button {
-  background-color: #46B39D;
+  background-color: #34495E;
   color: white;
   border-radius: 15px;
   padding: 10px 10px;
@@ -540,4 +545,65 @@ input {
 
 .matrix-quarter {
   height: 250px;
+  background-color: #1a2530;
+}
+
+#urgent-important-title {
+  background-color: #ce3333;
+  border-radius: 10px;
+}
+
+#non-urgent-important-title{
+  background-color: #E27A3F;
+  border-radius: 10px;
+}
+
+#urgent-non-important-title {
+  background-color: #DBB844;
+  border-radius: 10px;
+}
+#non-urgent-non-important-title {
+  background-color: #33A2CE;
+  border-radius: 10px;
+}
+
+#change-matrix-box {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  z-index: 9;
+  background-color: white;
+  box-shadow: 0 0 5px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  height: 150px;
+  width: 150px;
+  display: none;
+}
+
+#matrix-quarter-1 {
+  border-radius: 10px 0 0 0;
+  background-color: #ce3333;
+}
+
+#matrix-quarter-2 {
+  border-radius: 0 10px 0 0;
+  background-color: #e27a3f;
+  border-left: 2px solid white;
+}
+
+#matrix-quarter-3 {
+  border-radius: 0 0 0 10px;
+  background-color: #dbb844;
+}
+
+#matrix-quarter-4 {
+  border-radius: 0 0 10px 0;
+  background-color: #33a2ce;
+  border-left: 2px solid white;
+}
+
+#matrix-top-row {
+  border-bottom: 2px solid white;
 }

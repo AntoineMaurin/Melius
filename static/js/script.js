@@ -58,6 +58,15 @@ function toggleMyTasks() {
   }
 }
 
+function openChangeMatrixQuarter() {
+  document.getElementById("change-matrix-box").style.display = "block";
+}
+
+function closeChangeMatrixQuarter() {
+  document.getElementById("change-matrix-box").style.display = "none";
+}
+
+
 function closeBaseListForm() {
   document.getElementById("BaseListForm").style.display = "none";
 }

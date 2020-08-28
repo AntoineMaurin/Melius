@@ -1,4 +1,4 @@
-<div class="row task-box border my-2 mx-3" id="{{ task.id }}">
+<div class="row task-box border white-bg my-2 mx-3" id="{{ task.id }}">
   <div class="col-1 pr-0">
     <div class="h-100 category-color p-0" style="background-color:{{ task.tasklist.color }}"></div>
   </div>
@@ -13,6 +13,11 @@
     </div>
     <div class="pl-2 pt-1 font-16">
       {{ task.description }}
+    </div>
+  </div>
+  <div class="col-2 my-auto">
+    <div class="hah bg-transparent" type="button" onclick="openChangeMatrixQuarter()">
+      <i class="fas fa-expand-arrows-alt fa-2x"></i>
     </div>
   </div>
 </div>

@@ -42,12 +42,12 @@
 </div>
 
 <div class="matrix-container col-8 offset-2 px-5">
-  <div class="row">
-    <div class="col-6">
-      <h5 class="text-center mb-0 ">Non</h5>
+  <div class="row justify-content-around">
+    <div class="col-5 text-white" id="urgent-important-title">
       <h5 class="text-center mb-0">Important</h5>
+      <h5 class="text-center mb-0">Urgent</h5>
     </div>
-    <div class="col-6">
+    <div class="col-5 text-white" id="non-urgent-important-title">
       <h5 class="text-center mb-0">Important</h5>
       <h5 class="text-center mb-0">Non Urgent</h5>
     </div>
@@ -66,14 +66,14 @@
           {% endfor %}
         </div>
       </div>
-      <div class="row mt-3">
-        <div class="col-6 ">
-          <h5 class="text-center mb-0">Non important</h5>
+      <div class="row mt-3 justify-content-around">
+        <div class="col-5 text-white" id="urgent-non-important-title">
           <h5 class="text-center mb-0">Urgent</h5>
-        </div>
-        <div class="col-6">
           <h5 class="text-center mb-0">Non important</h5>
+        </div>
+        <div class="col-5 text-white" id="non-urgent-non-important-title">
           <h5 class="text-center mb-0">Non urgent</h5>
+          <h5 class="text-center mb-0">Non important</h5>
         </div>
       </div>
 
@@ -90,6 +90,17 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div id="change-matrix-box">
+  <div id="matrix-top-row" class="row h-50">
+    <div id="matrix-quarter-1" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
+    <div id="matrix-quarter-2" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
+  </div>
+  <div class="row h-50">
+    <div id="matrix-quarter-3" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
+    <div id="matrix-quarter-4" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
   </div>
 </div>
 
