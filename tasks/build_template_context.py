@@ -23,6 +23,8 @@ class BuildTemplateContext:
         future_tasks = SimpleTask.get_future_tasks(tasks)
         no_date_tasks = SimpleTask.get_no_date_tasks(tasks)
         finished_tasks = SimpleTask.get_finished_tasks(tasks)
+        urgent_tasks = SimpleTask.get_urgent_tasks(tasks)
+        important_tasks = SimpleTask.get_important_tasks(tasks)
 
         all_tasklists = TaskList.get_tasklists_from_user(self.user_mail)
 
@@ -32,6 +34,8 @@ class BuildTemplateContext:
                     'future_tasks': future_tasks,
                     'no_date_tasks': no_date_tasks,
                     'finished_tasks': finished_tasks,
+                    'urgent_tasks': urgent_tasks,
+                    'important_tasks': important_tasks,
                     'all_tasklists': all_tasklists,
                     'tasklist_to_show': self.tasklist_to_show}
 
@@ -56,6 +60,11 @@ class BuildTemplateContext:
                     'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
                     'all_tasklists', 'tasklist_to_show']
 
-        elif self.display == 'finished':
+        elif self.display == 'urgent':
+            return ['urgent_tasks', 'all_tasklists', 'tasklist_to_show']
 
+        elif self.display == 'important':
+            return ['important_tasks', 'all_tasklists', 'tasklist_to_show']
+
+        elif self.display == 'finished':
             return ['finished_tasks', 'all_tasklists', 'tasklist_to_show']

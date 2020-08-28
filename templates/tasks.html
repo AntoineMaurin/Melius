@@ -44,13 +44,17 @@
     <div class="row pl-1 border-bottom">
       <div class="col py-3 align-self-center">
         {% if tasklist_to_show %}
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/{{ tasklist_to_show.id }}" method="post">Toutes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/{{ tasklist_to_show.id }}" method="post">En cours</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/{{ tasklist_to_show.id }}" method="post">Terminées</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/{{ tasklist_to_show.id }}">Toutes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/{{ tasklist_to_show.id }}">En cours</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by_urgent/{{ tasklist_to_show.id }}">Urgentes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by_important/{{ tasklist_to_show.id }}">Importantes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/{{ tasklist_to_show.id }}">Terminées</a>
         {% else %}
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/0" method="post">Toutes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/0" method="post">En cours</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/0" method="post">Terminées</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/0">Toutes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/0">En cours</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by_urgent/0">Urgentes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by_important/0">Importantes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/0">Terminées</a>
         {% endif %}
       </div>
     </div>
@@ -102,12 +106,30 @@
 
       <div class="finished-tasks-list">
         {% if finished_tasks %}
-        <p class="m-3">Tâches terminées</p>
-        {% for task in finished_tasks %}
-          {% include "finished_task.html" %}
-        {% endfor %}
+          <p class="m-3">Tâches terminées</p>
+          {% for task in finished_tasks %}
+            {% include "finished_task.html" %}
+          {% endfor %}
+        {% endif %}
       </div>
-      {% endif %}
+
+      <div class="urgent-tasks-list">
+        {% if urgent_tasks %}
+          <p class="m-3">Tâches urgentes</p>
+          {% for task in urgent_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="important-tasks-list">
+        {% if important_tasks %}
+          <p class="m-3">Tâches importantes</p>
+          {% for task in important_tasks %}
+            {% include "simple_task.html" %}
+          {% endfor %}
+        {% endif %}
+      </div>
 
     </div>
   </section>

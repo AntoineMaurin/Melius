@@ -190,3 +190,65 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertTrue(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_important_urgent_tasks(self):
+        tasks = SimpleTask.get_important_urgent_tasks(self.user)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_important)
+            self.assertTrue(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_important_non_urgent_tasks(self):
+        tasks = SimpleTask.get_important_non_urgent_tasks(self.user)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_important)
+            self.assertFalse(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_non_important_urgent_tasks(self):
+        tasks = SimpleTask.get_non_important_urgent_tasks(self.user)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertFalse(task.is_important)
+            self.assertTrue(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_non_important_non_urgent_tasks(self):
+        tasks = SimpleTask.get_non_important_non_urgent_tasks(self.user)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertFalse(task.is_important)
+            self.assertFalse(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_urgent_tasks_with_tasklist(self):
+        tasks = SimpleTask.get_urgent_tasks(self.tasklist_1)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_urgent_tasks_with_all_tasks_by_user(self):
+        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+        tasks = SimpleTask.get_urgent_tasks(all_tasks)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_urgent)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_important_tasks_with_tasklist(self):
+        tasks = SimpleTask.get_important_tasks(self.tasklist_1)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_important)
+            self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_important_tasks_with_all_tasks_by_user(self):
+        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+        tasks = SimpleTask.get_important_tasks(all_tasks)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertTrue(task.is_important)
+            self.assertEquals(task.tasklist.user, self.user)

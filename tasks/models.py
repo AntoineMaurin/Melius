@@ -165,9 +165,39 @@ class SimpleTask(models.Model):
         return SimpleTask.objects.filter(tasklist__user=user,
                                          is_important=False,
                                          is_urgent=True)
-                                         
+
     def get_non_important_non_urgent_tasks(user):
 
         return SimpleTask.objects.filter(tasklist__user=user,
                                          is_important=False,
                                          is_urgent=False)
+
+    def get_urgent_tasks(tasks):
+        if hasattr(tasks, "__getitem__"):
+
+            list = []
+            for task in tasks:
+                if SimpleTask.objects.filter(id=task.id,
+                                            is_done=False,
+                                            is_urgent=True):
+                                                list.append(task)
+            return list
+
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, is_done=False,
+                                             is_urgent=True)
+
+    def get_important_tasks(tasks):
+        if hasattr(tasks, "__getitem__"):
+
+            list = []
+            for task in tasks:
+                if SimpleTask.objects.filter(id=task.id,
+                                            is_done=False,
+                                            is_important=True):
+                                                list.append(task)
+            return list
+
+        else:
+            return SimpleTask.objects.filter(tasklist=tasks, is_done=False,
+                                             is_important=True)

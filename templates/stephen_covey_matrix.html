@@ -5,10 +5,10 @@
 
 {% block title %}Stephen Covey's Matrix{% endblock title %}
 
-{% block body_class %}baloo-font{% endblock body_class %}
+{% block body_class %}baloo-font matrix-bg{% endblock body_class %}
 
 {% block main_content %}
-<div class="row header">
+<div class="row header matrix-header">
   <div class="col-1 text-center">
     <h2 class="powell-font text-white pb-2">Matrice</h2>
   </div>
@@ -41,53 +41,60 @@
   {% endfor %}
 </div>
 
-<div class="matrix-container col-8 offset-2 px-5">
-  <div class="row justify-content-around">
-    <div class="col-5 text-white" id="urgent-important-title">
-      <h5 class="text-center mb-0">Important</h5>
-      <h5 class="text-center mb-0">Urgent</h5>
+<div class="matrix-container col-8 offset-2 px-2">
+  <div class="row mt-2 justify-content-around">
+    <div class="col-5 matrix-quarter p-0">
+      <div class="row" id="important-urgent-title">
+        <div class="mx-auto" >
+          <h5 class="text-center text-white mb-0">Important</h5>
+          <h5 class="text-center text-white mb-0">Urgent</h5>
+        </div>
+      </div>
+      <div id="important-urgent">
+        {% for task in important_urgent %}
+          {% include "matrix_task.html" %}
+        {% endfor %}
+      </div>
     </div>
-    <div class="col-5 text-white" id="non-urgent-important-title">
-      <h5 class="text-center mb-0">Important</h5>
-      <h5 class="text-center mb-0">Non Urgent</h5>
+    <div class="col-5 matrix-quarter p-0">
+      <div class="row" id="important-non-urgent-title">
+        <div class="mx-auto">
+          <h5 class="text-center text-white mb-0">Important</h5>
+          <h5 class="text-center text-white mb-0">Non urgent</h5>
+        </div>
+      </div>
+      <div id="important-non-urgent">
+        {% for task in important_non_urgent %}
+          {% include "matrix_task.html" %}
+        {% endfor %}
+      </div>
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col p-0">
-      <div class="row justify-content-around">
-        <div class="col-5 matrix-quarter box-shadow p-0" id="important-urgent">
-          {% for task in important_urgent %}
-            {% include "matrix_task.html" %}
-          {% endfor %}
-        </div>
-        <div class="col-5 matrix-quarter box-shadow p-0" id="important-non-urgent">
-          {% for task in important_non_urgent %}
-            {% include "matrix_task.html" %}
-          {% endfor %}
+  <div class="row justify-content-around mt-3">
+    <div class="col-5 matrix-quarter p-0" >
+      <div class="row" id="non-important-urgent-title">
+        <div class="mx-auto">
+          <h5 class="text-center text-white mb-0">Non important</h5>
+          <h5 class="text-center text-white mb-0">Urgent</h5>
         </div>
       </div>
-      <div class="row mt-3 justify-content-around">
-        <div class="col-5 text-white" id="urgent-non-important-title">
-          <h5 class="text-center mb-0">Urgent</h5>
-          <h5 class="text-center mb-0">Non important</h5>
-        </div>
-        <div class="col-5 text-white" id="non-urgent-non-important-title">
-          <h5 class="text-center mb-0">Non urgent</h5>
-          <h5 class="text-center mb-0">Non important</h5>
+      <div id="non-important-urgent">
+        {% for task in non_important_urgent %}
+          {% include "matrix_task.html" %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-5 matrix-quarter p-0">
+      <div class="row" id="non-important-non-urgent-title">
+        <div class="mx-auto" >
+          <h5 class="text-center text-white mb-0">Non important</h5>
+          <h5 class="text-center text-white mb-0">Non urgent</h5>
         </div>
       </div>
-
-      <div class="row justify-content-around mt-2">
-        <div class="col-5 matrix-quarter box-shadow p-0" id="non-important-urgent">
-          {% for task in non_important_urgent %}
-            {% include "matrix_task.html" %}
-          {% endfor %}
-        </div>
-        <div class="col-5 matrix-quarter box-shadow p-0" id="non-important-non-urgent">
-          {% for task in non_important_non_urgent %}
-            {% include "matrix_task.html" %}
-          {% endfor %}
-        </div>
+      <div id="non-important-non-urgent">
+        {% for task in non_important_non_urgent %}
+          {% include "matrix_task.html" %}
+        {% endfor %}
       </div>
     </div>
   </div>

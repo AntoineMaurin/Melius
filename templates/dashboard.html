@@ -42,14 +42,14 @@
       <div class="row justify-content-center py-3">
         <div class="col-6" align="center">
           <div class="stat-container">
-            <h2 class="text-center huge-font-size powell-font">4</h2>
+            <h2 class="text-center huge-font-size powell-font">{{ today_done_tasks }}</h2>
             <h2 class="text-center">Tâches effectuées</h2>
           </div>
         </div>
         <div class="col-6" align="center">
           <div class="stat-container">
-            <h2 class="text-center huge-font-size powell-font">11</h2>
-            <h2 class="text-center">A faire</h2>
+            <h2 class="text-center huge-font-size powell-font">{{ today_total_tasks }}</h2>
+            <h2 class="text-center">Au total</h2>
           </div>
         </div>
       </div>
@@ -64,14 +64,14 @@
       <div class="row justify-content-center py-3">
         <div class="col-6" align="center">
           <div class="stat-container">
-            <h2 class="text-center huge-font-size powell-font">9</h2>
+            <h2 class="text-center huge-font-size powell-font">{{ done_for_next_week }}</h2>
             <h2 class="text-center">Tâches effectuées</h2>
           </div>
         </div>
         <div class="col-6" align="center">
           <div class="stat-container">
-            <h2 class="text-center huge-font-size powell-font">27</h2>
-            <h2 class="text-center">A faire</h2>
+            <h2 class="text-center huge-font-size powell-font">{{ total_until_next_week }}</h2>
+            <h2 class="text-center">Au total</h2>
           </div>
         </div>
       </div>
@@ -82,12 +82,12 @@
     <h1 class="big-font-size baloo-font text-white text-center">Total</h1>
     <div class="col mt-5">
       <div class="stat-container my-3 mx-auto">
-        <h2 class="text-center huge-font-size powell-font">26</h2>
+        <h2 class="text-center huge-font-size powell-font">{{ done_tasks }}</h2>
         <h2 class="text-center">Tâches effectuées</h2>
       </div>
       <div class="stat-container mt-5 mb-3 mx-auto">
-        <h2 class="text-center huge-font-size powell-font">44</h2>
-        <h2 class="text-center">A faire</h2>
+        <h2 class="text-center huge-font-size powell-font">{{ all_tasks }}</h2>
+        <h2 class="text-center">Au total</h2>
       </div>
     </div>
   </div>

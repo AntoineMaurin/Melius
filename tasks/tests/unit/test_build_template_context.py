@@ -26,6 +26,13 @@ class BuildTemplateContextTest(TestCase):
         self.finished_keys = ['finished_tasks', 'all_tasklists',
                               'tasklist_to_show']
 
+        self.urgent_keys = ['urgent_tasks', 'all_tasklists',
+                            'tasklist_to_show']
+
+        self.important_keys = ['important_tasks', 'all_tasklists',
+                               'tasklist_to_show']
+
+
     def test_display_all(self):
         test_obj = BuildTemplateContext('all', self.tasklist, self.email)
         response = test_obj.get_data()
@@ -73,3 +80,35 @@ class BuildTemplateContextTest(TestCase):
 
         for key in response.keys():
             self.assertTrue(key in self.finished_keys)
+
+    def test_display_urgent(self):
+        test_obj = BuildTemplateContext('urgent', self.tasklist, self.email)
+        response = test_obj.get_data()
+        self.assertTrue(isinstance(response, dict))
+
+        for key in response.keys():
+            self.assertTrue(key in self.urgent_keys)
+
+    def test_display_urgent_no_tasklist(self):
+        test_obj = BuildTemplateContext('urgent', None, self.email)
+        response = test_obj.get_data()
+        self.assertTrue(isinstance(response, dict))
+
+        for key in response.keys():
+            self.assertTrue(key in self.urgent_keys)
+
+    def test_display_important(self):
+        test_obj = BuildTemplateContext('important', self.tasklist, self.email)
+        response = test_obj.get_data()
+        self.assertTrue(isinstance(response, dict))
+
+        for key in response.keys():
+            self.assertTrue(key in self.important_keys)
+
+    def test_display_important_no_tasklist(self):
+        test_obj = BuildTemplateContext('important', None, self.email)
+        response = test_obj.get_data()
+        self.assertTrue(isinstance(response, dict))
+
+        for key in response.keys():
+            self.assertTrue(key in self.important_keys)

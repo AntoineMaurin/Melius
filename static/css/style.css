@@ -1,4 +1,4 @@
-body {
+important-urgent-titlebody {
   margin: 0;
 }
 
@@ -166,6 +166,10 @@ input {
   color: #fff;
 }
 
+.wheat-bg {
+  background-color: wheat;
+}
+
 .submit-list-form:hover {
   opacity: .80;
   border: white;
@@ -182,8 +186,7 @@ input {
 }
 
 .task-container {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
   max-height: 600px;
 }
 
@@ -502,18 +505,23 @@ input {
   background-color: #fff;
 }
 
-.matrix-container {
-  margin-top: -45px;
+.matrix-bg {
+  background-color: #46B39D;
 }
 
-#important-non-urgent, #non-important-non-urgent {
-
+.matrix-container {
+  margin-top: -45px;
+  padding: 30px 0;
+  background-color: #334752;
+  border-radius: 25px;
+  border: 2px solid #5B7594;
 }
 
 #important-urgent, #important-non-urgent, #non-important-urgent, #non-important-non-urgent {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
+  min-height: 250px;
   max-height: 250px;
+  border-bottom: 5px solid #1a2530;
 }
 
 .box-shadow {
@@ -521,21 +529,24 @@ input {
 }
 
 .border-top {
-    border-top: 2px solid #333 !important;
+  border-top: 2px solid #333 !important;
 }
 
 #my-tasks {
   width: 23%;
   float: left;
   max-height: 600px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
   display: none;
-  background-color: #1a2530;
+  background-color: #334752;
+}
+
+.matrix-header {
+  background-color: #334752;
 }
 
 .see-my-tasks-button {
-  background-color: #34495E;
+  background-color: #334752;
   color: white;
   border-radius: 15px;
   padding: 10px 10px;
@@ -544,27 +555,28 @@ input {
 }
 
 .matrix-quarter {
-  height: 250px;
   background-color: #1a2530;
-}
-
-#urgent-important-title {
-  background-color: #ce3333;
   border-radius: 10px;
 }
 
-#non-urgent-important-title{
-  background-color: #E27A3F;
-  border-radius: 10px;
+#important-urgent-title, #important-non-urgent-title, #non-important-urgent-title, #non-important-non-urgent-title {
+  border-radius: 10px 10px 0 0;
 }
 
-#urgent-non-important-title {
-  background-color: #DBB844;
-  border-radius: 10px;
+#important-urgent-title {
+  background-color: #DE4F3C;
 }
-#non-urgent-non-important-title {
-  background-color: #33A2CE;
-  border-radius: 10px;
+
+#important-non-urgent-title {
+  background-color: #E37332;
+}
+
+#non-important-urgent-title {
+  background-color: #F0CA4D;
+}
+
+#non-important-non-urgent-title {
+  background-color: #46B39D;
 }
 
 #change-matrix-box {
@@ -584,26 +596,20 @@ input {
 
 #matrix-quarter-1 {
   border-radius: 10px 0 0 0;
-  background-color: #ce3333;
+  background-color: #de4f3c;
 }
 
 #matrix-quarter-2 {
   border-radius: 0 10px 0 0;
   background-color: #e27a3f;
-  border-left: 2px solid white;
 }
 
 #matrix-quarter-3 {
   border-radius: 0 0 0 10px;
-  background-color: #dbb844;
+  background-color: #f0ca4d;
 }
 
 #matrix-quarter-4 {
   border-radius: 0 0 10px 0;
-  background-color: #33a2ce;
-  border-left: 2px solid white;
-}
-
-#matrix-top-row {
-  border-bottom: 2px solid white;
+  background-color: #46b39d;
 }

@@ -133,6 +133,24 @@ def sort_by_finished(request, id):
                         display='finished')
 
 @login_required
+def sort_by_urgent(request, id):
+    if id > 0:
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                               display='urgent')
+    else:
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                                        display='urgent')
+
+@login_required
+def sort_by_important(request, id):
+    if id > 0:
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                               display='important')
+    else:
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                               display='important')
+
+@login_required
 def addcategory(request):
     list_name = request.POST['list_name']
     list_color = request.POST['list_color']
