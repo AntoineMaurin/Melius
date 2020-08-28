@@ -194,3 +194,27 @@ def coveys_matrix_page(request):
                'my_tasks': my_tasks}
 
     return render(request, "stephen_covey_matrix.html", context)
+
+def update_matrix_task(request):
+    id = request.POST['task_id']
+    dest = request.POST['destination']
+    task = SimpleTask.get_task_with_id(id)
+
+    if dest == 'top-left':
+        task.is_important = True
+        task.is_urgent = True
+
+    elif dest == 'top-right':
+        task.is_important = True
+        task.is_urgent = False
+
+    elif dest == 'bottom-left':
+        task.is_important = False
+        task.is_urgent = True
+
+    elif dest == 'bottom-right':
+        task.is_important = False
+        task.is_urgent = False
+
+    task.save()
+    return coveys_matrix_page(request)

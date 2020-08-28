@@ -17,4 +17,5 @@ urlpatterns = [
     path('sort_by_current/<int:id>', views.sort_by_current),
     path('sort_by_finished/<int:id>', views.sort_by_finished),
     path('coveys_matrix', views.coveys_matrix_page),
+    path('update_matrix_task', views.update_matrix_task),
 ]

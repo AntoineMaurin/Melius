@@ -10,7 +10,7 @@
 {% block main_content %}
 <div class="row header">
   <div class="col-1 text-center">
-    <h2 class="powell-font text-white pb-2">Dashboard</h2>
+    <h2 class="powell-font text-white pb-2">Matrice</h2>
   </div>
   <div class="col-10 text-center">
     <div class="sidebar pb-3">
@@ -93,15 +93,20 @@
   </div>
 </div>
 
-<div id="change-matrix-box">
+<form id="change-matrix-box" action="/update_matrix_task" method="post">
+  {% csrf_token %}
+  <input id="change-matrix-task-id" class="form-control pt-2" type="hidden" name="task_id" value="" required="true">
+  <input id="change-matrix-destination" class="form-control pt-2" type="hidden" name="destination" value="" required="true">
   <div id="matrix-top-row" class="row h-50">
-    <div id="matrix-quarter-1" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
-    <div id="matrix-quarter-2" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
+    <button id="matrix-quarter-1" class="col-6" name="matrix-quarter-1" type="submit" onclick="closeChangeMatrixQuarter()"></button>
+    <button id="matrix-quarter-2" class="col-6" name="matrix-quarter-2" type="submit" onclick="closeChangeMatrixQuarter()"></button>
   </div>
   <div class="row h-50">
-    <div id="matrix-quarter-3" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
-    <div id="matrix-quarter-4" class="col-6" type="button" onclick="closeChangeMatrixQuarter()"></div>
+    <button id="matrix-quarter-3" class="col-6" name="matrix-quarter-3" type="submit" onclick="closeChangeMatrixQuarter()"></button>
+    <button id="matrix-quarter-4" class="col-6" name="matrix-quarter-4" type="submit" onclick="closeChangeMatrixQuarter()"></button>
   </div>
-</div>
+</form>
+
+<script src="{% static 'js/coveys_matrix.js' %}"></script>
 
 {% endblock main_content %}
