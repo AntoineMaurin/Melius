@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 def homepage(request):
     return render(request, "home.html")
 
+@login_required
 def dashboardpage(request):
     user_mail = request.session['user_mail']
     user = User.objects.get(email=user_mail)

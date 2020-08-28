@@ -173,6 +173,7 @@ def edit_task(request, id):
             "description": task.description}
     return JsonResponse(data)
 
+@login_required
 def coveys_matrix_page(request):
     user = User.objects.get(email=request.session['user_mail'])
 
