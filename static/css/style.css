@@ -537,7 +537,7 @@ input {
   float: left;
   max-height: 600px;
   overflow: auto;
-  display: none;
+  display: block;
   background-color: #334752;
 }
 
@@ -548,10 +548,15 @@ input {
 .see-my-tasks-button {
   background-color: #334752;
   color: white;
-  border-radius: 15px;
-  padding: 10px 10px;
-  width: 150px;
+  border-radius: 5px;
+  padding: 15px 10px 7px 10px;
+  width: 55px;
   margin: 15px;
+  transition: all .5s ease-out;
+}
+
+.turn-around {
+  transform: rotate(180deg);
 }
 
 .matrix-quarter {

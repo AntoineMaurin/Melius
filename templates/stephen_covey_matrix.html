@@ -32,16 +32,16 @@
 </div>
 
 <div class="see-my-tasks-button text-center" type="button" onclick="toggleMyTasks()">
-  <h6 class="mb-0">Voir mes tâches</h6>
+  <i class="fas fa-arrow-circle-left fa-2x"></i>
 </div>
 
-<div class="box-shadow" id="my-tasks">
+<div class="box-shadow" id="my-tasks" style="display: block;">
   {% for task in my_tasks %}
     {% include "matrix_task.html" %}
   {% endfor %}
 </div>
 
-<div class="matrix-container col-8 offset-2 px-2">
+<div class="matrix-container col-8 offset-3 px-2">
   <div class="row mt-2 justify-content-around">
     <div class="col-5 matrix-quarter p-0">
       <div class="row" id="important-urgent-title">
