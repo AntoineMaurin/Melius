@@ -85,3 +85,19 @@ class TasksUrlsTest(TestCase):
     def test_sort_by_finished_url_is_resolved(self):
         url = reverse(sort_by_finished, args=[self.tasklist_id])
         self.assertEqual(resolve(url).func, sort_by_finished)
+
+    def test_sort_by_urgent_url_is_resolved(self):
+        url = reverse(sort_by_urgent, args=[self.tasklist_id])
+        self.assertEqual(resolve(url).func, sort_by_urgent)
+
+    def test_sort_by_important_url_is_resolved(self):
+        url = reverse(sort_by_important, args=[self.tasklist_id])
+        self.assertEqual(resolve(url).func, sort_by_important)
+
+    def test_coveys_matrix_page_url_is_resolved(self):
+        url = reverse(coveys_matrix_page)
+        self.assertEqual(resolve(url).func, coveys_matrix_page)
+
+    def test_update_matrix_task_url_is_resolved(self):
+        url = reverse(update_matrix_task)
+        self.assertEqual(resolve(url).func, update_matrix_task)

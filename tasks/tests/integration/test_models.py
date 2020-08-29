@@ -252,3 +252,10 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertTrue(task.is_important)
             self.assertEquals(task.tasklist.user, self.user)
+
+    def test_get_finished_tasks_not_in_matrix(self):
+        tasks = SimpleTask.get_finished_tasks_not_in_matrix(self.user)
+        for task in tasks:
+            self.assertFalse(task.is_done)
+            self.assertEquals(task.tasklist.user, self.user)
+            self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from datetime import date
+from django.db.models import Q
 
 
 class TaskList(models.Model):
@@ -201,3 +202,6 @@ class SimpleTask(models.Model):
         else:
             return SimpleTask.objects.filter(tasklist=tasks, is_done=False,
                                              is_important=True)
+
+    def get_finished_tasks_not_in_matrix(user):
+        return SimpleTask.objects.filter(~Q(is_important__in = ['True', 'False'], is_urgent__in = ['True', 'False']), tasklist__user=user, is_done=False)

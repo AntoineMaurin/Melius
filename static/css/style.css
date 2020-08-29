@@ -166,10 +166,6 @@ input {
   color: #fff;
 }
 
-.wheat-bg {
-  background-color: wheat;
-}
-
 .submit-list-form:hover {
   opacity: .80;
   border: white;
@@ -424,11 +420,20 @@ input {
 }
 
 #sort_by_current {
-  background-color: #ffad10;
+  background-color: #27AE60;
 }
 
 #sort_by_finished {
-  background-color: #7f807f;
+  background-color: #334752;
+}
+
+#sort_by_urgent {
+  background-color: #E37332;
+}
+
+#sort_by_important {
+  background-color: #379380;
+  color: #FFF !important;
 }
 
 #empty-task-form-header {
@@ -510,7 +515,7 @@ input {
 }
 
 .matrix-container {
-  margin-top: -45px;
+  margin-top: -55px;
   padding: 30px 0;
   background-color: #334752;
   border-radius: 25px;
@@ -548,11 +553,11 @@ input {
 .see-my-tasks-button {
   background-color: #334752;
   color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 15px 10px 7px 10px;
   width: 55px;
   margin: 15px;
-  transition: all .5s ease-out;
+  transition: all .3s ease-out;
 }
 
 .turn-around {
@@ -586,9 +591,9 @@ input {
 
 #change-matrix-box {
   position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
+  /* top: 50%;
+  left: 50%; */
+  transform: translate(-50%, -50%);
   z-index: 9;
   background-color: white;
   box-shadow: 0 0 5px;
@@ -617,4 +622,20 @@ input {
 #matrix-quarter-4 {
   border-radius: 0 0 10px 0;
   background-color: #46b39d;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  z-index: 10;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid white;
+  height: 28px;
+}
+
+.cross-matrix-button {
+  color: #1a2530;
 }

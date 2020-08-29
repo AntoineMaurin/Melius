@@ -10,8 +10,6 @@ function toggleMyTasks() {
     matrix[0].classList.remove("offset-2");
     matrix[0].classList.add("offset-3");
     button[0].classList.remove("turn-around");
-
-
   } else {
     my_tasks.style.display = "none";
     matrix[0].classList.remove("offset-3");
@@ -20,8 +18,15 @@ function toggleMyTasks() {
   }
 }
 
-function openChangeMatrixQuarter() {
-  document.getElementById("change-matrix-box").style.display = "block";
+function openChangeMatrixQuarter(e) {
+  var box = document.getElementById("change-matrix-box")
+  box.style.display = "block";
+  var left  = e.clientX  + "px";
+  var top  = e.clientY  + "px";
+  console.log(left, top);
+
+  box.style.left = left;
+  box.style.top = top;
 }
 
 function closeChangeMatrixQuarter() {

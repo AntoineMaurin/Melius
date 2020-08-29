@@ -474,3 +474,27 @@ class TasksViewsTest(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/update_matrix_task')
+
+    def test_retire_task_from_matrix(self):
+        self.add_data()
+        task = SimpleTask.objects.get(name="tâche 4")
+        task.is_urgent = True
+        task.is_important = False
+        task.save()
+        response = self.client.post('/retire_task_from_matrix', {
+            'task_id': task.id,
+        })
+        updated_task = SimpleTask.objects.get(id=task.id)
+        self.assertEquals(updated_task.is_urgent, None)
+        self.assertEquals(updated_task.is_important, None)
+
+    def test_retire_task_from_matrix_no_auth(self):
+        self.client.get('/logout')
+        self.add_data()
+        task = SimpleTask.objects.get(tasklist__user=self.user,
+                                      name="tâche 4")
+        response = self.client.post('/retire_task_from_matrix', {
+            'task_id': task.id,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/login?next=/retire_task_from_matrix')

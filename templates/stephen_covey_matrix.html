@@ -44,10 +44,9 @@
 <div class="matrix-container col-8 offset-3 px-2">
   <div class="row mt-2 justify-content-around">
     <div class="col-5 matrix-quarter p-0">
-      <div class="row" id="important-urgent-title">
-        <div class="mx-auto" >
-          <h5 class="text-center text-white mb-0">Important</h5>
-          <h5 class="text-center text-white mb-0">Urgent</h5>
+      <div class="row py-2" id="important-urgent-title">
+        <div class="mx-auto">
+          <h5 class="text-center text-white mb-0">Important & urgent</h5>
         </div>
       </div>
       <div id="important-urgent">
@@ -57,10 +56,9 @@
       </div>
     </div>
     <div class="col-5 matrix-quarter p-0">
-      <div class="row" id="important-non-urgent-title">
+      <div class="row py-2" id="important-non-urgent-title">
         <div class="mx-auto">
-          <h5 class="text-center text-white mb-0">Important</h5>
-          <h5 class="text-center text-white mb-0">Non urgent</h5>
+          <h5 class="text-center text-white mb-0">Important mais pas urgent</h5>
         </div>
       </div>
       <div id="important-non-urgent">
@@ -72,10 +70,9 @@
   </div>
   <div class="row justify-content-around mt-3">
     <div class="col-5 matrix-quarter p-0" >
-      <div class="row" id="non-important-urgent-title">
+      <div class="row py-2" id="non-important-urgent-title">
         <div class="mx-auto">
-          <h5 class="text-center text-white mb-0">Non important</h5>
-          <h5 class="text-center text-white mb-0">Urgent</h5>
+          <h5 class="text-center text-white mb-0">Urgent mais pas important</h5>
         </div>
       </div>
       <div id="non-important-urgent">
@@ -85,10 +82,9 @@
       </div>
     </div>
     <div class="col-5 matrix-quarter p-0">
-      <div class="row" id="non-important-non-urgent-title">
+      <div class="row py-2" id="non-important-non-urgent-title">
         <div class="mx-auto" >
-          <h5 class="text-center text-white mb-0">Non important</h5>
-          <h5 class="text-center text-white mb-0">Non urgent</h5>
+          <h5 class="text-center text-white mb-0">Ni urgent ni important</h5>
         </div>
       </div>
       <div id="non-important-non-urgent">
@@ -111,6 +107,9 @@
   <div class="row h-50">
     <button id="matrix-quarter-3" class="col-6" name="matrix-quarter-3" type="submit" onclick="closeChangeMatrixQuarter()"></button>
     <button id="matrix-quarter-4" class="col-6" name="matrix-quarter-4" type="submit" onclick="closeChangeMatrixQuarter()"></button>
+  </div>
+  <div class="absolute-center" type="button" onclick="closeChangeMatrixQuarter()">
+    <i class="fas fa-times-circle fa-2x"></i>
   </div>
 </form>
 

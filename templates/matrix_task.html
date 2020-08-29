@@ -1,4 +1,4 @@
-<div class="row task-box border white-bg my-2 mx-3" type="button" onclick="openChangeMatrixQuarter()" id="{{ task.id }}">
+<div class="row task-box border white-bg my-2 mx-3" type="button" onclick="openChangeMatrixQuarter(event)" id="{{ task.id }}">
   <div class="col-1 pr-0">
     <div class="h-100 category-color p-0" style="background-color:{{ task.tasklist.color }}"></div>
   </div>
@@ -15,9 +15,12 @@
       {{ task.description }}
     </div>
   </div>
-  <!-- <div class="col-2 my-auto">
-    <div class="bg-transparent" type="button"">
-      <i class="fas fa-expand-arrows-alt fa-2x change-matrix-button"></i>
-    </div>
-  </div> -->
+  {% if task.is_important is not None and task.is_urgent is not None %}
+    <form action="/retire_task_from_matrix" method="post" class="col-2 my-auto">
+      {% csrf_token %}
+      <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
+        <i class="fas fa-times fa-2x cross-matrix-button"></i>
+      </button>
+    </form>
+  {% endif %}
 </div>

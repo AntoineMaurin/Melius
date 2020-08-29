@@ -196,14 +196,10 @@ def coveys_matrix_page(request):
     user = User.objects.get(email=request.session['user_mail'])
 
     important_urgent = SimpleTask.get_important_urgent_tasks(user)
-
     important_non_urgent = SimpleTask.get_important_non_urgent_tasks(user)
-
     non_important_urgent = SimpleTask.get_non_important_urgent_tasks(user)
-
     non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(user)
-
-    my_tasks = SimpleTask.get_all_tasks_by_user(user)
+    my_tasks = SimpleTask.get_finished_tasks_not_in_matrix(user)
 
     context = {'important_urgent': important_urgent,
                'important_non_urgent': important_non_urgent,
@@ -234,5 +230,13 @@ def update_matrix_task(request):
         task.is_important = False
         task.is_urgent = False
 
+    task.save()
+    return coveys_matrix_page(request)
+
+def retire_task_from_matrix(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.is_important = None
+    task.is_urgent = None
     task.save()
     return coveys_matrix_page(request)
