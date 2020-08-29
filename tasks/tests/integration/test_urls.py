@@ -51,8 +51,12 @@ class TasksUrlsTest(TestCase):
         self.assertEqual(resolve(url).func, update_task)
 
     def test_change_task_state_url_is_resolved(self):
-        url = reverse(change_task_state, args=[self.task_id])
+        url = reverse(change_task_state)
         self.assertEqual(resolve(url).func, change_task_state)
+
+    def test_change_matrix_task_state_url_is_resolved(self):
+        url = reverse(change_matrix_task_state)
+        self.assertEqual(resolve(url).func, change_matrix_task_state)
 
     def test_addcategory_url_is_resolved(self):
         url = reverse(addcategory)

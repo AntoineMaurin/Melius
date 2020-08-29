@@ -61,12 +61,20 @@ def addtask(request):
     return tasks_dashboard(request, tasklist_to_show_id=user_tasklist.id)
 
 @login_required
-def change_task_state(request, id):
+def change_task_state(request):
+    id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)
     task.is_done = not task.is_done
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=task.tasklist.id)
-    # return redirect("/tasks")
+
+@login_required
+def change_matrix_task_state(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.is_done = not task.is_done
+    task.save()
+    return coveys_matrix_page(request)
 
 @login_required
 def deltask(request, id):

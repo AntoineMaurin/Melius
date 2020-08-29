@@ -20,9 +20,12 @@
       <div class="col-6">
         <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
       </div>
-      <div class="col-6">
-        <a href="/changestate/{{ task.id }}" class="d-inline change-task-state"><i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i></a>
-      </div>
+      <form action="/changestate" method="post" class="col-6 my-auto px-2">
+        {% csrf_token %}
+        <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
+          <i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i>
+        </button>
+      </form>
     </div>
   </div>
 </div>

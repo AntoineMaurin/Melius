@@ -144,19 +144,21 @@ class TasksViewsTest(TestCase):
     def test_change_task_state(self):
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 2")
-        is_done_before = task.is_done
-        self.client.get('/changestate/' + str(task.id))
+        state_before = task.is_done
+        response = self.client.post('/changestate', {
+            'task_id': task.id,
+        })
         task_after = SimpleTask.objects.get(id=task.id)
-        is_done_now = task_after.is_done
-        self.assertEqual(is_done_now, not is_done_before)
+        state_after = task_after.is_done
+        self.assertEqual(state_after, not state_before)
 
     def test_change_task_state_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 2")
-        response = self.client.get('/changestate/' + str(task.id))
+        response = self.client.get('/changestate')
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/changestate/' + str(task.id))
+        self.assertRedirects(response, '/login?next=/changestate')
 
     def test_del_task(self):
         self.add_data()

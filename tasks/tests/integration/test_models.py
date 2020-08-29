@@ -197,6 +197,7 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertTrue(task.is_important)
             self.assertTrue(task.is_urgent)
+            self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
 
     def test_get_important_non_urgent_tasks(self):
@@ -205,6 +206,7 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertTrue(task.is_important)
             self.assertFalse(task.is_urgent)
+            self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
 
     def test_get_non_important_urgent_tasks(self):
@@ -213,6 +215,7 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertFalse(task.is_important)
             self.assertTrue(task.is_urgent)
+            self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
 
     def test_get_non_important_non_urgent_tasks(self):
@@ -221,6 +224,7 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertFalse(task.is_important)
             self.assertFalse(task.is_urgent)
+            self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
 
     def test_get_urgent_tasks_with_tasklist(self):
