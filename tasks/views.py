@@ -248,3 +248,12 @@ def retire_task_from_matrix(request):
     task.is_urgent = None
     task.save()
     return coveys_matrix_page(request)
+
+def kanbanpage(request):
+    user = User.objects.get(email=request.session['user_mail'])
+
+    full_backlog = SimpleTask.get_all_undone_tasks_by_user(user)
+
+    context = {"my_tasks" : full_backlog}
+
+    return render(request, "kanban.html", context)

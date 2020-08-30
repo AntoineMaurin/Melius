@@ -325,7 +325,6 @@ input {
 .task-box {
   box-shadow: 0 0 2px;
   border-radius: 5px;
-  cursor: move;
 }
 
 .task-box:hover {
@@ -541,9 +540,14 @@ input {
   width: 23%;
   float: left;
   max-height: 600px;
-  overflow: auto;
   display: block;
   background-color: #334752;
+  border-bottom: 5px solid #334752;
+}
+
+.scrollable {
+  overflow: auto;
+  max-height: 540px;
 }
 
 .matrix-header {
@@ -638,4 +642,42 @@ input {
 
 .cross-matrix-button {
   color: #1a2530;
+}
+
+.kanban-container {
+  margin-top: 30px;
+}
+
+.kanban-column {
+  background-color: #FFFFE8;
+  border-radius: 0 0 10px 10px;
+  min-height: 75vh;
+  max-height: 75vh;
+  overflow: auto;
+  border-bottom: 5px solid #ffffe8;
+}
+
+#backlog-title, #tasks-in-progress-title, #finished-tasks-title {
+  background-color: #5B5150;
+  border-radius: 10px 10px 0 0;
+  color: #ffffe8;
+  border-bottom: 2px solid #ffffe8;
+}
+
+.kanban-white-bg {
+  background-color: #FFFFE8;
+}
+
+.kanban-brown-bg {
+  background-color: #5B5150;
+}
+
+.kanban-task-box {
+  border-radius: 5px;
+  background-color: #5b5150;
+  color: #ffffe8;
+}
+
+.radius-10 {
+  border-radius: 10px;
 }
