@@ -15,20 +15,40 @@
       {{ task.description }}
     </div>
   </div>
-  <!-- <div class="col-3">
-    <div class="row h-100 justify-content-between">
-      <form action="/changematrixtaskstate" method="post" class="col-5 my-auto px-0">
+  <div class="col-3 px-0">
+    {% if task.in_progress %}
+      <div class="row h-100 justify-content-between">
+        <form action="/cancelinprogress" method="post" class="col-6 my-auto px-0">
+          {% csrf_token %}
+          <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
+            <i class="fas fa-arrow-alt-circle-left fa-2x cross-matrix-button"></i>
+          </button>
+        </form>
+        <form action="/setfinished" method="post" class="col-6 my-auto px-0">
+          {% csrf_token %}
+          <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
+            <i class="fas fa-check fa-2x cross-matrix-button"></i>
+          </button>
+        </form>
+      </div>
+    {% else %}
+      {% if task.is_done %}
+      <!-- <form action="/deltask" method="post" class="col-5 my-auto px-0">
         {% csrf_token %}
         <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
-          <i class="fas fa-check fa-2x cross-matrix-button"></i>
+          <i class="far fa-trash-alt fa-2x cross-matrix-button"></i>
         </button>
-      </form>
-      <form action="/retire_task_from_matrix" method="post" class="col-5 my-auto px-0">
-        {% csrf_token %}
-        <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
-          <i class="fas fa-times fa-2x cross-matrix-button"></i>
-        </button>
-      </form>
-    </div>
-  </div> -->
+      </form> -->
+      {% else %}
+        <div class="row h-100 justify-content-center">
+          <form action="/setinprogress" method="post" class="col-5 my-auto px-0">
+            {% csrf_token %}
+            <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
+              <i class="fas fa-arrow-alt-circle-right fa-2x cross-matrix-button"></i>
+            </button>
+          </form>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
 </div>

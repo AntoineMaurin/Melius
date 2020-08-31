@@ -254,6 +254,37 @@ def kanbanpage(request):
 
     full_backlog = SimpleTask.get_all_undone_tasks_by_user(user)
 
-    context = {"my_tasks" : full_backlog}
+    in_progress = SimpleTask.objects.filter(tasklist__user=user,
+                                            in_progress=True)
+
+    finished = SimpleTask.objects.filter(tasklist__user=user,
+                                         in_progress=False,
+                                         is_done=True)
+
+    context = {"backlog" : full_backlog,
+               "in_progress": in_progress,
+               "finished": finished}
 
     return render(request, "kanban.html", context)
+
+def set_in_pogress(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.in_progress = True
+    task.save()
+    return kanbanpage(request)
+
+def cancel_in_progress(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.in_progress = False
+    task.save()
+    return kanbanpage(request)
+
+def set_finished(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.in_progress = False
+    task.is_done = True
+    task.save()
+    return kanbanpage(request)

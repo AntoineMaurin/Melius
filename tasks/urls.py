@@ -23,4 +23,7 @@ urlpatterns = [
     path('update_matrix_task', views.update_matrix_task),
     path('retire_task_from_matrix', views.retire_task_from_matrix),
     path('kanban', views.kanbanpage),
+    path('setinprogress', views.set_in_pogress),
+    path('cancelinprogress', views.cancel_in_progress),
+    path('setfinished', views.set_finished)
 ]

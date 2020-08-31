@@ -649,33 +649,45 @@ input {
 }
 
 .kanban-column {
-  background-color: #FFFFE8;
+  background-color: #1a252b;
   border-radius: 0 0 10px 10px;
   min-height: 75vh;
   max-height: 75vh;
   overflow: auto;
-  border-bottom: 5px solid #ffffe8;
+  border-bottom: 5px solid #1a252b;
 }
 
 #backlog-title, #tasks-in-progress-title, #finished-tasks-title {
-  background-color: #5B5150;
   border-radius: 10px 10px 0 0;
   color: #ffffe8;
-  border-bottom: 2px solid #ffffe8;
+  border-bottom: 2px solid #1a252b;
 }
 
-.kanban-white-bg {
-  background-color: #FFFFE8;
+#backlog-title {
+  background-color: #6346b3;
 }
 
-.kanban-brown-bg {
-  background-color: #5B5150;
+#tasks-in-progress-title{
+  background-color: #2E65B9;
+}
+
+#finished-tasks-title {
+  background-color: #3A9B4A;
+}
+
+.kanban-bg {
+  background-color: #334752;
+}
+
+.kanban-darkblue-bg {
+  background-color: #1a252b;
+  border-bottom: 1px solid #1a252b;
 }
 
 .kanban-task-box {
   border-radius: 5px;
-  background-color: #5b5150;
-  color: #ffffe8;
+  background-color: #ffffed;
+  color: #333;
 }
 
 .radius-10 {

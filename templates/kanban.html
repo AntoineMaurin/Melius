@@ -5,10 +5,10 @@
 
 {% block title %}Stephen Covey's Matrix{% endblock title %}
 
-{% block body_class %}baloo-font kanban-white-bg{% endblock body_class %}
+{% block body_class %}baloo-font kanban-bg{% endblock body_class %}
 
 {% block main_content %}
-<div class="row header kanban-brown-bg">
+<div class="row header box-shadow kanban-darkblue-bg">
   <div class="col-1 text-center">
     <h2 class="powell-font text-white pb-2">Kanban</h2>
   </div>
@@ -32,7 +32,7 @@
 </div>
 
 <div class="row justify-content-center kanban-container">
-  <div class="col-10 px-2">
+  <div class="col-11 px-2">
     <div class="row mt-2 justify-content-around">
       <div class="col-3 p-0 box-shadow radius-10">
         <div class="row py-2" id="backlog-title">
@@ -41,8 +41,10 @@
           </div>
         </div>
         <div class="kanban-column">
-          {% for task in my_tasks %}
-            {% include "kanban_task.html" %}
+          {% for task in backlog %}
+            {% if not task.in_progress %}
+              {% include "kanban_task.html" %}
+            {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -53,8 +55,8 @@
           </div>
         </div>
         <div class="kanban-column">
-          {% for task in important_urgent %}
-            {% include "matrix_task.html" %}
+          {% for task in in_progress %}
+            {% include "kanban_task.html" %}
           {% endfor %}
         </div>
       </div>
@@ -65,8 +67,8 @@
           </div>
         </div>
         <div class="kanban-column">
-          {% for task in important_non_urgent %}
-            {% include "matrix_task.html" %}
+          {% for task in finished %}
+            {% include "kanban_task.html" %}
           {% endfor %}
         </div>
       </div>
