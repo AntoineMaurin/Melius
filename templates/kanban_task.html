@@ -33,12 +33,14 @@
       </div>
     {% else %}
       {% if task.is_done %}
-      <!-- <form action="/deltask" method="post" class="col-5 my-auto px-0">
-        {% csrf_token %}
-        <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
-          <i class="far fa-trash-alt fa-2x cross-matrix-button"></i>
-        </button>
-      </form> -->
+        <div class="row h-100 justify-content-center">
+          <form action="/setbackinprogress" method="post" class="col-5 my-auto px-0">
+            {% csrf_token %}
+            <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
+              <i class="fas fa-arrow-alt-circle-left fa-2x cross-matrix-button"></i>
+            </button>
+          </form>
+        </div>
       {% else %}
         <div class="row h-100 justify-content-center">
           <form action="/setinprogress" method="post" class="col-5 my-auto px-0">

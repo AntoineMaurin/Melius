@@ -51,13 +51,18 @@ class TasksModelsTest(TestCase):
         self.assertTrue(isinstance(tl[0], TaskList))
         self.assertEqual(tl[0].name, "Loisirs")
 
-    def test_get_tasklists_from_user(self):
+    def test_get_tasklist_by_id(self):
 
-        first_tasklist = TaskList.objects.all()[:1]
-
-        tl = TaskList.get_tasklist_by_id(first_tasklist[0].id)
+        tl = TaskList.get_tasklist_by_id(self.tasklist_1.id)
         self.assertTrue(isinstance(tl, TaskList))
-        self.assertEqual(tl.name, first_tasklist[0].name)
+        self.assertEqual(tl.name, self.tasklist_1.name)
+        self.assertEqual(tl.color, self.tasklist_1.color)
+
+    def test_get_tasks_from_tasklist(self):
+        tasks = SimpleTask.get_tasks_from_tasklist(self.tasklist_1)
+        for task in tasks:
+            self.assertTrue(isinstance(task, SimpleTask))
+            self.assertEquals(task.tasklist, self.tasklist_1)
 
     def test_get_all_tasks_by_user(self):
         all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
@@ -90,14 +95,6 @@ class TasksModelsTest(TestCase):
         self.assertTrue(isinstance(task, SimpleTask))
         self.assertEquals(task.id, first_task[0].id)
 
-    def test_get_overdue_tasks_with_tasklist(self):
-        today = date.today()
-        overdue_tasks = SimpleTask.get_overdue_tasks(self.tasklist_1)
-        for task in overdue_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.due_date < today)
-            self.assertEquals(task.tasklist.user, self.user)
-
     def test_get_overdue_tasks_with_all_tasks_by_user(self):
         today = date.today()
         all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
@@ -107,159 +104,160 @@ class TasksModelsTest(TestCase):
             self.assertTrue(task.due_date < today)
             self.assertEquals(task.tasklist.user, self.user)
 
-
-    def test_get_today_tasks_with_tasklist(self):
+    def test_get_overdue_tasks_with_tasklist_tasks(self):
         today = date.today()
-        today_tasks = SimpleTask.get_today_tasks(self.tasklist_1)
-        for task in today_tasks:
+        tasklist_tasks = SimpleTask.objects.filter(tasklist=self.tasklist_1)
+        overdue_tasks = SimpleTask.get_overdue_tasks(tasklist_tasks)
+        for task in overdue_tasks:
             self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, today)
+            self.assertTrue(task.due_date < today)
             self.assertEquals(task.tasklist.user, self.user)
 
-    def test_get_today_tasks_with_all_tasks_by_user(self):
-        today = date.today()
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        today_tasks = SimpleTask.get_today_tasks(all_tasks)
-        for task in today_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, today)
-            self.assertEquals(task.tasklist.user, self.user)
 
-    def test_get_tomorrow_tasks_with_tasklist(self):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        tomorrow_tasks = SimpleTask.get_tomorrow_tasks(self.tasklist_1)
-        for task in tomorrow_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, tomorrow)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_tomorrow_tasks_with_all_tasks_by_user(self):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        tomorrow_tasks = SimpleTask.get_tomorrow_tasks(all_tasks)
-        for task in tomorrow_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, tomorrow)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_future_tasks_with_tasklist(self):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        future_tasks = SimpleTask.get_future_tasks(self.tasklist_1)
-        for task in future_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.due_date > tomorrow)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_future_tasks_with_all_tasks_by_user(self):
-        tomorrow = date.today() + datetime.timedelta(days=1)
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        future_tasks = SimpleTask.get_future_tasks(all_tasks)
-        for task in future_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.due_date > tomorrow)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_no_date_tasks_with_tasklist(self):
-        no_date_tasks = SimpleTask.get_no_date_tasks(self.tasklist_1)
-        for task in no_date_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, None)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_no_date_tasks_with_all_tasks_by_user(self):
-
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        no_date_tasks = SimpleTask.get_no_date_tasks(all_tasks)
-        for task in no_date_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertEquals(task.due_date, None)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_finished_tasks_with_tasklist(self):
-        finished_tasks = SimpleTask.get_finished_tasks(self.tasklist_1)
-        for task in finished_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_finished_tasks_with_all_tasks_by_user(self):
-
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        finished_tasks = SimpleTask.get_finished_tasks(all_tasks)
-        for task in finished_tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_important_urgent_tasks(self):
-        tasks = SimpleTask.get_important_urgent_tasks(self.user)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_important)
-            self.assertTrue(task.is_urgent)
-            self.assertFalse(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_important_non_urgent_tasks(self):
-        tasks = SimpleTask.get_important_non_urgent_tasks(self.user)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_important)
-            self.assertFalse(task.is_urgent)
-            self.assertFalse(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_non_important_urgent_tasks(self):
-        tasks = SimpleTask.get_non_important_urgent_tasks(self.user)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertFalse(task.is_important)
-            self.assertTrue(task.is_urgent)
-            self.assertFalse(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_non_important_non_urgent_tasks(self):
-        tasks = SimpleTask.get_non_important_non_urgent_tasks(self.user)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertFalse(task.is_important)
-            self.assertFalse(task.is_urgent)
-            self.assertFalse(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_urgent_tasks_with_tasklist(self):
-        tasks = SimpleTask.get_urgent_tasks(self.tasklist_1)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_urgent)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_urgent_tasks_with_all_tasks_by_user(self):
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        tasks = SimpleTask.get_urgent_tasks(all_tasks)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_urgent)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_important_tasks_with_tasklist(self):
-        tasks = SimpleTask.get_important_tasks(self.tasklist_1)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_important)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_important_tasks_with_all_tasks_by_user(self):
-        all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        tasks = SimpleTask.get_important_tasks(all_tasks)
-        for task in tasks:
-            self.assertTrue(isinstance(task, SimpleTask))
-            self.assertTrue(task.is_important)
-            self.assertEquals(task.tasklist.user, self.user)
-
-    def test_get_finished_tasks_not_in_matrix(self):
-        tasks = SimpleTask.get_finished_tasks_not_in_matrix(self.user)
-        for task in tasks:
-            self.assertFalse(task.is_done)
-            self.assertEquals(task.tasklist.user, self.user)
-            self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))
+    # def test_get_today_tasks_with_all_tasks_by_user(self):
+    #     today = date.today()
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     today_tasks = SimpleTask.get_today_tasks(all_tasks)
+    #     for task in today_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertEquals(task.due_date, today)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_tomorrow_tasks_with_tasklist(self):
+    #     tomorrow = date.today() + datetime.timedelta(days=1)
+    #     tomorrow_tasks = SimpleTask.get_tomorrow_tasks(self.tasklist_1)
+    #     for task in tomorrow_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertEquals(task.due_date, tomorrow)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_tomorrow_tasks_with_all_tasks_by_user(self):
+    #     tomorrow = date.today() + datetime.timedelta(days=1)
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     tomorrow_tasks = SimpleTask.get_tomorrow_tasks(all_tasks)
+    #     for task in tomorrow_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertEquals(task.due_date, tomorrow)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_future_tasks_with_tasklist(self):
+    #     tomorrow = date.today() + datetime.timedelta(days=1)
+    #     future_tasks = SimpleTask.get_future_tasks(self.tasklist_1)
+    #     for task in future_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.due_date > tomorrow)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_future_tasks_with_all_tasks_by_user(self):
+    #     tomorrow = date.today() + datetime.timedelta(days=1)
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     future_tasks = SimpleTask.get_future_tasks(all_tasks)
+    #     for task in future_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.due_date > tomorrow)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_no_date_tasks_with_tasklist(self):
+    #     no_date_tasks = SimpleTask.get_no_date_tasks(self.tasklist_1)
+    #     for task in no_date_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertEquals(task.due_date, None)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_no_date_tasks_with_all_tasks_by_user(self):
+    #
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     no_date_tasks = SimpleTask.get_no_date_tasks(all_tasks)
+    #     for task in no_date_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertEquals(task.due_date, None)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_finished_tasks_with_tasklist(self):
+    #     finished_tasks = SimpleTask.get_finished_tasks(self.tasklist_1)
+    #     for task in finished_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_finished_tasks_with_all_tasks_by_user(self):
+    #
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     finished_tasks = SimpleTask.get_finished_tasks(all_tasks)
+    #     for task in finished_tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_important_urgent_tasks(self):
+    #     tasks = SimpleTask.get_important_urgent_tasks(self.user)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_important)
+    #         self.assertTrue(task.is_urgent)
+    #         self.assertFalse(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_important_non_urgent_tasks(self):
+    #     tasks = SimpleTask.get_important_non_urgent_tasks(self.user)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_important)
+    #         self.assertFalse(task.is_urgent)
+    #         self.assertFalse(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_non_important_urgent_tasks(self):
+    #     tasks = SimpleTask.get_non_important_urgent_tasks(self.user)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertFalse(task.is_important)
+    #         self.assertTrue(task.is_urgent)
+    #         self.assertFalse(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_non_important_non_urgent_tasks(self):
+    #     tasks = SimpleTask.get_non_important_non_urgent_tasks(self.user)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertFalse(task.is_important)
+    #         self.assertFalse(task.is_urgent)
+    #         self.assertFalse(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_urgent_tasks_with_tasklist(self):
+    #     tasks = SimpleTask.get_urgent_tasks(self.tasklist_1)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_urgent)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_urgent_tasks_with_all_tasks_by_user(self):
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     tasks = SimpleTask.get_urgent_tasks(all_tasks)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_urgent)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_important_tasks_with_tasklist(self):
+    #     tasks = SimpleTask.get_important_tasks(self.tasklist_1)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_important)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_important_tasks_with_all_tasks_by_user(self):
+    #     all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
+    #     tasks = SimpleTask.get_important_tasks(all_tasks)
+    #     for task in tasks:
+    #         self.assertTrue(isinstance(task, SimpleTask))
+    #         self.assertTrue(task.is_important)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #
+    # def test_get_finished_tasks_not_in_matrix(self):
+    #     tasks = SimpleTask.get_finished_tasks_not_in_matrix(self.user)
+    #     for task in tasks:
+    #         self.assertFalse(task.is_done)
+    #         self.assertEquals(task.tasklist.user, self.user)
+    #         self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))

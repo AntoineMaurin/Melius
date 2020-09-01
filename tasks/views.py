@@ -10,27 +10,34 @@ from tasks.build_template_context import BuildTemplateContext
 
 
 @login_required
-def set_tasks_dict(request, display, tasklist_to_show):
+def set_tasks_dict(request, tasks, display='all'):
 
     user_mail = request.session['user_mail']
-    data_dict_obj = BuildTemplateContext(display, tasklist_to_show, user_mail)
+
+    data_dict_obj = BuildTemplateContext(display, tasks)
+
     data_dict = data_dict_obj.get_data()
+
+    all_tasklists = TaskList.get_tasklists_from_user(user_mail)
+
+    data_dict['all_tasklists'] = all_tasklists
 
     return data_dict
 
 @login_required
 def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
 
+    user_mail = request.session['user_mail']
     if tasklist_to_show_id:
-        tasklist_to_show = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
-
-        for task in SimpleTask.get_tasks_with_due_date_from_tasklist(tasklist=tasklist_to_show):
-            task.due_date = str(task.due_date)
-
-        dict = set_tasks_dict(request, display, tasklist_to_show)
-
+        tasklist = TaskList.get_tasklist_by_id(id=tasklist_to_show_id)
+        tasks = SimpleTask.get_tasks_from_tasklist(tasklist)
     else:
-        dict = set_tasks_dict(request, display, tasklist_to_show_id)
+        tasks = SimpleTask.get_all_tasks_by_user(user_mail)
+
+    dict = set_tasks_dict(request, tasks, display)
+
+    if tasklist_to_show_id:
+        dict['tasklist_to_show'] = tasklist
 
     return render(request, "tasks.html", dict)
 
@@ -66,7 +73,11 @@ def change_task_state(request):
     task = SimpleTask.get_task_with_id(id)
     task.is_done = not task.is_done
     task.save()
-    return tasks_dashboard(request, tasklist_to_show_id=task.tasklist.id)
+    if 'tasklist_to_show_id' in request.session:
+        id = request.session['tasklist_to_show_id']
+    else:
+        id = None
+    return tasks_dashboard(request, tasklist_to_show_id=id)
 
 @login_required
 def change_matrix_task_state(request):
@@ -110,8 +121,8 @@ def show_tasklist(request, id):
 
 @login_required
 def show_all_tasklists(request):
+    request.session['tasklist_to_show_id'] = 0
     return tasks_dashboard(request, tasklist_to_show_id=None)
-
 
 @login_required
 def sort_by_all(request, id):
@@ -201,22 +212,38 @@ def edit_task(request, id):
 
 @login_required
 def coveys_matrix_page(request):
-    user = User.objects.get(email=request.session['user_mail'])
 
-    important_urgent = SimpleTask.get_important_urgent_tasks(user)
-    important_non_urgent = SimpleTask.get_important_non_urgent_tasks(user)
-    non_important_urgent = SimpleTask.get_non_important_urgent_tasks(user)
-    non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(user)
-    my_tasks = SimpleTask.get_finished_tasks_not_in_matrix(user)
+    user_mail = request.session['user_mail']
+    tasks = SimpleTask.get_all_tasks_by_user(user_mail)
 
-    context = {'important_urgent': important_urgent,
-               'important_non_urgent': important_non_urgent,
-               'non_important_urgent': non_important_urgent,
-               'non_important_non_urgent': non_important_non_urgent,
-               'my_tasks': my_tasks}
+    matrix_data = set_tasks_dict(request, tasks, display='matrix')
 
-    return render(request, "stephen_covey_matrix.html", context)
+    full_backlog = SimpleTask.get_finished_tasks_not_in_matrix(tasks)
 
+    final_backlog = set_tasks_dict(request, full_backlog, display='all')
+
+    return render(request, "stephen_covey_matrix.html",
+                 {'backlog': final_backlog,
+                  'matrix_data': matrix_data})
+
+def covey_one_category_backlog(request, id):
+    user_mail = request.session['user_mail']
+    tasklist = TaskList.objects.get(id=id)
+    tasks_in_tasklist = SimpleTask.get_tasks_from_tasklist(tasklist)
+
+    backlog = SimpleTask.get_finished_tasks_not_in_matrix(tasks_in_tasklist)
+
+    one_category_backlog = set_tasks_dict(request, backlog, display='all')
+
+    all_tasks = SimpleTask.get_all_tasks_by_user(user_mail)
+
+    matrix_data = set_tasks_dict(request, all_tasks, display='matrix')
+
+    return render(request, "stephen_covey_matrix.html",
+                 {'backlog': one_category_backlog,
+                  'matrix_data': matrix_data})
+
+@login_required
 def update_matrix_task(request):
     id = request.POST['task_id']
     dest = request.POST['destination']
@@ -241,6 +268,7 @@ def update_matrix_task(request):
     task.save()
     return coveys_matrix_page(request)
 
+@login_required
 def retire_task_from_matrix(request):
     id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)
@@ -249,6 +277,7 @@ def retire_task_from_matrix(request):
     task.save()
     return coveys_matrix_page(request)
 
+@login_required
 def kanbanpage(request):
     user = User.objects.get(email=request.session['user_mail'])
 
@@ -267,6 +296,10 @@ def kanbanpage(request):
 
     return render(request, "kanban.html", context)
 
+def one_category_kanbanpage(request, id):
+    pass
+
+@login_required
 def set_in_pogress(request):
     id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)
@@ -274,6 +307,16 @@ def set_in_pogress(request):
     task.save()
     return kanbanpage(request)
 
+@login_required
+def set_back_in_progress(request):
+    id = request.POST['task_id']
+    task = SimpleTask.get_task_with_id(id)
+    task.in_progress = True
+    task.is_done = False
+    task.save()
+    return kanbanpage(request)
+
+@login_required
 def cancel_in_progress(request):
     id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)
@@ -281,6 +324,7 @@ def cancel_in_progress(request):
     task.save()
     return kanbanpage(request)
 
+@login_required
 def set_finished(request):
     id = request.POST['task_id']
     task = SimpleTask.get_task_with_id(id)

@@ -431,7 +431,7 @@ input {
 }
 
 #sort_by_important {
-  background-color: #379380;
+  background-color: #f2bf24;
   color: #FFF !important;
 }
 
@@ -644,6 +644,10 @@ input {
   color: #1a2530;
 }
 
+.yellow-star {
+  color: #f2bf24;
+}
+
 .kanban-container {
   margin-top: 30px;
 }
@@ -692,4 +696,20 @@ input {
 
 .radius-10 {
   border-radius: 10px;
+}
+
+.urgent-task {
+  color: #d73d3d;
+}
+
+#matrix-categories-sort {
+  display: none;
+  width: 90%;
+}
+
+.matrix-category {
+  margin: 5px;
+  color: white;
+  border-radius: 15px;
+  padding: 2px 7px;
 }

@@ -1,8 +1,8 @@
-<div class="row task-box border my-2 mx-3" id="{{ task.id }}">
+<div class="row task-box border white-bg my-2 mx-3" id="{{ task.id }}">
   <div class="col-1">
     <div class="h-100 category-color p-0" style="background-color:{{ task.tasklist.color }}"></div>
   </div>
-  <div class="col-9 offset-left-45 py-2">
+  <div class="col-8 offset-left-45 py-2">
     <div class="pl-2 pt-1">
       {{ task.name }}
     </div>
@@ -15,17 +15,92 @@
       {{ task.description }}
     </div>
   </div>
-  <div class="col-2 ml-3">
-    <div class="row align-items-center h-100">
-      <div class="col-6">
-        <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
+  {% if task.is_important and task.is_urgent %}
+    <div class="col-3 p-0">
+      <div class="row align-items-center justify-content-around h-100">
+        <div class="col-3">
+          <i class="fas fa-clock fa-2x urgent-task"></i>
+        </div>
+        <div class="col-3">
+          <i class="fas fa-star fa-2x yellow-star"></i>
+        </div>
+        <div class="col-3">
+          <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
+        </div>
+        <form action="/changestate" method="post" class="col-3 my-auto px-2">
+          {% csrf_token %}
+          <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
+            {% if task.is_done %}
+              <i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i>
+            {% else %}
+              <i class="fas fa-check fa-2x text-darkblue last-icon-task"></i>
+            {% endif %}
+          </button>
+        </form>
       </div>
-      <form action="/changestate" method="post" class="col-6 my-auto px-2">
-        {% csrf_token %}
-        <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
-          <i class="fas fa-check fa-2x text-darkblue last-icon-task"></i>
-        </button>
-      </form>
     </div>
-  </div>
+  {% endif %}
+  {% if not task.is_important and not task.is_urgent %}
+    <div class="col-3 p-0">
+      <div class="row align-items-center justify-content-around h-100">
+        <div class="col-3 offset-7 p-0">
+          <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
+        </div>
+        <form action="/changestate" method="post" class="col-2 my-auto p-0">
+          {% csrf_token %}
+          <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
+            {% if task.is_done %}
+              <i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i>
+            {% else %}
+              <i class="fas fa-check fa-2x text-darkblue last-icon-task"></i>
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+  {% if task.is_important and not task.is_urgent %}
+    <div class="col-3 p-0">
+      <div class="row align-items-center justify-content-end h-100">
+        <div class="col-3">
+          <i class="fas fa-star fa-2x yellow-star"></i>
+        </div>
+        <div class="col-3">
+          <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
+        </div>
+        <form action="/changestate" method="post" class="col-3 my-auto px-2">
+          {% csrf_token %}
+          <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
+            {% if task.is_done %}
+              <i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i>
+            {% else %}
+              <i class="fas fa-check fa-2x text-darkblue last-icon-task"></i>
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+  {% if task.is_urgent and not task.is_important %}
+    <div class="col-3 p-0">
+      <div class="row align-items-center justify-content-end h-100">
+        <div class="col-3">
+          <i class="fas fa-clock fa-2x urgent-task"></i>
+        </div>
+        <div class="col-3">
+          <div class="d-inline del-task"><i class="far fa-trash-alt fa-2x text-darkblue"></i></div>
+        </div>
+        <form action="/changestate" method="post" class="col-3 my-auto px-2">
+          {% csrf_token %}
+          <button class="bg-transparent border-0 change-task-state" type="submit" name="task_id" value="{{ task.id }}">
+            {% if task.is_done %}
+              <i class="fas fa-arrow-circle-up fa-2x text-darkblue last-icon-task"></i>
+            {% else %}
+              <i class="fas fa-check fa-2x text-darkblue last-icon-task"></i>
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
 </div>

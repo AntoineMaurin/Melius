@@ -4,29 +4,26 @@ from tasks.models import TaskList, SimpleTask
 
 class BuildTemplateContext:
 
-    def __init__(self, display, tasklist_to_show, user_mail):
+    def __init__(self, display, tasks):
         self.display = display
-        self.tasklist_to_show = tasklist_to_show
-        self.user_mail = user_mail
+        self.tasks = tasks
 
     def get_data(self):
+        overdue_tasks = SimpleTask.get_overdue_tasks(self.tasks)
+        due_today_tasks = SimpleTask.get_today_tasks(self.tasks)
+        due_tommorow_tasks = SimpleTask.get_tomorrow_tasks(self.tasks)
+        future_tasks = SimpleTask.get_future_tasks(self.tasks)
+        no_date_tasks = SimpleTask.get_no_date_tasks(self.tasks)
+        finished_tasks = SimpleTask.get_finished_tasks(self.tasks)
+        urgent_tasks = SimpleTask.get_urgent_tasks(self.tasks)
+        important_tasks = SimpleTask.get_important_tasks(self.tasks)
 
-        if self.tasklist_to_show:
-            tasks = self.tasklist_to_show
-        else:
-            user = User.objects.get(email=self.user_mail)
-            tasks = SimpleTask.get_all_tasks_by_user(user)
+        important_urgent = SimpleTask.get_important_urgent_tasks(self.tasks)
+        important_non_urgent = SimpleTask.get_important_non_urgent_tasks(self.tasks)
+        non_important_urgent = SimpleTask.get_non_important_urgent_tasks(self.tasks)
+        non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(self.tasks)
 
-        overdue_tasks = SimpleTask.get_overdue_tasks(tasks)
-        due_today_tasks = SimpleTask.get_today_tasks(tasks)
-        due_tommorow_tasks = SimpleTask.get_tomorrow_tasks(tasks)
-        future_tasks = SimpleTask.get_future_tasks(tasks)
-        no_date_tasks = SimpleTask.get_no_date_tasks(tasks)
-        finished_tasks = SimpleTask.get_finished_tasks(tasks)
-        urgent_tasks = SimpleTask.get_urgent_tasks(tasks)
-        important_tasks = SimpleTask.get_important_tasks(tasks)
-
-        all_tasklists = TaskList.get_tasklists_from_user(self.user_mail)
+        matrix_backlog = SimpleTask.get_finished_tasks_not_in_matrix(self.tasks)
 
         all_data = {'overdue_tasks': overdue_tasks,
                     'due_today_tasks': due_today_tasks,
@@ -36,11 +33,14 @@ class BuildTemplateContext:
                     'finished_tasks': finished_tasks,
                     'urgent_tasks': urgent_tasks,
                     'important_tasks': important_tasks,
-                    'all_tasklists': all_tasklists,
-                    'tasklist_to_show': self.tasklist_to_show}
+                    'important_urgent': important_urgent,
+                    'important_non_urgent': important_non_urgent,
+                    'non_important_urgent': non_important_urgent,
+                    'non_important_non_urgent': non_important_non_urgent,
+                    'matrix_backlog': matrix_backlog}
 
         dict = {}
-        keys_list = self.get_keys()
+        keys_list = self.content_to_return()
 
         for k, v in all_data.items():
             if k in keys_list:
@@ -48,23 +48,26 @@ class BuildTemplateContext:
 
         return dict
 
-    def get_keys(self):
+    def content_to_return(self):
 
         if self.display == 'all':
             return ['overdue_tasks', 'due_today_tasks', 'due_tommorow_tasks',
-                    'future_tasks', 'no_date_tasks', 'finished_tasks',
-                    'all_tasklists', 'tasklist_to_show']
+                    'future_tasks', 'no_date_tasks', 'finished_tasks']
 
         elif self.display == 'current':
             return ['overdue_tasks', 'due_today_tasks',
-                    'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
-                    'all_tasklists', 'tasklist_to_show']
+                    'due_tommorow_tasks', 'future_tasks', 'no_date_tasks']
 
         elif self.display == 'urgent':
-            return ['urgent_tasks', 'all_tasklists', 'tasklist_to_show']
+            return ['urgent_tasks']
 
         elif self.display == 'important':
-            return ['important_tasks', 'all_tasklists', 'tasklist_to_show']
+            return ['important_tasks']
 
         elif self.display == 'finished':
-            return ['finished_tasks', 'all_tasklists', 'tasklist_to_show']
+            return ['finished_tasks']
+
+        elif self.display == 'matrix':
+            return ['important_urgent', 'important_non_urgent',
+                    'non_important_urgent', 'non_important_non_urgent',
+                    'matrix_backlog']

@@ -20,10 +20,12 @@ urlpatterns = [
     path('sort_by_urgent/<int:id>', views.sort_by_urgent),
     path('sort_by_important/<int:id>', views.sort_by_important),
     path('coveys_matrix', views.coveys_matrix_page),
+    path('covey_one_category_backlog/<int:id>', views.covey_one_category_backlog),
     path('update_matrix_task', views.update_matrix_task),
     path('retire_task_from_matrix', views.retire_task_from_matrix),
     path('kanban', views.kanbanpage),
     path('setinprogress', views.set_in_pogress),
+    path('setbackinprogress', views.set_back_in_progress),
     path('cancelinprogress', views.cancel_in_progress),
-    path('setfinished', views.set_finished)
+    path('setfinished', views.set_finished),
 ]

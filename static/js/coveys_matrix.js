@@ -18,6 +18,15 @@ function toggleMyTasks() {
   }
 }
 
+function toggleCategoriesSort() {
+  var categories = document.getElementById("matrix-categories-sort");
+  if (categories.style.display === "block") {
+    categories.style.display = "none";
+  } else {
+    categories.style.display = "block";
+  }
+}
+
 function openChangeMatrixQuarter(e) {
   var box = document.getElementById("change-matrix-box")
   box.style.display = "block";
