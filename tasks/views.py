@@ -218,7 +218,7 @@ def coveys_matrix_page(request):
 
     matrix_data = set_tasks_dict(request, tasks, display='matrix')
 
-    full_backlog = SimpleTask.get_finished_tasks_not_in_matrix(tasks)
+    full_backlog = SimpleTask.get_to_do_tasks_not_in_matrix(tasks)
 
     final_backlog = set_tasks_dict(request, full_backlog, display='all')
 
@@ -231,7 +231,7 @@ def covey_one_category_backlog(request, id):
     tasklist = TaskList.objects.get(id=id)
     tasks_in_tasklist = SimpleTask.get_tasks_from_tasklist(tasklist)
 
-    backlog = SimpleTask.get_finished_tasks_not_in_matrix(tasks_in_tasklist)
+    backlog = SimpleTask.get_to_do_tasks_not_in_matrix(tasks_in_tasklist)
 
     one_category_backlog = set_tasks_dict(request, backlog, display='all')
 

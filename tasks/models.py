@@ -177,9 +177,9 @@ class SimpleTask(models.Model):
                                             list.append(task)
         return list
 
-    def get_finished_tasks_not_in_matrix(tasks):
+    def get_to_do_tasks_not_in_matrix(tasks):
         list = []
         for task in tasks:
-            if (task.is_important is None and task.is_urgent is None) or (task.is_important is None or task.is_urgent is None):
+            if (task.is_done is False) and ((task.is_important and task.is_urgent) or (task.is_important or task.is_urgent)):
                 list.append(task)
         return list

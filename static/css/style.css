@@ -547,7 +547,7 @@ input {
 
 .scrollable {
   overflow: auto;
-  max-height: 540px;
+  max-height: 460px;
 }
 
 .matrix-header {

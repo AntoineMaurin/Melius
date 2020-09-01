@@ -27,7 +27,7 @@
         <form action="/setfinished" method="post" class="col-6 my-auto px-0">
           {% csrf_token %}
           <button class="bg-transparent border-0" type="submit" name="task_id" value="{{ task.id }}">
-            <i class="fas fa-check fa-2x cross-matrix-button"></i>
+            <i class="fas fa-arrow-alt-circle-right fa-2x cross-matrix-button"></i>
           </button>
         </form>
       </div>
