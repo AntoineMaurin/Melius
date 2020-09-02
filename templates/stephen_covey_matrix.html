@@ -46,9 +46,10 @@
       <i class="fas fa-angle-down fa-2x"></i>
     </div>
     <div id="matrix-categories-sort" class="row pt-2">
+      <a class="matrix-category text-white darkblue-bg" href="/coveys_matrix" method="post"">Toutes</a>
       {% for tasklist in matrix_data.all_tasklists %}
       <div class="d-inline-block mb-3">
-        <a class="matrix-category text-white" href="/covey_one_category_backlog/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
+        <a class="matrix-category text-white" href="/covey_sort_backlog/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
       </div>
       {% endfor %}
     </div>

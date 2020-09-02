@@ -125,49 +125,25 @@ def show_all_tasklists(request):
     return tasks_dashboard(request, tasklist_to_show_id=None)
 
 @login_required
-def sort_by_all(request, id):
-    if id > 0:
-        return tasks_dashboard(request, tasklist_to_show_id=id,
-                        display='all')
-    else:
-        return tasks_dashboard(request, tasklist_to_show_id=None,
-                        display='all')
+def sort_by(request, type, id):
+    if id == 0:
+        id = None
 
-@login_required
-def sort_by_current(request, id):
-    if id > 0:
+    if type == 'all':
         return tasks_dashboard(request, tasklist_to_show_id=id,
-                        display='current')
-    else:
-        return tasks_dashboard(request, tasklist_to_show_id=None,
-                        display='current')
-
-@login_required
-def sort_by_finished(request, id):
-    if id > 0:
+                               display='all')
+    elif type == 'current':
         return tasks_dashboard(request, tasklist_to_show_id=id,
-                        display='finished')
-    else:
-        return tasks_dashboard(request, tasklist_to_show_id=None,
-                        display='finished')
-
-@login_required
-def sort_by_urgent(request, id):
-    if id > 0:
+                               display='current')
+    elif type == 'finished':
+        return tasks_dashboard(request, tasklist_to_show_id=id,
+                               display='finished')
+    elif type == 'urgent':
         return tasks_dashboard(request, tasklist_to_show_id=id,
                                display='urgent')
-    else:
-        return tasks_dashboard(request, tasklist_to_show_id=None,
-                                        display='urgent')
-
-@login_required
-def sort_by_important(request, id):
-    if id > 0:
-        return tasks_dashboard(request, tasklist_to_show_id=id,
-                               display='important')
-    else:
-        return tasks_dashboard(request, tasklist_to_show_id=None,
-                               display='important')
+    elif type == 'important':
+       return tasks_dashboard(request, tasklist_to_show_id=id,
+                              display='important')
 
 @login_required
 def addcategory(request):
@@ -218,7 +194,7 @@ def coveys_matrix_page(request):
 
     matrix_data = set_tasks_dict(request, tasks, display='matrix')
 
-    full_backlog = SimpleTask.get_to_do_tasks_not_in_matrix(tasks)
+    full_backlog = SimpleTask.get_matrix_backlog_tasks(tasks)
 
     final_backlog = set_tasks_dict(request, full_backlog, display='all')
 
@@ -226,7 +202,7 @@ def coveys_matrix_page(request):
                  {'backlog': final_backlog,
                   'matrix_data': matrix_data})
 
-def covey_one_category_backlog(request, id):
+def covey_sort_backlog(request, id):
     user_mail = request.session['user_mail']
     tasklist = TaskList.objects.get(id=id)
     tasks_in_tasklist = SimpleTask.get_tasks_from_tasklist(tasklist)

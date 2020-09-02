@@ -44,17 +44,17 @@
     <div class="row pl-1 border-bottom">
       <div class="col py-3 align-self-center">
         {% if tasklist_to_show %}
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/{{ tasklist_to_show.id }}">Toutes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/{{ tasklist_to_show.id }}">En cours</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by_urgent/{{ tasklist_to_show.id }}">Urgentes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by_important/{{ tasklist_to_show.id }}">Importantes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/{{ tasklist_to_show.id }}">Terminées</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by/all/{{ tasklist_to_show.id }}">Toutes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by/current/{{ tasklist_to_show.id }}">En cours</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by/urgent/{{ tasklist_to_show.id }}">Urgentes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by/important/{{ tasklist_to_show.id }}">Importantes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by/finished/{{ tasklist_to_show.id }}">Terminées</a>
         {% else %}
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by_all/0">Toutes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by_current/0">En cours</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by_urgent/0">Urgentes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by_important/0">Importantes</a>
-          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by_finished/0">Terminées</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_all" href="/sort_by/all/0">Toutes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_current" href="/sort_by/current/0">En cours</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_urgent" href="/sort_by/urgent/0">Urgentes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_important" href="/sort_by/important/0">Importantes</a>
+          <a class="text-white green-blue-bg sort-by-buttons" id="sort_by_finished" href="/sort_by/finished/0">Terminées</a>
         {% endif %}
       </div>
     </div>

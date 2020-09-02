@@ -312,17 +312,17 @@ class TasksModelsTest(TestCase):
             self.assertTrue(task.is_important)
             self.assertEquals(task.tasklist.user, self.user)
 
-    def test_get_to_do_tasks_not_in_matrix_with_all_tasks_by_user(self):
+    def test_get_matrix_backlog_tasks_with_all_tasks_by_user(self):
         all_tasks = SimpleTask.get_all_tasks_by_user(self.user)
-        tasks = SimpleTask.get_to_do_tasks_not_in_matrix(all_tasks)
+        tasks = SimpleTask.get_matrix_backlog_tasks(all_tasks)
         for task in tasks:
             self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
             self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))
 
-    def test_get_to_do_tasks_not_in_matrix_with_tasks_from_tasklist(self):
+    def test_get_matrix_backlog_tasks_with_tasks_from_tasklist(self):
         tasklist_tasks = SimpleTask.objects.filter(tasklist=self.tasklist_2)
-        tasks = SimpleTask.get_to_do_tasks_not_in_matrix(tasklist_tasks)
+        tasks = SimpleTask.get_matrix_backlog_tasks(tasklist_tasks)
         for task in tasks:
             self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)

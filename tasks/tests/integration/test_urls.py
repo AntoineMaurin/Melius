@@ -78,25 +78,18 @@ class TasksUrlsTest(TestCase):
         url = reverse(show_all_tasklists)
         self.assertEqual(resolve(url).func, show_all_tasklists)
 
+
     def test_sort_by_all_url_is_resolved(self):
-        url = reverse(sort_by_all, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, sort_by_all)
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            url = reverse(sort_by, args=[param, 0])
+            self.assertEqual(resolve(url).func, sort_by)
 
-    def test_sort_by_current_url_is_resolved(self):
-        url = reverse(sort_by_current, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, sort_by_current)
-
-    def test_sort_by_finished_url_is_resolved(self):
-        url = reverse(sort_by_finished, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, sort_by_finished)
-
-    def test_sort_by_urgent_url_is_resolved(self):
-        url = reverse(sort_by_urgent, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, sort_by_urgent)
-
-    def test_sort_by_important_url_is_resolved(self):
-        url = reverse(sort_by_important, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, sort_by_important)
+    def test_sort_by_tasklist_url_is_resolved(self):
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            url = reverse(sort_by, args=[param, self.tasklist_id])
+            self.assertEqual(resolve(url).func, sort_by)
 
     def test_coveys_matrix_page_url_is_resolved(self):
         url = reverse(coveys_matrix_page)

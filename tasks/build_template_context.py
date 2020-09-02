@@ -23,7 +23,7 @@ class BuildTemplateContext:
         non_important_urgent = SimpleTask.get_non_important_urgent_tasks(self.tasks)
         non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(self.tasks)
 
-        matrix_backlog = SimpleTask.get_to_do_tasks_not_in_matrix(self.tasks)
+        matrix_backlog = SimpleTask.get_matrix_backlog_tasks(self.tasks)
 
         all_data = {'overdue_tasks': overdue_tasks,
                     'due_today_tasks': due_today_tasks,

@@ -18,7 +18,8 @@ class TasksViewsTest(TestCase):
         for i in range(5):
             SimpleTask.objects.create(tasklist=tasklist_1,
                                       name=str("tâche " + str(i)),
-                                      due_date=date.today() + datetime.timedelta(days=i),
+                                      due_date=(date.today() +
+                                                datetime.timedelta(days=i)),
                                       description="Description tâche " + str(i),
                                       creation=timezone.now(),
                                       is_done=random.choice(is_done))
@@ -56,60 +57,11 @@ class TasksViewsTest(TestCase):
         tasklist_to_show = response.context['tasklist_to_show']
         self.assertEqual(tasklist_to_show.id, tl.id)
 
-    def test_tasks_dashboard_tasklist_display_all(self):
-        self.add_data()
-        tl = TaskList.objects.create(user=self.user, name="Sport",
-                                     color="#333333")
-        response = self.client.get('/sort_by_all/' + str(tl.id))
 
-        all_keys = ['overdue_tasks', 'due_today_tasks', 'due_tommorow_tasks',
-                    'future_tasks', 'no_date_tasks', 'finished_tasks',
-                    'all_tasklists', 'tasklist_to_show']
-        for key in all_keys:
-            self.assertIn(key, response.context)
 
-    def test_tasks_dashboard_tasklist_display_current(self):
-        self.add_data()
-        tl = TaskList.objects.create(user=self.user, name="Sport",
-                                     color="#333333")
-        response = self.client.get('/sort_by_current/' + str(tl.id))
 
-        current_keys = ['overdue_tasks', 'due_today_tasks',
-                        'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
-                        'all_tasklists', 'tasklist_to_show']
-        for key in current_keys:
-            self.assertIn(key, response.context)
 
-    def test_tasks_dashboard_tasklist_display_finished(self):
-        self.add_data()
-        tl = TaskList.objects.create(user=self.user, name="Sport",
-                                     color="#333333")
-        response = self.client.get('/sort_by_finished/' + str(tl.id))
 
-        finished_keys = ['finished_tasks', 'all_tasklists', 'tasklist_to_show']
-        for key in finished_keys:
-            self.assertIn(key, response.context)
-
-    def test_tasks_dashboard_tasklist_display_urgent(self):
-        self.add_data()
-        tl = TaskList.objects.create(user=self.user, name="Sport",
-                                     color="#333333")
-        response = self.client.get('/sort_by_urgent/' + str(tl.id))
-
-        urgent_keys = ['urgent_tasks', 'all_tasklists', 'tasklist_to_show']
-        for key in urgent_keys:
-            self.assertIn(key, response.context)
-
-    def test_tasks_dashboard_tasklist_display_important(self):
-        self.add_data()
-        tl = TaskList.objects.create(user=self.user, name="Sport",
-                                     color="#333333")
-        response = self.client.get('/sort_by_important/' + str(tl.id))
-
-        important_keys = ['important_tasks', 'all_tasklists',
-                          'tasklist_to_show']
-        for key in important_keys:
-            self.assertIn(key, response.context)
 
     def test_add_task_adds_task(self):
 
@@ -240,94 +192,43 @@ class TasksViewsTest(TestCase):
         self.assertRedirects(response, '/login?next=/show_all_tasklists')
 
     def test_sort_by_all(self):
-        self.add_data()
-        tasklist = TaskList.objects.get(name="Loisirs")
-        response = self.client.get('/sort_by_all/' + str(tasklist.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            response = self.client.get('/sort_by/' + param + '/0')
+            self.assertEqual(response.status_code, 200)
 
-    def test_sort_by_all_no_id(self):
-        response = self.client.get('/sort_by_all/0')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_all_no_auth(self):
+    def test_sort_by_all_not_auth(self):
         self.client.get('/logout')
-        response = self.client.get('/sort_by_all/0')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/sort_by_all/0')
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            response = self.client.get('/sort_by/' + param + '/0')
+            self.assertEqual(response.status_code, 302)
+            self.assertRedirects(response,
+                                 '/login?next=/sort_by/' + param + '/0')
 
-    def test_sort_by_current(self):
+    def test_sort_by_one_tasklist(self):
         self.add_data()
-        tasklist = TaskList.objects.get(name="Loisirs")
-        response = self.client.get('/sort_by_current/' + str(tasklist.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
+        tasklist = TaskList.objects.get(user=self.user, name="Loisirs",
+                                        color="#55b37e")
 
-    def test_sort_by_current_no_id(self):
-        response = self.client.get('/sort_by_current/0')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            response = self.client.get('/sort_by/' + param +
+                                       '/' + str(tasklist.id))
+            self.assertEqual(response.status_code, 200)
 
-    def test_sort_by_current_no_auth(self):
+    def test_sort_by_one_tasklist_not_auth(self):
         self.client.get('/logout')
-        response = self.client.get('/sort_by_current/0')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/sort_by_current/0')
-
-    def test_sort_by_finished(self):
         self.add_data()
-        tasklist = TaskList.objects.get(name="Loisirs")
-        response = self.client.get('/sort_by_finished/' + str(tasklist.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_finished_no_id(self):
-        response = self.client.get('/sort_by_finished/0')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_finished_no_auth(self):
-        self.client.get('/logout')
-        response = self.client.get('/sort_by_finished/0')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/sort_by_finished/0')
-
-    def test_sort_by_urgent(self):
-        self.add_data()
-        tasklist = TaskList.objects.get(name="Loisirs")
-        response = self.client.get('/sort_by_urgent/' + str(tasklist.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_urgent_no_id(self):
-        response = self.client.get('/sort_by_urgent/0')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_urgent_no_auth(self):
-        self.client.get('/logout')
-        response = self.client.get('/sort_by_urgent/0')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/sort_by_urgent/0')
-
-    def test_sort_by_important(self):
-        self.add_data()
-        tasklist = TaskList.objects.get(name="Loisirs")
-        response = self.client.get('/sort_by_important/' + str(tasklist.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_important_no_id(self):
-        response = self.client.get('/sort_by_important/0')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks.html')
-
-    def test_sort_by_important_no_auth(self):
-        self.client.get('/logout')
-        response = self.client.get('/sort_by_important/0')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/sort_by_important/0')
+        tasklist = TaskList.objects.get(user=self.user, name="Loisirs",
+                                        color="#55b37e")
+        parameters = ['all', 'current', 'finished', 'important', 'urgent']
+        for param in parameters:
+            response = self.client.get('/sort_by/' + param +
+                                        '/' + str(tasklist.id))
+            self.assertEqual(response.status_code, 302)
+            self.assertRedirects(response, ('/login?next=/sort_by/'
+                                            + param + '/' + str(tasklist.id)))
 
     def test_add_category(self):
         self.add_data()
@@ -339,7 +240,7 @@ class TasksViewsTest(TestCase):
                                                 color="#262626",
                                                 user=self.user).exists())
 
-    def test_add_category_no_auth(self):
+    def test_add_category_not_auth(self):
         self.client.get('/logout')
         response = self.client.post('/addcategory', {
             'list_name': 'Tâches ménagères',
@@ -364,7 +265,7 @@ class TasksViewsTest(TestCase):
         self.assertEqual(list_changed.name, "Tâches ménagères")
         self.assertEqual(list_changed.color, "#262626")
 
-    def test_edit_category_no_auth(self):
+    def test_edit_category_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         tasklist_to_change = TaskList.objects.get(name="Loisirs",
@@ -390,7 +291,7 @@ class TasksViewsTest(TestCase):
         existing = TaskList.objects.filter(id=tasklist_to_del.id).exists()
         self.assertFalse(existing)
 
-    def test_deletecategory_no_auth(self):
+    def test_deletecategory_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         tasklist_to_del = TaskList.objects.get(name="Loisirs",
@@ -431,7 +332,7 @@ class TasksViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
 
-    def test_coveys_matrix_page_no_auth(self):
+    def test_coveys_matrix_page_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         response = self.client.get('/coveys_matrix')
@@ -462,7 +363,7 @@ class TasksViewsTest(TestCase):
         self.assertTrue(updated_task.is_important)
         self.assertFalse(updated_task.is_urgent)
 
-    def test_update_matrix_task_no_auth(self):
+    def test_update_matrix_task_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         task_to_update = SimpleTask.objects.get(name="tâche 1")
@@ -487,7 +388,7 @@ class TasksViewsTest(TestCase):
         self.assertEquals(updated_task.is_urgent, None)
         self.assertEquals(updated_task.is_important, None)
 
-    def test_retire_task_from_matrix_no_auth(self):
+    def test_retire_task_from_matrix_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         task = SimpleTask.objects.get(tasklist__user=self.user,
