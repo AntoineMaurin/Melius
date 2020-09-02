@@ -188,6 +188,9 @@ class SimpleTask(models.Model):
                     list.append(task)
         return list
 
-    def get_kanban_backlog_tasks_from_user(user):
-        return SimpleTask.objects.filter(tasklist__user=user, is_done=False
-                                        ).exclude(in_progress=True)
+    def get_kanban_backlog_tasks(tasks):
+        list = []
+        for task in tasks:
+            if task.is_done is False and task.in_progress != True:
+                list.append(task)
+        return list

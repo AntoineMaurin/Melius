@@ -253,17 +253,22 @@ def retire_task_from_matrix(request):
     return coveys_matrix_page(request)
 
 @login_required
-def kanbanpage(request):
-    user = User.objects.get(email=request.session['user_mail'])
+def kanbanpage(request, tasklist_to_show_id=None):
+    user_mail = request.session['user_mail']
 
-    initial_backlog = SimpleTask.get_kanban_backlog_tasks_from_user(user)
+    if tasklist_to_show_id:
+        tasklist = TaskList.objects.get(id=tasklist_to_show_id)
+        tasks = SimpleTask.get_tasks_from_tasklist(tasklist)
+    else:
+        tasks = SimpleTask.get_all_tasks_by_user(user_mail)
 
+    initial_backlog = SimpleTask.get_kanban_backlog_tasks(tasks)
     final_backlog = set_tasks_dict(request, initial_backlog, display='all')
 
-    in_progress = SimpleTask.objects.filter(tasklist__user=user,
+    in_progress = SimpleTask.objects.filter(tasklist__user__email=user_mail,
                                             in_progress=True)
 
-    finished = SimpleTask.objects.filter(tasklist__user=user,
+    finished = SimpleTask.objects.filter(tasklist__user__email=user_mail,
                                          in_progress=False,
                                          is_done=True)
 
@@ -274,8 +279,19 @@ def kanbanpage(request):
     return render(request, "kanban.html", context)
 
 def one_category_kanbanpage(request, id):
-    tasklist = TaskList.objects.get(id=id)
-    pass
+    user_mail = request.session['user_mail']
+    if id == 0:
+        return kanbanpage(request, tasklist_to_show_id=None)
+
+    try:
+        tasklist = TaskList.objects.get(id=id)
+
+        if tasklist in TaskList.get_tasklists_from_user(user_mail):
+            return kanbanpage(request, tasklist_to_show_id=id)
+        else:
+            return kanbanpage(request, tasklist_to_show_id=None)
+    except:
+        return kanbanpage(request, tasklist_to_show_id=None)
 
 @login_required
 def set_in_pogress(request):
