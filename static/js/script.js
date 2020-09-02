@@ -152,33 +152,6 @@ $(document).ready(function() {
     });
   });
 
-
-  $(".del-task").click(function(){
-      var task_id = $(this).parent().parent().parent().parent().attr('id');
-      $(".new-task-button").trigger('click');
-
-      $.ajax({
-        type: "GET",
-        url: "/deltask/" + task_id,
-        data: {},
-        dataType: "json",
-        success: function() {
-
-          if ( $("#" + task_id).siblings().length < 2 ) {
-            var title_class = $("#" + task_id).parent().attr('class');
-            $("." + title_class).remove();
-          }
-
-          $("#" + task_id).remove();
-
-        },
-        error: function(rs, e) {
-          console.log(e);
-        }
-      });
-    });
-
-
   $(".new-list-form").click(function(){
 
     $("#BaseListForm").css("display", "block");

@@ -35,7 +35,7 @@
 <div class="row px-3">
   <section class="col container pl-5">
     <div class="row pl-3 py-2 border-bottom">
-      <a class="category text-white darkblue-bg my-3" href="/show_all_tasklists" method="post">Toutes catégories</a>
+      <a class="category text-white darkblue-bg my-3" href="/show_tasklist/0" method="post">Toutes catégories</a>
       {% for tasklist in all_tasklists %}
         <a class="category text-white darkblue-bg my-3" href="/show_tasklist/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
       {% endfor %}

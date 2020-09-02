@@ -39,7 +39,7 @@ class TasksUrlsTest(TestCase):
         self.assertEqual(resolve(url).func, addtask)
 
     def test_deltask_url_is_resolved(self):
-        url = reverse(deltask, args=[self.task_id])
+        url = reverse(deltask)
         self.assertEqual(resolve(url).func, deltask)
 
     def test_edit_task_url_is_resolved(self):
@@ -73,11 +73,6 @@ class TasksUrlsTest(TestCase):
     def test_show_tasklist_url_is_resolved(self):
         url = reverse(show_tasklist, args=[self.tasklist_id])
         self.assertEqual(resolve(url).func, show_tasklist)
-
-    def test_show_all_tasklists_url_is_resolved(self):
-        url = reverse(show_all_tasklists)
-        self.assertEqual(resolve(url).func, show_all_tasklists)
-
 
     def test_sort_by_all_url_is_resolved(self):
         parameters = ['all', 'current', 'finished', 'important', 'urgent']

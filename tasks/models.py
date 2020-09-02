@@ -125,7 +125,8 @@ class SimpleTask(models.Model):
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
                                         is_important=True,
-                                        is_urgent=True):
+                                        is_urgent=True,
+                                        is_done=False):
                                             list.append(task)
         return list
 
@@ -136,7 +137,8 @@ class SimpleTask(models.Model):
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
                                         is_important=True,
-                                        is_urgent=False):
+                                        is_urgent=False,
+                                        is_done=False):
                                             list.append(task)
         return list
 
@@ -146,7 +148,8 @@ class SimpleTask(models.Model):
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
                                         is_important=False,
-                                        is_urgent=True):
+                                        is_urgent=True,
+                                        is_done=False):
                                             list.append(task)
         return list
 
@@ -156,7 +159,8 @@ class SimpleTask(models.Model):
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
                                         is_important=False,
-                                        is_urgent=False):
+                                        is_urgent=False,
+                                        is_done=False):
                                             list.append(task)
         return list
 

@@ -115,17 +115,21 @@ class TasksViewsTest(TestCase):
     def test_del_task(self):
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 4")
-        self.client.get('/deltask/' + str(task.id))
-        existing = SimpleTask.objects.filter(id=task.id).exists()
-        self.assertFalse(existing)
+        response = self.client.post('/deltask', {
+            'task_id': task.id,
+        })
+        is_still_existing = SimpleTask.objects.filter(id=task.id).exists()
+        self.assertFalse(is_still_existing)
 
     def test_del_task_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 4")
-        response = self.client.get('/deltask/' + str(task.id))
+        response = self.client.post('/deltask', {
+            'task_id': task.id,
+        })
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/deltask/' + str(task.id))
+        self.assertRedirects(response, '/login?next=/deltask')
 
     def test_update_task(self):
         self.add_data()
@@ -180,16 +184,16 @@ class TasksViewsTest(TestCase):
 
     def test_show_all_tasklists(self):
         self.add_data()
-        response = self.client.get('/show_all_tasklists')
+        response = self.client.get('/show_tasklist/0')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'tasks.html')
 
     def test_show_all_tasklists_not_auth(self):
         self.client.get('/logout')
         self.add_data()
-        response = self.client.get('/show_all_tasklists')
+        response = self.client.get('/show_tasklist/0')
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/show_all_tasklists')
+        self.assertRedirects(response, '/login?next=/show_tasklist/0')
 
     def test_sort_by_all(self):
         parameters = ['all', 'current', 'finished', 'important', 'urgent']
