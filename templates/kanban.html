@@ -35,17 +35,68 @@
   <div class="col-11 px-2">
     <div class="row mt-2 justify-content-around">
       <div class="col-3 p-0 box-shadow radius-10">
-        <div class="row py-2" id="backlog-title">
-          <div class="mx-auto">
+        <div class="row justify-content-center pt-2" id="backlog-title">
+          <div class="col-2"></div>
+          <div class="col-8">
             <h5 class="text-center text-white mb-0">Backlog</h5>
+          </div>
+          <div class="col-2 bg-transparent" type="button" onclick="toggleCategoriesSort()">
+            <i class="fas fa-angle-down fa-2x"></i>
+          </div>
+          <div id="categories-sort" class="row pt-3 px-1 w-100 kanban-darkblue-bg">
+            <a class="matrix-category text-white kanban-darkblue-bg border" href="/coveys_matrix" method="post"">Toutes</a>
+            {% for tasklist in backlog.all_tasklists %}
+              <div class="d-inline-block mb-3">
+                <a class="matrix-category text-white" href="/covey_sort_backlog/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
+              </div>
+            {% endfor %}
           </div>
         </div>
         <div class="kanban-column">
-          {% for task in backlog %}
-            {% if not task.in_progress %}
-              {% include "kanban_task.html" %}
+          <div class="overdue-tasks-list">
+            {% if backlog.overdue_tasks|length > 0 %}
+              <p class="m-3 text-white">Tâches dépassées</p>
+              {% for task in backlog.overdue_tasks %}
+                {% include "kanban_task.html" %}
+              {% endfor %}
             {% endif %}
-          {% endfor %}
+          </div>
+
+          <div class="today-tasks-list">
+            {% if backlog.due_today_tasks|length > 0 %}
+              <p class="m-3 text-white">Pour aujourd'hui</p>
+              {% for task in backlog.due_today_tasks %}
+                {% include "kanban_task.html" %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="tomorrow-tasks-list">
+            {% if backlog.due_tommorow_tasks|length > 0 %}
+              <p class="m-3 text-white">Pour demain</p>
+              {% for task in backlog.due_tommorow_tasks %}
+                {% include "kanban_task.html" %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="future-tasks-list">
+            {% if backlog.future_tasks|length > 0 %}
+              <p class="m-3 text-white">A venir</p>
+              {% for task in backlog.future_tasks %}
+                {% include "kanban_task.html" %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="no-date-tasks-list">
+            {% if backlog.no_date_tasks|length > 0 %}
+              <p class="m-3 text-white">Sans date</p>
+              {% for task in backlog.no_date_tasks %}
+                {% include "kanban_task.html" %}
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
       </div>
       <div class="col-3 p-0 box-shadow radius-10">
@@ -75,5 +126,7 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'js/kanban.js' %}"></script>
 
 {% endblock main_content %}

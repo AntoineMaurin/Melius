@@ -9,7 +9,6 @@ import datetime
 from tasks.build_template_context import BuildTemplateContext
 
 
-@login_required
 def set_tasks_dict(request, tasks, display='all'):
 
     user_mail = request.session['user_mail']
@@ -207,7 +206,7 @@ def covey_sort_backlog(request, id):
     tasklist = TaskList.objects.get(id=id)
     tasks_in_tasklist = SimpleTask.get_tasks_from_tasklist(tasklist)
 
-    backlog = SimpleTask.get_to_do_tasks_not_in_matrix(tasks_in_tasklist)
+    backlog = SimpleTask.get_matrix_backlog_tasks(tasks_in_tasklist)
 
     one_category_backlog = set_tasks_dict(request, backlog, display='all')
 
@@ -257,7 +256,9 @@ def retire_task_from_matrix(request):
 def kanbanpage(request):
     user = User.objects.get(email=request.session['user_mail'])
 
-    full_backlog = SimpleTask.get_all_undone_tasks_by_user(user)
+    initial_backlog = SimpleTask.get_kanban_backlog_tasks_from_user(user)
+
+    final_backlog = set_tasks_dict(request, initial_backlog, display='all')
 
     in_progress = SimpleTask.objects.filter(tasklist__user=user,
                                             in_progress=True)
@@ -266,13 +267,14 @@ def kanbanpage(request):
                                          in_progress=False,
                                          is_done=True)
 
-    context = {"backlog" : full_backlog,
+    context = {"backlog" : final_backlog,
                "in_progress": in_progress,
                "finished": finished}
 
     return render(request, "kanban.html", context)
 
 def one_category_kanbanpage(request, id):
+    tasklist = TaskList.objects.get(id=id)
     pass
 
 @login_required

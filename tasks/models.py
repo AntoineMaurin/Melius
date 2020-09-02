@@ -181,6 +181,13 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if task.is_done is False:
-                if (task.is_important is None and task.is_urgent is None) or (task.is_important is None or task.is_urgent is None):
+                if (task.is_important is None and
+                    task.is_urgent is None) or (
+                    task.is_important is None or
+                    task.is_urgent is None):
                     list.append(task)
         return list
+
+    def get_kanban_backlog_tasks_from_user(user):
+        return SimpleTask.objects.filter(tasklist__user=user, is_done=False
+                                        ).exclude(in_progress=True)

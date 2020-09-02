@@ -45,12 +45,12 @@
     <div class="col-2 bg-transparent" type="button" onclick="toggleCategoriesSort()">
       <i class="fas fa-angle-down fa-2x"></i>
     </div>
-    <div id="matrix-categories-sort" class="row pt-2">
-      <a class="matrix-category text-white darkblue-bg" href="/coveys_matrix" method="post"">Toutes</a>
+    <div id="categories-sort" class="row pt-2">
+      <a class="matrix-category text-white darkblue-bg" href="/coveys_matrix">Toutes</a>
       {% for tasklist in matrix_data.all_tasklists %}
-      <div class="d-inline-block mb-3">
-        <a class="matrix-category text-white" href="/covey_sort_backlog/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
-      </div>
+        <div class="d-inline-block mb-3">
+          <a class="matrix-category text-white" href="/covey_sort_backlog/{{ tasklist.id }}" method="post" style="background-color:{{ tasklist.color }}">{{ tasklist.name }}</a>
+        </div>
       {% endfor %}
     </div>
   </div>

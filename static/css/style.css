@@ -702,7 +702,7 @@ input {
   color: #d73d3d;
 }
 
-#matrix-categories-sort {
+#categories-sort {
   display: none;
   width: 90%;
 }
@@ -712,4 +712,8 @@ input {
   color: white;
   border-radius: 15px;
   padding: 2px 7px;
+}
+
+.kanban-darkblue-bg {
+  background-color: #1a252b;
 }

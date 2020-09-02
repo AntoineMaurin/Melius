@@ -1,13 +1,8 @@
-function toggleMyTasks() {
-
-  var my_tasks = document.getElementById("my-tasks");
-  var button = document.getElementsByClassName('see-my-tasks-button');
-
-  if (my_tasks.style.display === "none") {
-    my_tasks.style.display = "block";
-    button[0].classList.remove("turn-around");
+function toggleCategoriesSort() {
+  var categories = document.getElementById("categories-sort");
+  if (categories.style.display === "block") {
+    categories.style.display = "none";
   } else {
-    my_tasks.style.display = "none";
-    button[0].classList.add("turn-around");
+    categories.style.display = "block";
   }
 }
