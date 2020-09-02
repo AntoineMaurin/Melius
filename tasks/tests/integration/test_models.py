@@ -1,5 +1,5 @@
 from tasks.models import TaskList, SimpleTask
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.utils import timezone
 from django.contrib.auth.models import User
 import datetime
@@ -30,7 +30,7 @@ class TasksModelsTest(TestCase):
                                       due_date=(date.today()
                                                 + datetime.timedelta(days=i)),
                                       description=("Description loisir "
-                                                    + str(i)),
+                                                   + str(i)),
                                       creation=timezone.now(),
                                       is_done=True)
 
@@ -40,10 +40,9 @@ class TasksModelsTest(TestCase):
                                       due_date=(date.today()
                                                 + datetime.timedelta(days=j)),
                                       description=("Description travail "
-                                                    + str(j)),
+                                                   + str(j)),
                                       creation=timezone.now(),
                                       is_done=False)
-
 
     def test_get_tasklists_from_user(self):
 
@@ -84,7 +83,8 @@ class TasksModelsTest(TestCase):
             self.assertEquals(task.tasklist.user, self.user)
 
     def test_get_tasks_with_due_date_from_tasklist(self):
-        tasks = SimpleTask.get_tasks_with_due_date_from_tasklist(self.tasklist_1)
+        tasks = SimpleTask.get_tasks_with_due_date_from_tasklist(
+            self.tasklist_1)
         for task in tasks:
             self.assertTrue(isinstance(task.due_date, date))
             self.assertEquals(task.tasklist.user, self.user)
@@ -130,7 +130,6 @@ class TasksModelsTest(TestCase):
             self.assertTrue(isinstance(task, SimpleTask))
             self.assertTrue(task.due_date == today)
             self.assertEquals(task.tasklist.user, self.user)
-
 
     def test_get_tomorrow_tasks_with_all_tasks_by_user(self):
         tomorrow = date.today() + datetime.timedelta(days=1)
@@ -318,7 +317,8 @@ class TasksModelsTest(TestCase):
         for task in tasks:
             self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
-            self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))
+            self.assertTrue((task.is_urgent not in [True, False]) and
+                            (task.is_important not in [True, False]))
 
     def test_get_matrix_backlog_tasks_with_tasks_from_tasklist(self):
         tasklist_tasks = SimpleTask.objects.filter(tasklist=self.tasklist_2)
@@ -326,4 +326,5 @@ class TasksModelsTest(TestCase):
         for task in tasks:
             self.assertFalse(task.is_done)
             self.assertEquals(task.tasklist.user, self.user)
-            self.assertTrue((task.is_urgent not in [True, False]) and (task.is_important not in [True, False]))
+            self.assertTrue((task.is_urgent not in [True, False]) and
+                            (task.is_important not in [True, False]))

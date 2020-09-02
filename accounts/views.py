@@ -54,9 +54,9 @@ def register(request):
         form = UserRegisterForm()
     return render(request, "register.html", {'form': form})
 
+
 def user_logout(request):
     logout(request)
-    form = UserLoginForm()
     try:
         del request.session['user_mail']
         del request.session['user_name']

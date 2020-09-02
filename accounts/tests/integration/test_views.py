@@ -4,6 +4,7 @@ from accounts.forms import UserRegisterForm, UserLoginForm
 from django.contrib import auth
 from tasks.models import TaskList
 
+
 class AccountsViewsTest(TestCase):
 
     def setUp(self):

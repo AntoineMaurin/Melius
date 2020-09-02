@@ -1,5 +1,4 @@
-from django.contrib.auth.models import User
-from tasks.models import TaskList, SimpleTask
+from tasks.models import SimpleTask
 
 
 class BuildTemplateContext:
@@ -19,9 +18,12 @@ class BuildTemplateContext:
         important_tasks = SimpleTask.get_important_tasks(self.tasks)
 
         important_urgent = SimpleTask.get_important_urgent_tasks(self.tasks)
-        important_non_urgent = SimpleTask.get_important_non_urgent_tasks(self.tasks)
-        non_important_urgent = SimpleTask.get_non_important_urgent_tasks(self.tasks)
-        non_important_non_urgent = SimpleTask.get_non_important_non_urgent_tasks(self.tasks)
+        important_non_urgent = SimpleTask.get_important_non_urgent_tasks(
+            self.tasks)
+        non_important_urgent = SimpleTask.get_non_important_urgent_tasks(
+            self.tasks)
+        non_important_non_urgent = SimpleTask. \
+            get_non_important_non_urgent_tasks(self.tasks)
 
         matrix_backlog = SimpleTask.get_matrix_backlog_tasks(self.tasks)
 

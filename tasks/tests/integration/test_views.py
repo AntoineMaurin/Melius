@@ -7,6 +7,7 @@ from tasks.models import TaskList, SimpleTask
 from django.contrib.auth.models import User
 from tasks.views import *
 
+
 class TasksViewsTest(TestCase):
 
     def add_data(self):
@@ -20,7 +21,8 @@ class TasksViewsTest(TestCase):
                                       name=str("tâche " + str(i)),
                                       due_date=(date.today() +
                                                 datetime.timedelta(days=i)),
-                                      description="Description tâche " + str(i),
+                                      description=("Description tâche "
+                                                   + str(i)),
                                       creation=timezone.now(),
                                       is_done=random.choice(is_done))
 
@@ -57,17 +59,11 @@ class TasksViewsTest(TestCase):
         tasklist_to_show = response.context['tasklist_to_show']
         self.assertEqual(tasklist_to_show.id, tl.id)
 
-
-
-
-
-
-
     def test_add_task_adds_task(self):
 
         tl = TaskList.objects.create(user=self.user, name="Sport",
                                      color="#333333")
-        response = self.client.post('/addtask', {
+        self.client.post('/addtask', {
             'name': 'Footing',
             'due_date': date.today(),
             'description': '',
@@ -97,7 +93,7 @@ class TasksViewsTest(TestCase):
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 2")
         state_before = task.is_done
-        response = self.client.post('/changestate', {
+        self.client.post('/changestate', {
             'task_id': task.id,
         })
         task_after = SimpleTask.objects.get(id=task.id)
@@ -107,7 +103,7 @@ class TasksViewsTest(TestCase):
     def test_change_task_state_not_auth(self):
         self.client.get('/logout')
         self.add_data()
-        task = SimpleTask.objects.get(name="tâche 2")
+        SimpleTask.objects.get(name="tâche 2")
         response = self.client.get('/changestate')
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/changestate')
@@ -115,7 +111,7 @@ class TasksViewsTest(TestCase):
     def test_del_task(self):
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 4")
-        response = self.client.post('/deltask', {
+        self.client.post('/deltask', {
             'task_id': task.id,
         })
         is_still_existing = SimpleTask.objects.filter(id=task.id).exists()
@@ -134,7 +130,7 @@ class TasksViewsTest(TestCase):
     def test_update_task(self):
         self.add_data()
         id = SimpleTask.objects.get(name="tâche 3").id
-        response = self.client.post('/updatetask', {
+        self.client.post('/updatetask', {
             'task_id': id,
             'name': 'Handball',
             'due_date': date.today(),
@@ -229,14 +225,14 @@ class TasksViewsTest(TestCase):
         parameters = ['all', 'current', 'finished', 'important', 'urgent']
         for param in parameters:
             response = self.client.get('/sort_by/' + param +
-                                        '/' + str(tasklist.id))
+                                       '/' + str(tasklist.id))
             self.assertEqual(response.status_code, 302)
             self.assertRedirects(response, ('/login?next=/sort_by/'
                                             + param + '/' + str(tasklist.id)))
 
     def test_add_category(self):
         self.add_data()
-        response = self.client.post('/addcategory', {
+        self.client.post('/addcategory', {
             'list_name': 'Tâches ménagères',
             'list_color': '#262626',
         })
@@ -259,7 +255,7 @@ class TasksViewsTest(TestCase):
                                                   name="Loisirs",
                                                   color="#55b37e")
 
-        response = self.client.post('/editcategory', {
+        self.client.post('/editcategory', {
             'list_id': tasklist_to_change.id,
             'list_name': 'Tâches ménagères',
             'list_color': '#262626',
@@ -289,7 +285,7 @@ class TasksViewsTest(TestCase):
                                                name="Loisirs",
                                                color="#55b37e")
 
-        response = self.client.post('/deletecategory', {
+        self.client.post('/deletecategory', {
             'list_id': tasklist_to_del.id,
         })
         existing = TaskList.objects.filter(id=tasklist_to_del.id).exists()
@@ -318,7 +314,7 @@ class TasksViewsTest(TestCase):
         self.assertEqual(response['due_date'], task_to_edit.due_date)
         self.assertEqual(response['description'], task_to_edit.description)
 
-    def test_edit_task(self):
+    def test_edit_task_not_auth(self):
         self.client.get('/logout')
         self.add_data()
         task_to_edit = SimpleTask.objects.get(name="tâche 1")
@@ -358,7 +354,7 @@ class TasksViewsTest(TestCase):
         self.add_data()
         task_to_update = SimpleTask.objects.get(name="tâche 1")
 
-        response = self.client.post('/update_matrix_task', {
+        self.client.post('/update_matrix_task', {
             'task_id': task_to_update.id,
             'destination': 'top-right'
         })
@@ -385,7 +381,7 @@ class TasksViewsTest(TestCase):
         task.is_urgent = True
         task.is_important = False
         task.save()
-        response = self.client.post('/retire_task_from_matrix', {
+        self.client.post('/retire_task_from_matrix', {
             'task_id': task.id,
         })
         updated_task = SimpleTask.objects.get(id=task.id)

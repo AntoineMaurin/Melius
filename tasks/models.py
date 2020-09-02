@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from datetime import date
-from django.db.models import Q
 
 
 class TaskList(models.Model):
@@ -18,6 +17,7 @@ class TaskList(models.Model):
 
     def get_tasklist_by_id(id=id):
         return TaskList.objects.get(id=id)
+
 
 class SimpleTask(models.Model):
     tasklist = models.ForeignKey(TaskList,
@@ -49,7 +49,8 @@ class SimpleTask(models.Model):
         return SimpleTask.objects.filter(tasklist__user=user, is_done=False)
 
     def get_tasks_with_due_date_from_tasklist(tasklist):
-        return SimpleTask.objects.filter(tasklist=tasklist).exclude(due_date=None)
+        return SimpleTask.objects.filter(tasklist=tasklist).exclude(
+            due_date=None)
 
     def get_task_with_id(id):
         return SimpleTask.objects.get(id=id)
@@ -59,10 +60,9 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if task.due_date:
-                if SimpleTask.objects.filter(id=task.id,
-                                             due_date__lt=today,
+                if SimpleTask.objects.filter(id=task.id, due_date__lt=today,
                                              is_done=False):
-                                                list.append(task)
+                    list.append(task)
         return list
 
     def get_today_tasks(tasks):
@@ -73,9 +73,9 @@ class SimpleTask(models.Model):
         for task in tasks:
             if task.due_date:
                 if SimpleTask.objects.filter(id=task.id,
-                                            due_date=today,
-                                            is_done=False):
-                                                list.append(task)
+                                             due_date=today,
+                                             is_done=False):
+                    list.append(task)
         return list
 
     def get_tomorrow_tasks(tasks):
@@ -85,9 +85,9 @@ class SimpleTask(models.Model):
         for task in tasks:
             if task.due_date:
                 if SimpleTask.objects.filter(id=task.id,
-                                            due_date=tomorrow,
-                                            is_done=False):
-                                                list.append(task)
+                                             due_date=tomorrow,
+                                             is_done=False):
+                    list.append(task)
         return list
 
     def get_future_tasks(tasks):
@@ -96,9 +96,9 @@ class SimpleTask(models.Model):
         for task in tasks:
             if task.due_date:
                 if SimpleTask.objects.filter(id=task.id,
-                                            due_date__gt=tomorrow,
-                                            is_done=False):
-                                                list.append(task)
+                                             due_date__gt=tomorrow,
+                                             is_done=False):
+                    list.append(task)
         return list
 
     def get_no_date_tasks(tasks):
@@ -106,17 +106,17 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        due_date=None,
-                                        is_done=False):
-                                            list.append(task)
+                                         due_date=None,
+                                         is_done=False):
+                list.append(task)
         return list
 
     def get_finished_tasks(tasks):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_done=True):
-                                            list.append(task)
+                                         is_done=True):
+                list.append(task)
         return list
 
     def get_important_urgent_tasks(tasks):
@@ -124,22 +124,21 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_important=True,
-                                        is_urgent=True,
-                                        is_done=False):
-                                            list.append(task)
+                                         is_important=True,
+                                         is_urgent=True,
+                                         is_done=False):
+                list.append(task)
         return list
-
 
     def get_important_non_urgent_tasks(tasks):
 
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_important=True,
-                                        is_urgent=False,
-                                        is_done=False):
-                                            list.append(task)
+                                         is_important=True,
+                                         is_urgent=False,
+                                         is_done=False):
+                list.append(task)
         return list
 
     def get_non_important_urgent_tasks(tasks):
@@ -147,10 +146,10 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_important=False,
-                                        is_urgent=True,
-                                        is_done=False):
-                                            list.append(task)
+                                         is_important=False,
+                                         is_urgent=True,
+                                         is_done=False):
+                list.append(task)
         return list
 
     def get_non_important_non_urgent_tasks(tasks):
@@ -158,10 +157,10 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_important=False,
-                                        is_urgent=False,
-                                        is_done=False):
-                                            list.append(task)
+                                         is_important=False,
+                                         is_urgent=False,
+                                         is_done=False):
+                list.append(task)
         return list
 
     def get_urgent_tasks(tasks):
@@ -169,8 +168,8 @@ class SimpleTask(models.Model):
         list = []
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
-                                        is_urgent=True):
-                                            list.append(task)
+                                         is_urgent=True):
+                list.append(task)
         return list
 
     def get_important_tasks(tasks):
@@ -178,23 +177,21 @@ class SimpleTask(models.Model):
         for task in tasks:
             if SimpleTask.objects.filter(id=task.id,
                                          is_important=True):
-                                            list.append(task)
+                list.append(task)
         return list
 
     def get_matrix_backlog_tasks(tasks):
         list = []
         for task in tasks:
             if task.is_done is False:
-                if (task.is_important is None and
-                    task.is_urgent is None) or (
-                    task.is_important is None or
-                    task.is_urgent is None):
+                if (task.is_important is None and task.is_urgent is None) or (
+                        task.is_important is None or task.is_urgent is None):
                     list.append(task)
         return list
 
     def get_kanban_backlog_tasks(tasks):
         list = []
         for task in tasks:
-            if task.is_done is False and task.in_progress != True:
+            if task.is_done is False and task.in_progress is not True:
                 list.append(task)
         return list

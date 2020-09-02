@@ -11,8 +11,7 @@ class BuildTemplateContextTest(TestCase):
                                         email="test@test.com",
                                         password="testpassword")
         self.email = user.email
-        tasklist = TaskList.objects.create(user=user, name="Loisirs",
-                                           color="#55b37e")
+        TaskList.objects.create(user=user, name="Loisirs", color="#55b37e")
 
         self.tasks = SimpleTask.objects.filter(tasklist__user=user)
 
@@ -20,7 +19,7 @@ class BuildTemplateContextTest(TestCase):
                          'due_tommorow_tasks', 'future_tasks', 'no_date_tasks',
                          'finished_tasks', 'all_tasklists', 'tasklist_to_show']
 
-        self.current_keys =  ['overdue_tasks', 'due_today_tasks',
+        self.current_keys = ['overdue_tasks', 'due_today_tasks',
                              'due_tommorow_tasks', 'future_tasks',
                              'no_date_tasks', 'all_tasklists',
                              'tasklist_to_show']

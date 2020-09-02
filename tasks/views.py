@@ -4,9 +4,9 @@ from tasks.models import TaskList, SimpleTask
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from tasks.utils import * 
-import datetime
+from tasks.utils import convert_to_clean_date, convert_into_date_type
 from tasks.build_template_context import BuildTemplateContext
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def set_tasks_dict(request, tasks, display='all'):
@@ -22,6 +22,7 @@ def set_tasks_dict(request, tasks, display='all'):
     data_dict['all_tasklists'] = all_tasklists
 
     return data_dict
+
 
 @login_required
 def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
@@ -39,6 +40,7 @@ def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
         dict['tasklist_to_show'] = tasklist
 
     return render(request, "tasks.html", dict)
+
 
 @login_required
 def addtask(request):
@@ -66,6 +68,7 @@ def addtask(request):
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=user_tasklist.id)
 
+
 @login_required
 def change_task_state(request):
     id = request.POST['task_id']
@@ -78,6 +81,7 @@ def change_task_state(request):
         id = None
     return tasks_dashboard(request, tasklist_to_show_id=id)
 
+
 @login_required
 def change_matrix_task_state(request):
     id = request.POST['task_id']
@@ -86,11 +90,13 @@ def change_matrix_task_state(request):
     task.save()
     return coveys_matrix_page(request)
 
+
 @login_required
 def deltask(request):
     id = request.POST['task_id']
     SimpleTask.get_task_with_id(id).delete()
     return tasks_dashboard(request)
+
 
 @login_required
 def update_task(request):
@@ -115,6 +121,7 @@ def update_task(request):
     task.save()
     return tasks_dashboard(request, tasklist_to_show_id=new_tasklist.id)
 
+
 @login_required
 def show_tasklist(request, id):
     user_mail = request.session['user_mail']
@@ -127,8 +134,9 @@ def show_tasklist(request, id):
             return tasks_dashboard(request, tasklist_to_show_id=id)
         else:
             return tasks_dashboard(request)
-    except:
+    except(ObjectDoesNotExist):
         return tasks_dashboard(request)
+
 
 @login_required
 def sort_by(request, type, id):
@@ -138,11 +146,13 @@ def sort_by(request, type, id):
     try:
         tasklist = TaskList.objects.get(id=id)
         if tasklist in TaskList.get_tasklists_from_user(user_mail):
-            return tasks_dashboard(request, tasklist_to_show_id=id, display=type)
+            return tasks_dashboard(request, tasklist_to_show_id=id,
+                                   display=type)
         else:
             return tasks_dashboard(request)
-    except:
+    except(ObjectDoesNotExist):
         return tasks_dashboard(request)
+
 
 @login_required
 def addcategory(request):
@@ -153,6 +163,7 @@ def addcategory(request):
     tl = TaskList.objects.create(name=list_name, user=user, color=list_color)
 
     return tasks_dashboard(request, tasklist_to_show_id=tl.id)
+
 
 @login_required
 def editcategory(request):
@@ -167,12 +178,14 @@ def editcategory(request):
     tasklist_to_edit.save()
     return redirect('/tasks')
 
+
 @login_required
 def deletecategory(request):
     list_id = request.POST['list_id']
     tasklist_to_edit = TaskList.get_tasklist_by_id(id=list_id)
     tasklist_to_edit.delete()
     return redirect('/tasks')
+
 
 @login_required
 def edit_task(request, id):
@@ -185,9 +198,9 @@ def edit_task(request, id):
             "description": task.description}
     return JsonResponse(data)
 
+
 @login_required
 def coveys_matrix_page(request, tasklist_to_show_id=None):
-
     user_mail = request.session['user_mail']
 
     if tasklist_to_show_id:
@@ -205,8 +218,9 @@ def coveys_matrix_page(request, tasklist_to_show_id=None):
     final_backlog = set_tasks_dict(request, backlog_tasks, display='all')
 
     return render(request, "stephen_covey_matrix.html",
-                 {'backlog': final_backlog,
-                  'matrix_data': matrix_data})
+                           {'backlog': final_backlog,
+                            'matrix_data': matrix_data})
+
 
 def covey_sort_backlog(request, id):
 
@@ -222,7 +236,7 @@ def covey_sort_backlog(request, id):
             return coveys_matrix_page(request, tasklist_to_show_id=id)
         else:
             return coveys_matrix_page(request, tasklist_to_show_id=None)
-    except:
+    except(ObjectDoesNotExist):
         return coveys_matrix_page(request, tasklist_to_show_id=None)
 
 
@@ -251,6 +265,7 @@ def update_matrix_task(request):
     task.save()
     return coveys_matrix_page(request)
 
+
 @login_required
 def retire_task_from_matrix(request):
     id = request.POST['task_id']
@@ -259,6 +274,7 @@ def retire_task_from_matrix(request):
     task.is_urgent = None
     task.save()
     return coveys_matrix_page(request)
+
 
 @login_required
 def kanbanpage(request, tasklist_to_show_id=None):
@@ -280,11 +296,12 @@ def kanbanpage(request, tasklist_to_show_id=None):
                                          in_progress=False,
                                          is_done=True)
 
-    context = {"backlog" : final_backlog,
+    context = {"backlog": final_backlog,
                "in_progress": in_progress,
                "finished": finished}
 
     return render(request, "kanban.html", context)
+
 
 def one_category_kanbanpage(request, id):
     user_mail = request.session['user_mail']
@@ -298,8 +315,9 @@ def one_category_kanbanpage(request, id):
             return kanbanpage(request, tasklist_to_show_id=id)
         else:
             return kanbanpage(request, tasklist_to_show_id=None)
-    except:
+    except(ObjectDoesNotExist):
         return kanbanpage(request, tasklist_to_show_id=None)
+
 
 @login_required
 def set_in_progress(request):
@@ -308,6 +326,7 @@ def set_in_progress(request):
     task.in_progress = True
     task.save()
     return kanbanpage(request)
+
 
 @login_required
 def set_back_in_progress(request):
@@ -318,6 +337,7 @@ def set_back_in_progress(request):
     task.save()
     return kanbanpage(request)
 
+
 @login_required
 def cancel_in_progress(request):
     id = request.POST['task_id']
@@ -325,6 +345,7 @@ def cancel_in_progress(request):
     task.in_progress = False
     task.save()
     return kanbanpage(request)
+
 
 @login_required
 def set_finished(request):
