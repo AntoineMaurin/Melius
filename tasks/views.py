@@ -9,21 +9,6 @@ from tasks.build_template_context import BuildTemplateContext
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def set_tasks_dict(request, tasks, display='all'):
-
-    user_mail = request.session['user_mail']
-
-    data_dict_obj = BuildTemplateContext(display, tasks)
-
-    data_dict = data_dict_obj.get_data()
-
-    all_tasklists = TaskList.get_tasklists_from_user(user_mail)
-
-    data_dict['all_tasklists'] = all_tasklists
-
-    return data_dict
-
-
 @login_required
 def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
 
@@ -34,12 +19,18 @@ def tasks_dashboard(request, tasklist_to_show_id=None, display='all'):
     else:
         tasks = SimpleTask.get_all_tasks_by_user(user_mail)
 
-    dict = set_tasks_dict(request, tasks, display)
+    data_dict_obj = BuildTemplateContext(display, tasks)
+
+    data_dict = data_dict_obj.get_data()
+
+    all_tasklists = TaskList.get_tasklists_from_user(user_mail)
+
+    data_dict['all_tasklists'] = all_tasklists
 
     if tasklist_to_show_id:
-        dict['tasklist_to_show'] = tasklist
+        data_dict['tasklist_to_show'] = tasklist
 
-    return render(request, "tasks.html", dict)
+    return render(request, "tasks.html", data_dict)
 
 
 @login_required
@@ -80,15 +71,6 @@ def change_task_state(request):
     else:
         id = None
     return tasks_dashboard(request, tasklist_to_show_id=id)
-
-
-@login_required
-def change_matrix_task_state(request):
-    id = request.POST['task_id']
-    task = SimpleTask.get_task_with_id(id)
-    task.is_done = not task.is_done
-    task.save()
-    return coveys_matrix_page(request)
 
 
 @login_required
@@ -199,82 +181,6 @@ def edit_task(request, id):
     return JsonResponse(data)
 
 
-@login_required
-def coveys_matrix_page(request, tasklist_to_show_id=None):
-    user_mail = request.session['user_mail']
-
-    if tasklist_to_show_id:
-        tasklist = TaskList.objects.get(id=tasklist_to_show_id)
-        tasks = SimpleTask.get_tasks_from_tasklist(tasklist)
-    else:
-        tasks = SimpleTask.get_all_tasks_by_user(user_mail)
-
-    all_user_tasks = SimpleTask.get_all_tasks_by_user(user_mail)
-
-    matrix_data = set_tasks_dict(request, all_user_tasks, display='matrix')
-
-    backlog_tasks = SimpleTask.get_matrix_backlog_tasks(tasks)
-
-    final_backlog = set_tasks_dict(request, backlog_tasks, display='all')
-
-    return render(request, "stephen_covey_matrix.html",
-                           {'backlog': final_backlog,
-                            'matrix_data': matrix_data})
-
-
-def covey_sort_backlog(request, id):
-
-    user_mail = request.session['user_mail']
-
-    if id == 0:
-        return coveys_matrix_page(request, tasklist_to_show_id=None)
-
-    try:
-        tasklist = TaskList.objects.get(id=id)
-
-        if tasklist in TaskList.get_tasklists_from_user(user_mail):
-            return coveys_matrix_page(request, tasklist_to_show_id=id)
-        else:
-            return coveys_matrix_page(request, tasklist_to_show_id=None)
-    except(ObjectDoesNotExist):
-        return coveys_matrix_page(request, tasklist_to_show_id=None)
-
-
-@login_required
-def update_matrix_task(request):
-    id = request.POST['task_id']
-    dest = request.POST['destination']
-    task = SimpleTask.get_task_with_id(id)
-
-    if dest == 'top-left':
-        task.is_important = True
-        task.is_urgent = True
-
-    elif dest == 'top-right':
-        task.is_important = True
-        task.is_urgent = False
-
-    elif dest == 'bottom-left':
-        task.is_important = False
-        task.is_urgent = True
-
-    elif dest == 'bottom-right':
-        task.is_important = False
-        task.is_urgent = False
-
-    task.save()
-    return coveys_matrix_page(request)
-
-
-@login_required
-def retire_task_from_matrix(request):
-    id = request.POST['task_id']
-    task = SimpleTask.get_task_with_id(id)
-    task.is_important = None
-    task.is_urgent = None
-    task.save()
-    return coveys_matrix_page(request)
-
 
 @login_required
 def kanbanpage(request, tasklist_to_show_id=None):
@@ -287,7 +193,14 @@ def kanbanpage(request, tasklist_to_show_id=None):
         tasks = SimpleTask.get_all_tasks_by_user(user_mail)
 
     initial_backlog = SimpleTask.get_kanban_backlog_tasks(tasks)
-    final_backlog = set_tasks_dict(request, initial_backlog, display='all')
+
+    data_dict_obj = BuildTemplateContext('all', initial_backlog)
+
+    final_backlog = data_dict_obj.get_data()
+
+    all_tasklists = TaskList.get_tasklists_from_user(user_mail)
+
+    final_backlog['all_tasklists'] = all_tasklists
 
     in_progress = SimpleTask.objects.filter(tasklist__user__email=user_mail,
                                             in_progress=True)

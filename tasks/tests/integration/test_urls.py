@@ -54,10 +54,6 @@ class TasksUrlsTest(TestCase):
         url = reverse(change_task_state)
         self.assertEqual(resolve(url).func, change_task_state)
 
-    def test_change_matrix_task_state_url_is_resolved(self):
-        url = reverse(change_matrix_task_state)
-        self.assertEqual(resolve(url).func, change_matrix_task_state)
-
     def test_addcategory_url_is_resolved(self):
         url = reverse(addcategory)
         self.assertEqual(resolve(url).func, addcategory)
@@ -85,11 +81,3 @@ class TasksUrlsTest(TestCase):
         for param in parameters:
             url = reverse(sort_by, args=[param, self.tasklist_id])
             self.assertEqual(resolve(url).func, sort_by)
-
-    def test_coveys_matrix_page_url_is_resolved(self):
-        url = reverse(coveys_matrix_page)
-        self.assertEqual(resolve(url).func, coveys_matrix_page)
-
-    def test_update_matrix_task_url_is_resolved(self):
-        url = reverse(update_matrix_task)
-        self.assertEqual(resolve(url).func, update_matrix_task)

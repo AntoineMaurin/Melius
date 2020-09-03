@@ -303,17 +303,6 @@ class TasksViewsTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/deletecategory')
 
-    def test_edit_task(self):
-        self.add_data()
-        task_to_edit = SimpleTask.objects.get(name="tâche 1")
-        response = self.client.get('/edittask/' + str(task_to_edit.id))
-
-        self.assertEqual(response['task_name'], task_to_edit.name)
-        self.assertEqual(response['task_id'], task_to_edit.id)
-        self.assertEqual(response['category_name'], task_to_edit.tasklist.name)
-        self.assertEqual(response['due_date'], task_to_edit.due_date)
-        self.assertEqual(response['description'], task_to_edit.description)
-
     def test_edit_task_not_auth(self):
         self.client.get('/logout')
         self.add_data()
@@ -323,78 +312,3 @@ class TasksViewsTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, ('/login?next=/edittask/'
                                         + str(task_to_edit.id)))
-
-    def test_coveys_matrix_page(self):
-        response = self.client.get('/coveys_matrix')
-        coveys_keys = ['backlog', 'matrix_data']
-        for key in coveys_keys:
-            self.assertIn(key, response.context)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
-
-    def test_coveys_matrix_page_not_auth(self):
-        self.client.get('/logout')
-        self.add_data()
-        response = self.client.get('/coveys_matrix')
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/coveys_matrix')
-
-    def test_update_matrix_task(self):
-        self.add_data()
-        task_to_update = SimpleTask.objects.get(name="tâche 1")
-
-        response = self.client.post('/update_matrix_task', {
-            'task_id': task_to_update.id,
-            'destination': 'top-right'
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
-
-    def test_update_matrix_task_updates_task(self):
-        self.add_data()
-        task_to_update = SimpleTask.objects.get(name="tâche 1")
-
-        self.client.post('/update_matrix_task', {
-            'task_id': task_to_update.id,
-            'destination': 'top-right'
-        })
-        updated_task = SimpleTask.objects.get(id=task_to_update.id)
-
-        self.assertTrue(updated_task.is_important)
-        self.assertFalse(updated_task.is_urgent)
-
-    def test_update_matrix_task_not_auth(self):
-        self.client.get('/logout')
-        self.add_data()
-        task_to_update = SimpleTask.objects.get(name="tâche 1")
-
-        response = self.client.post('/update_matrix_task', {
-            'task_id': task_to_update.id,
-            'destination': 'top-right'
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/update_matrix_task')
-
-    def test_retire_task_from_matrix(self):
-        self.add_data()
-        task = SimpleTask.objects.get(name="tâche 4")
-        task.is_urgent = True
-        task.is_important = False
-        task.save()
-        self.client.post('/retire_task_from_matrix', {
-            'task_id': task.id,
-        })
-        updated_task = SimpleTask.objects.get(id=task.id)
-        self.assertEquals(updated_task.is_urgent, None)
-        self.assertEquals(updated_task.is_important, None)
-
-    def test_retire_task_from_matrix_not_auth(self):
-        self.client.get('/logout')
-        self.add_data()
-        task = SimpleTask.objects.get(tasklist__user=self.user,
-                                      name="tâche 4")
-        response = self.client.post('/retire_task_from_matrix', {
-            'task_id': task.id,
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/login?next=/retire_task_from_matrix')
