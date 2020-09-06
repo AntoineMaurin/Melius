@@ -122,9 +122,11 @@ def show_tasklist(request, id):
 
 @login_required
 def sort_by(request, type, id):
+
     user_mail = request.session['user_mail']
     if id == 0:
-        id = None
+        return tasks_dashboard(request, tasklist_to_show_id=None,
+                               display=type)
     try:
         tasklist = TaskList.objects.get(id=id)
         if tasklist in TaskList.get_tasklists_from_user(user_mail):
