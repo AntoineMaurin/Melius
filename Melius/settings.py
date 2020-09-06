@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'tasks',
     'matrix',
+    'kanban',
 ]
 
 MIDDLEWARE = [

@@ -5,7 +5,6 @@ import random
 from datetime import date
 from tasks.models import TaskList, SimpleTask
 from django.contrib.auth.models import User
-from tasks.views import *
 
 
 class TasksViewsTest(TestCase):

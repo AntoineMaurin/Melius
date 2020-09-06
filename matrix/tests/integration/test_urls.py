@@ -1,7 +1,7 @@
 from django.urls import reverse, resolve
 from django.test import TestCase
 from matrix.views import coveys_matrix_page, covey_sort_backlog, \
-update_matrix_task, retire_task_from_matrix, change_matrix_task_state
+    update_matrix_task, retire_task_from_matrix, change_matrix_task_state
 from django.contrib.auth.models import User
 from tasks.models import TaskList, SimpleTask
 from django.utils import timezone
@@ -24,7 +24,7 @@ class MatrixUrlsTest(TestCase):
                                         password="testpassword")
 
         tasklist = TaskList.objects.create(user=user, name="Loisirs",
-                                             color="#55b37e")
+                                           color="#55b37e")
 
         SimpleTask.objects.create(tasklist=tasklist,
                                   name="tâche 1",
@@ -32,7 +32,6 @@ class MatrixUrlsTest(TestCase):
                                   description="Description :)",
                                   creation=timezone.now(),
                                   is_done=False)
-
 
     def test_coveys_matrix_page_url_is_resolved(self):
         url = reverse(coveys_matrix_page)

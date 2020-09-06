@@ -5,8 +5,6 @@ import random
 from datetime import date
 from tasks.models import TaskList, SimpleTask
 from django.contrib.auth.models import User
-from matrix.views import coveys_matrix_page, covey_sort_backlog, \
-update_matrix_task, retire_task_from_matrix, change_matrix_task_state
 
 
 class MatrixViewsTest(TestCase):
@@ -41,7 +39,6 @@ class MatrixViewsTest(TestCase):
     def tearDown(self):
         self.client.get('/logout')
 
-
     def test_coveys_matrix_page(self):
         response = self.client.get('/coveys_matrix')
         coveys_keys = ['backlog', 'matrix_data']
@@ -56,6 +53,34 @@ class MatrixViewsTest(TestCase):
         response = self.client.get('/coveys_matrix')
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/coveys_matrix')
+
+    def test_covey_sort_backlog(self):
+        self.add_data()
+        tasklist = TaskList.objects.get(name='Loisirs')
+        response = self.client.get('/covey_sort_backlog/' + str(tasklist.id))
+        coveys_keys = ['backlog', 'matrix_data']
+        for key in coveys_keys:
+            self.assertIn(key, response.context)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
+
+    def test_covey_sort_backlog_with_random_id(self):
+        self.add_data()
+        response = self.client.get('/covey_sort_backlog/564314')
+        coveys_keys = ['backlog', 'matrix_data']
+        for key in coveys_keys:
+            self.assertIn(key, response.context)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
+
+    def test_covey_sort_backlog_with_zero_id(self):
+        self.add_data()
+        response = self.client.get('/covey_sort_backlog/0')
+        coveys_keys = ['backlog', 'matrix_data']
+        for key in coveys_keys:
+            self.assertIn(key, response.context)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'stephen_covey_matrix.html')
 
     def test_update_matrix_task(self):
         self.add_data()

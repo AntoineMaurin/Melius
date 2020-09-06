@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('tasks.urls')),
     path('', include('matrix.urls')),
+    path('', include('kanban.urls')),
     path('', views.homepage),
     path('dashboard', views.dashboardpage),
 ]
