@@ -1,8 +1,10 @@
 from django.urls import reverse, resolve
 from django.test import TestCase
-from tasks.views import *
+from tasks import views
 from django.utils import timezone
 from datetime import date
+from django.contrib.auth.models import User
+from tasks.models import SimpleTask, TaskList
 
 
 class TasksUrlsTest(TestCase):
@@ -21,7 +23,7 @@ class TasksUrlsTest(TestCase):
                                         password="testpassword")
 
         tasklist = TaskList.objects.create(user=user, name="Loisirs",
-                                             color="#55b37e")
+                                           color="#55b37e")
 
         SimpleTask.objects.create(tasklist=tasklist,
                                   name="tâche 1",
@@ -31,53 +33,53 @@ class TasksUrlsTest(TestCase):
                                   is_done=False)
 
     def test_tasks_dashboard_url_is_resolved(self):
-        url = reverse(tasks_dashboard)
-        self.assertEqual(resolve(url).func, tasks_dashboard)
+        url = reverse(views.tasks_dashboard)
+        self.assertEqual(resolve(url).func, views.tasks_dashboard)
 
     def test_addtask_url_is_resolved(self):
-        url = reverse(addtask)
-        self.assertEqual(resolve(url).func, addtask)
+        url = reverse(views.addtask)
+        self.assertEqual(resolve(url).func, views.addtask)
 
     def test_deltask_url_is_resolved(self):
-        url = reverse(deltask)
-        self.assertEqual(resolve(url).func, deltask)
+        url = reverse(views.deltask)
+        self.assertEqual(resolve(url).func, views.deltask)
 
     def test_edit_task_url_is_resolved(self):
-        url = reverse(edit_task, args=[self.task_id])
-        self.assertEqual(resolve(url).func, edit_task)
+        url = reverse(views.edit_task, args=[self.task_id])
+        self.assertEqual(resolve(url).func, views.edit_task)
 
     def test_update_task_url_is_resolved(self):
-        url = reverse(update_task)
-        self.assertEqual(resolve(url).func, update_task)
+        url = reverse(views.update_task)
+        self.assertEqual(resolve(url).func, views.update_task)
 
     def test_change_task_state_url_is_resolved(self):
-        url = reverse(change_task_state)
-        self.assertEqual(resolve(url).func, change_task_state)
+        url = reverse(views.change_task_state)
+        self.assertEqual(resolve(url).func, views.change_task_state)
 
     def test_addcategory_url_is_resolved(self):
-        url = reverse(addcategory)
-        self.assertEqual(resolve(url).func, addcategory)
+        url = reverse(views.addcategory)
+        self.assertEqual(resolve(url).func, views.addcategory)
 
     def test_editcategory_url_is_resolved(self):
-        url = reverse(editcategory)
-        self.assertEqual(resolve(url).func, editcategory)
+        url = reverse(views.editcategory)
+        self.assertEqual(resolve(url).func, views.editcategory)
 
     def test_deletecategory_url_is_resolved(self):
-        url = reverse(deletecategory)
-        self.assertEqual(resolve(url).func, deletecategory)
+        url = reverse(views.deletecategory)
+        self.assertEqual(resolve(url).func, views.deletecategory)
 
     def test_show_tasklist_url_is_resolved(self):
-        url = reverse(show_tasklist, args=[self.tasklist_id])
-        self.assertEqual(resolve(url).func, show_tasklist)
+        url = reverse(views.show_tasklist, args=[self.tasklist_id])
+        self.assertEqual(resolve(url).func, views.show_tasklist)
 
     def test_sort_by_all_url_is_resolved(self):
         parameters = ['all', 'current', 'finished', 'important', 'urgent']
         for param in parameters:
-            url = reverse(sort_by, args=[param, 0])
-            self.assertEqual(resolve(url).func, sort_by)
+            url = reverse(views.sort_by, args=[param, 0])
+            self.assertEqual(resolve(url).func, views.sort_by)
 
     def test_sort_by_tasklist_url_is_resolved(self):
         parameters = ['all', 'current', 'finished', 'important', 'urgent']
         for param in parameters:
-            url = reverse(sort_by, args=[param, self.tasklist_id])
-            self.assertEqual(resolve(url).func, sort_by)
+            url = reverse(views.sort_by, args=[param, self.tasklist_id])
+            self.assertEqual(resolve(url).func, views.sort_by)

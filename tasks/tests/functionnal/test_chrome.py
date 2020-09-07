@@ -3,9 +3,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth.models import User
 from tasks.models import SimpleTask, TaskList
-import time
-from selenium.webdriver.common.keys import Keys
-
 
 
 class MeliusChromeTest(StaticLiveServerTestCase):
@@ -28,6 +25,7 @@ class MeliusChromeTest(StaticLiveServerTestCase):
                                              email='seleniumtest@test.com',
                                              password='password')
         TaskList.objects.create(user=self.user)
+
     def test_simple_task_creation(self):
         self.create_user()
         self.browser.get(self.live_server_url + '/login')

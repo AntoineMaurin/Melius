@@ -80,12 +80,12 @@ class KanbanViewsTest(TestCase):
             self.tasklist_1.id))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login?next=/kanban_one_category/' +
-            str(self.tasklist_1.id))
+                             str(self.tasklist_1.id))
 
     def test_set_in_progress(self):
         self.add_data()
         task = SimpleTask.objects.get(name="tâche 2")
-        response = self.client.post('/setinprogress', {
+        self.client.post('/setinprogress', {
             'task_id': task.id,
             })
         updated_task = SimpleTask.objects.get(id=task.id)
@@ -111,7 +111,7 @@ class KanbanViewsTest(TestCase):
                                          in_progress=False,
                                          is_done=True)
 
-        response = self.client.post('/setbackinprogress', {
+        self.client.post('/setbackinprogress', {
             'task_id': task.id,
             })
         updated_task = SimpleTask.objects.get(id=task.id)
@@ -138,7 +138,7 @@ class KanbanViewsTest(TestCase):
                                          is_done=False,
                                          in_progress=True)
 
-        response = self.client.post('/cancelinprogress', {
+        self.client.post('/cancelinprogress', {
             'task_id': task.id,
             })
         updated_task = SimpleTask.objects.get(id=task.id)
@@ -165,7 +165,7 @@ class KanbanViewsTest(TestCase):
                                          is_done=False,
                                          in_progress=True)
 
-        response = self.client.post('/setfinished', {
+        self.client.post('/setfinished', {
             'task_id': task.id,
             })
         updated_task = SimpleTask.objects.get(id=task.id)
