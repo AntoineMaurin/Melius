@@ -57,7 +57,7 @@
             {% if backlog.overdue_tasks|length > 0 %}
               <p class="m-3 text-white">Tâches dépassées</p>
               {% for task in backlog.overdue_tasks %}
-                {% include "kanban_task.html" %}
+                {% include "tasks/kanban_task.html" %}
               {% endfor %}
             {% endif %}
           </div>
@@ -66,7 +66,7 @@
             {% if backlog.due_today_tasks|length > 0 %}
               <p class="m-3 text-white">Pour aujourd'hui</p>
               {% for task in backlog.due_today_tasks %}
-                {% include "kanban_task.html" %}
+                {% include "tasks/kanban_task.html" %}
               {% endfor %}
             {% endif %}
           </div>
@@ -75,7 +75,7 @@
             {% if backlog.due_tommorow_tasks|length > 0 %}
               <p class="m-3 text-white">Pour demain</p>
               {% for task in backlog.due_tommorow_tasks %}
-                {% include "kanban_task.html" %}
+                {% include "tasks/kanban_task.html" %}
               {% endfor %}
             {% endif %}
           </div>
@@ -84,7 +84,7 @@
             {% if backlog.future_tasks|length > 0 %}
               <p class="m-3 text-white">A venir</p>
               {% for task in backlog.future_tasks %}
-                {% include "kanban_task.html" %}
+                {% include "tasks/kanban_task.html" %}
               {% endfor %}
             {% endif %}
           </div>
@@ -93,7 +93,7 @@
             {% if backlog.no_date_tasks|length > 0 %}
               <p class="m-3 text-white">Sans date</p>
               {% for task in backlog.no_date_tasks %}
-                {% include "kanban_task.html" %}
+                {% include "tasks/kanban_task.html" %}
               {% endfor %}
             {% endif %}
           </div>
@@ -107,7 +107,7 @@
         </div>
         <div class="kanban-column">
           {% for task in in_progress %}
-            {% include "kanban_task.html" %}
+            {% include "tasks/kanban_task.html" %}
           {% endfor %}
         </div>
       </div>
@@ -119,7 +119,7 @@
         </div>
         <div class="kanban-column">
           {% for task in finished %}
-            {% include "kanban_task.html" %}
+            {% include "tasks/kanban_task.html" %}
           {% endfor %}
         </div>
       </div>

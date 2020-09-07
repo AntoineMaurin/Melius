@@ -59,7 +59,7 @@
       {% if backlog.overdue_tasks|length > 0 %}
         <p class="m-3 text-white">Tâches dépassées</p>
         {% for task in backlog.overdue_tasks %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       {% endif %}
     </div>
@@ -68,7 +68,7 @@
       {% if backlog.due_today_tasks|length > 0 %}
         <p class="m-3 text-white">Pour aujourd'hui</p>
         {% for task in backlog.due_today_tasks %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       {% endif %}
     </div>
@@ -77,7 +77,7 @@
       {% if backlog.due_tommorow_tasks|length > 0 %}
         <p class="m-3 text-white">Pour demain</p>
         {% for task in backlog.due_tommorow_tasks %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       {% endif %}
     </div>
@@ -86,7 +86,7 @@
       {% if backlog.future_tasks|length > 0 %}
         <p class="m-3 text-white">A venir</p>
         {% for task in backlog.future_tasks %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       {% endif %}
     </div>
@@ -95,7 +95,7 @@
       {% if backlog.no_date_tasks|length > 0 %}
         <p class="m-3 text-white">Sans date</p>
         {% for task in backlog.no_date_tasks %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       {% endif %}
     </div>
@@ -113,7 +113,7 @@
       </div>
       <div id="important-urgent">
         {% for task in matrix_data.important_urgent %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       </div>
     </div>
@@ -125,7 +125,7 @@
       </div>
       <div id="important-non-urgent">
         {% for task in matrix_data.important_non_urgent %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       </div>
     </div>
@@ -139,7 +139,7 @@
       </div>
       <div id="non-important-urgent">
         {% for task in matrix_data.non_important_urgent %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       </div>
     </div>
@@ -151,7 +151,7 @@
       </div>
       <div id="non-important-non-urgent">
         {% for task in matrix_data.non_important_non_urgent %}
-          {% include "matrix_task.html" %}
+          {% include "tasks/matrix_task.html" %}
         {% endfor %}
       </div>
     </div>

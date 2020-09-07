@@ -63,7 +63,7 @@
         {% if overdue_tasks %}
           <p class="m-3">Tâches dépassées</p>
           {% for task in overdue_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -72,7 +72,7 @@
         {% if due_today_tasks %}
           <p class="m-3">Pour aujourd'hui</p>
           {% for task in due_today_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -81,7 +81,7 @@
         {% if due_tommorow_tasks %}
           <p class="m-3">Pour demain</p>
           {% for task in due_tommorow_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -90,7 +90,7 @@
         {% if future_tasks %}
           <p class="m-3">A venir</p>
           {% for task in future_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -99,7 +99,7 @@
         {% if no_date_tasks %}
           <p class="m-3">Sans date</p>
           {% for task in no_date_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -108,7 +108,7 @@
         {% if finished_tasks %}
           <p class="m-3">Tâches terminées</p>
           {% for task in finished_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -117,7 +117,7 @@
         {% if urgent_tasks %}
           <p class="m-3">Tâches urgentes</p>
           {% for task in urgent_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -126,7 +126,7 @@
         {% if important_tasks %}
           <p class="m-3">Tâches importantes</p>
           {% for task in important_tasks %}
-            {% include "simple_task.html" %}
+            {% include "tasks/simple_task.html" %}
           {% endfor %}
         {% endif %}
       </div>
@@ -135,11 +135,11 @@
   </section>
 
   <section class="col container mr-3 pt-3 mt-2">
-    {% include "tasks_forms/empty_task_form.html" %}
+    {% include "forms/empty_task_form.html" %}
   </section>
 
-  {% include "tasks_forms/base_list_form.html" %}
-  {% include "tasks_forms/delete_list_form.html" %}
+  {% include "forms/base_list_form.html" %}
+  {% include "forms/delete_list_form.html" %}
 
 <script src="{% static 'js/script.js' %}"></script>
 </div>

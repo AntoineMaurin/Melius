@@ -42,7 +42,7 @@ class BuildTemplateContext:
                     'matrix_backlog': matrix_backlog}
 
         dict = {}
-        keys_list = self.content_to_return()
+        keys_list = self.__content_to_return()
 
         for k, v in all_data.items():
             if k in keys_list:
@@ -50,7 +50,7 @@ class BuildTemplateContext:
 
         return dict
 
-    def content_to_return(self):
+    def __content_to_return(self):
 
         if self.display == 'all':
             return ['overdue_tasks', 'due_today_tasks', 'due_tommorow_tasks',
